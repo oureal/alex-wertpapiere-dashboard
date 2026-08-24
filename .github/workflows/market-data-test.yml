@@ -50,7 +50,7 @@ jobs:
         continue-on-error: true
         run: python scripts/network_diagnostics.py --output "$RUN_OUTPUT/research-report.json"
 
-      - name: Load and runtime-validate Yahoo Finance prices
+      - name: Load Yahoo Finance prices and official Monega NAVs
         run: |
           python scripts/update_yahoo_prices.py \
             --output "$RUN_OUTPUT/latest.json" \

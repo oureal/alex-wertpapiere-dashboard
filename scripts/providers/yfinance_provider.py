@@ -34,15 +34,31 @@ class YFinanceProvider(MarketDataProvider):
             raise ProviderError(f"Yahoo metadata request failed: {error}") from error
 
     @staticmethod
-    def _validate_identity(symbol: str, info: dict[str, Any], metadata: dict[str, Any]) -> tuple[str, str]:
+    def _officially_verified_mapping(instrument_id: str, symbol: str, metadata: dict[str, Any]) -> bool:
+        mapping = metadata.get("officially_verified_mapping")
+        return bool(
+            instrument_id == "wisdomtree-physical-bitcoin"
+            and symbol == "WBIT.DE"
+            and isinstance(mapping, dict)
+            and mapping.get("isin") == "GB00BJYDH287"
+            and mapping.get("product_ticker") == "WBIT"
+            and mapping.get("market") == "Germany"
+            and mapping.get("trading_currency") == "EUR"
+            and mapping.get("provenance") == "wisdomtree_official_listing"
+            and str(mapping.get("source_url", "")).startswith("https://www.wisdomtree.eu/")
+        )
+
+    @classmethod
+    def _validate_identity(cls, instrument_id: str, symbol: str, info: dict[str, Any], metadata: dict[str, Any]) -> tuple[str, str]:
         name = str(info.get("longName") or info.get("shortName") or "")
         tokens = metadata.get("expected_name_tokens") or []
         normalized = _normalized(name)
-        if not name or any(_normalized(token) not in normalized for token in tokens):
+        verified = cls._officially_verified_mapping(instrument_id, symbol, metadata)
+        if not verified and (not name or any(_normalized(token) not in normalized for token in tokens)):
             raise ProviderError(f"Yahoo identity mismatch for {symbol}: {name!r}")
         quote_type = str(info.get("quoteType") or "").upper()
         allowed = {str(item).upper() for item in metadata.get("allowed_quote_types", ("EQUITY", "ETF", "MUTUALFUND"))}
-        if quote_type not in allowed:
+        if not verified and quote_type not in allowed:
             raise ProviderError(f"Unsupported Yahoo quote type for {symbol}: {quote_type or 'missing'}")
         currency = str(info.get("currency") or "").upper()
         exchange = str(info.get("fullExchangeName") or info.get("exchange") or "")
@@ -74,7 +90,7 @@ class YFinanceProvider(MarketDataProvider):
         try:
             ticker = self.ticker_factory(symbol)
             info = self._metadata(ticker)
-            currency, exchange = self._validate_identity(symbol, info, metadata)
+            currency, exchange = self._validate_identity(instrument_id, symbol, info, metadata)
             history = ticker.history(period="10d", interval="1d", auto_adjust=False)
         except ProviderError:
             raise
