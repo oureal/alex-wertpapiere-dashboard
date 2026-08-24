@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "instruments": [
+    {
+      "id": "berkshire-hathaway-b",
+      "name": "Berkshire Hathaway B",
+      "isin": "US0846707026",
+      "wkn": "A0YJQ2",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "xetra-gold",
+      "name": "Xetra-Gold",
+      "isin": "DE000A0S9GB0",
+      "wkn": "A0S9GB",
+      "asset_type": "etc",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "2026-08-20-lookthrough.xlsx Ausgangsdepots; updated values from index.html where present",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "allianz",
+      "name": "Allianz",
+      "isin": "DE0008404005",
+      "wkn": "840400",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft",
+      "isin": "US5949181045",
+      "wkn": "870747",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "eli-lilly",
+      "name": "Eli Lilly and Company",
+      "isin": "US5324571083",
+      "wkn": "858560",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "siemens",
+      "name": "Siemens",
+      "isin": "DE0007236101",
+      "wkn": "723610",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "hsbc",
+      "name": "HSBC",
+      "isin": "GB0005405286",
+      "wkn": "923893",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "isin": "US0378331005",
+      "wkn": "865985",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "linde",
+      "name": "Linde",
+      "isin": "IE000S9YS762",
+      "wkn": "A3D7VW",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "boerse-de-aktienfonds",
+      "name": "boerse.de-Aktienfonds - V EUR ACC",
+      "isin": "LU2115464500",
+      "wkn": "A2PZMR",
+      "asset_type": "fund",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "2026-08-20-lookthrough.xlsx Ausgangsdepots; updated values from index.html where present",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "ishares-global-titans-50",
+      "name": "iShares Dow Jones Global Titans 50 UCITS ETF EUR Dis. (DE)",
+      "isin": "DE0006289382",
+      "wkn": "628938",
+      "asset_type": "etf",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "2026-08-20-lookthrough.xlsx Ausgangsdepots; updated values from index.html where present",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "boerse-de-technologiefonds",
+      "name": "boerse.de-Technologiefonds - T EUR ACC",
+      "isin": "LU2479335734",
+      "wkn": "TMG4TT",
+      "asset_type": "fund",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "2026-08-20-lookthrough.xlsx Ausgangsdepots; updated values from index.html where present",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "nvidia",
+      "name": "Nvidia",
+      "isin": "US67066G1040",
+      "wkn": "918422",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "amd",
+      "name": "AMD",
+      "isin": "US0079031078",
+      "wkn": "863186",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "ishares-core-msci-world",
+      "name": "iShares Core MSCI World UCITS ETF USD Acc.",
+      "isin": "IE00B4L5Y983",
+      "wkn": "A0RPWH",
+      "asset_type": "etf",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "2026-08-20-lookthrough.xlsx Ausgangsdepots; updated values from index.html where present",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "alphabet-c",
+      "name": "Alphabet C (Google)",
+      "isin": "US02079K1079",
+      "wkn": "A14Y6H",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "micron-technology",
+      "name": "Micron Technology",
+      "isin": "US5951121038",
+      "wkn": "869020",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "ishares-msci-world-value-factor",
+      "name": "iShares Edge MSCI World Value Factor UCITS ETF USD Acc.",
+      "isin": "IE00BP3QZB59",
+      "wkn": "A12ATG",
+      "asset_type": "etf",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "2026-08-20-lookthrough.xlsx Ausgangsdepots; updated values from index.html where present",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "wisdomtree-physical-bitcoin",
+      "name": "WisdomTree Physical Bitcoin",
+      "isin": "GB00BJYDH287",
+      "wkn": "A3GKGK",
+      "asset_type": "etp",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "2026-08-20-lookthrough.xlsx Ausgangsdepots; updated values from index.html where present",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "marvell-technology",
+      "name": "Marvell Technology",
+      "isin": "US5738741041",
+      "wkn": "A3CNLD",
+      "asset_type": "equity",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "tsmc-adr",
+      "name": "TSMC Taiwan Semiconductor (ADR)",
+      "isin": "US8740391003",
+      "wkn": "909800",
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "id": "broadcom",
+      "name": "Broadcom",
+      "isin": "US11135F1012",
+      "wkn": "A2JG9Z",
+      "asset_type": "equity",
+      "trading_currency": null,
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "id": "siemens-energy",
+      "name": "Siemens Energy AG NA O.N.",
+      "isin": "DE000ENER6Y0",
+      "wkn": null,
+      "asset_type": "equity",
+      "trading_currency": "EUR",
+      "ticker": null,
+      "exchange": null,
+      "price_source": null,
+      "legacy_price_reference": "index.html DATA as of 2026-08-21",
+      "missing_fields": [
+        "wkn",
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    }
+  ]
+}

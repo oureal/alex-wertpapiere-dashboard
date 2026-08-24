@@ -1,0 +1,2 @@
+transaction_id,date,depot,type,instrument_id,quantity,price,currency,gross_value_eur,cash_effect_eur,provenance,needs_confirmation
+2026-08-21-siemens-energy-buy,2026-08-21,Depot 2,BUY,siemens-energy,4,154.04,EUR,616.16,-616.16,user-confirmed Depot 2 assignment; same depot as Broadcom,false

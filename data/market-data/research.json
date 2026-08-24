@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-08-24",
+  "live_network_available": false,
+  "api_key_available": false,
+  "attempts": [
+    {
+      "source": "web search tool",
+      "result": "blocked",
+      "error": "HTTP 401 Unauthorized"
+    },
+    {
+      "source": "Alpha Vantage documentation",
+      "result": "blocked",
+      "error": "CONNECT tunnel failed with HTTP 403"
+    },
+    {
+      "source": "Boerse Frankfurt API and website",
+      "result": "blocked",
+      "error": "CONNECT tunnel failed with HTTP 403"
+    },
+    {
+      "source": "iShares official website",
+      "result": "blocked",
+      "error": "CONNECT tunnel failed with HTTP 403"
+    },
+    {
+      "source": "boerse.de official website",
+      "result": "blocked",
+      "error": "CONNECT tunnel failed with HTTP 403"
+    },
+    {
+      "source": "WisdomTree official website",
+      "result": "blocked",
+      "error": "CONNECT tunnel failed with HTTP 403"
+    }
+  ],
+  "conclusion": "No live source could be reliability-tested in this environment. No provider mapping or fresh price was activated.",
+  "automatic_instruments": 0,
+  "legacy_fallback_instruments": 23
+}

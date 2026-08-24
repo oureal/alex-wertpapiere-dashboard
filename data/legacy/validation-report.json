@@ -1,0 +1,891 @@
+{
+  "schema_version": 1,
+  "legacy_reference": "data/legacy/index-data-2026-08-21.json",
+  "overall_status": "pass",
+  "checks": [
+    {
+      "name": "unique_instrument_ids",
+      "status": "pass",
+      "details": {
+        "count": 23
+      }
+    },
+    {
+      "name": "valid_present_isins",
+      "status": "pass",
+      "details": {
+        "invalid_instrument_ids": []
+      }
+    },
+    {
+      "name": "no_unintended_negative_quantities",
+      "status": "pass",
+      "details": {
+        "negative_rows": []
+      }
+    },
+    {
+      "name": "holdings_reference_known_instruments",
+      "status": "pass",
+      "details": {
+        "unknown_instrument_ids": []
+      }
+    },
+    {
+      "name": "siemens_energy_depot_assignment_confirmed",
+      "status": "pass",
+      "details": {
+        "depot": "Depot 2",
+        "broadcom_depot": "Depot 2",
+        "needs_confirmation": "false"
+      }
+    },
+    {
+      "name": "dry_run_resolved_plus_unresolved_equals_total",
+      "status": "pass",
+      "details": {
+        "dry_run_total": 113578.029995
+      }
+    },
+    {
+      "name": "dry_run_company_exposures_equal_resolved",
+      "status": "pass",
+      "details": {
+        "dry_run_total": 113578.029995
+      }
+    },
+    {
+      "name": "dry_run_sectors_equal_resolved",
+      "status": "pass",
+      "details": {
+        "dry_run_total": 113578.029995
+      }
+    },
+    {
+      "name": "dry_run_sources_equal_resolved",
+      "status": "pass",
+      "details": {
+        "dry_run_total": 113578.029995
+      }
+    },
+    {
+      "name": "dry_run_assets_equal_total",
+      "status": "pass",
+      "details": {
+        "dry_run_total": 113578.029995
+      }
+    },
+    {
+      "name": "dry_run_direct_consistent",
+      "status": "pass",
+      "details": {
+        "dry_run_total": 113578.029995
+      }
+    },
+    {
+      "name": "resolved_plus_unresolved_equals_total",
+      "status": "pass",
+      "details": {
+        "resolved": 98212.430874,
+        "unresolved": 15362.933096604043,
+        "total": 113575.36397060403
+      }
+    },
+    {
+      "name": "company_exposures_equal_resolved",
+      "status": "pass",
+      "details": {
+        "company_exposures": 98212.430874,
+        "resolved": 98212.430874
+      }
+    },
+    {
+      "name": "direct_holdings_consistent_with_company_exposures",
+      "status": "pass",
+      "details": {
+        "migrated_direct": 54642.2,
+        "company_direct": 54642.2,
+        "meta_direct": 54642.2
+      }
+    },
+    {
+      "name": "cash_consistent_with_meta",
+      "status": "pass",
+      "details": {
+        "migrated_cash": 4765.75,
+        "meta_cash": 4765.75
+      }
+    },
+    {
+      "name": "quantities_times_legacy_unit_prices_reproduce_values",
+      "status": "pass",
+      "details": {
+        "checked_rows": 25
+      }
+    },
+    {
+      "name": "immutable_legacy_files_unchanged",
+      "status": "pass",
+      "details": {
+        "errors": []
+      }
+    }
+  ],
+  "known_legacy_inconsistencies": [
+    {
+      "id": "assets_total_differs_from_meta_total",
+      "status": "known_legacy_warning",
+      "left": 112879.88,
+      "right": 113575.36397060403,
+      "difference": -695.483970604022,
+      "corrected": false
+    },
+    {
+      "id": "sectors_total_differs_from_meta_resolved",
+      "status": "known_legacy_warning",
+      "left": 97516.83457200007,
+      "right": 98212.430874,
+      "difference": -695.5963019999326,
+      "corrected": false
+    },
+    {
+      "id": "sources_total_differs_from_meta_resolved",
+      "status": "known_legacy_warning",
+      "left": 97516.83457200004,
+      "right": 98212.430874,
+      "difference": -695.5963019999617,
+      "corrected": false
+    },
+    {
+      "id": "asset_direct_differs_from_meta_direct",
+      "status": "known_legacy_warning",
+      "left": 53944.05,
+      "right": 54642.2,
+      "difference": -698.1499999999942,
+      "corrected": false
+    },
+    {
+      "id": "migrated_legacy_values_differ_from_meta_total",
+      "status": "known_legacy_warning",
+      "left": 113578.03,
+      "right": 113575.36397060403,
+      "difference": 2.6660293959721457,
+      "corrected": false
+    }
+  ],
+  "legacy_aggregates": {
+    "meta_total": 113575.36397060403,
+    "assets_total": 112879.88,
+    "meta_resolved": 98212.430874,
+    "sectors_total": 97516.83457200007,
+    "sources_total": 97516.83457200004,
+    "meta_direct": 54642.2,
+    "asset_direct": 53944.05,
+    "migrated_holdings_plus_cash": 113578.03
+  },
+  "missing_master_data": [
+    {
+      "instrument_id": "berkshire-hathaway-b",
+      "name": "Berkshire Hathaway B",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "xetra-gold",
+      "name": "Xetra-Gold",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "allianz",
+      "name": "Allianz",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "microsoft",
+      "name": "Microsoft",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "eli-lilly",
+      "name": "Eli Lilly and Company",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "siemens",
+      "name": "Siemens",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "hsbc",
+      "name": "HSBC",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "apple",
+      "name": "Apple",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "linde",
+      "name": "Linde",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "boerse-de-aktienfonds",
+      "name": "boerse.de-Aktienfonds - V EUR ACC",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "ishares-global-titans-50",
+      "name": "iShares Dow Jones Global Titans 50 UCITS ETF EUR Dis. (DE)",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "boerse-de-technologiefonds",
+      "name": "boerse.de-Technologiefonds - T EUR ACC",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "nvidia",
+      "name": "Nvidia",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "amd",
+      "name": "AMD",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "ishares-core-msci-world",
+      "name": "iShares Core MSCI World UCITS ETF USD Acc.",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "alphabet-c",
+      "name": "Alphabet C (Google)",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "micron-technology",
+      "name": "Micron Technology",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "ishares-msci-world-value-factor",
+      "name": "iShares Edge MSCI World Value Factor UCITS ETF USD Acc.",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "wisdomtree-physical-bitcoin",
+      "name": "WisdomTree Physical Bitcoin",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "marvell-technology",
+      "name": "Marvell Technology",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "tsmc-adr",
+      "name": "TSMC Taiwan Semiconductor (ADR)",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "broadcom",
+      "name": "Broadcom",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source",
+        "trading_currency"
+      ]
+    },
+    {
+      "instrument_id": "siemens-energy",
+      "name": "Siemens Energy AG NA O.N.",
+      "missing": [
+        "wkn",
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    }
+  ],
+  "missing_market_data": [
+    {
+      "instrument_id": "berkshire-hathaway-b",
+      "name": "Berkshire Hathaway B",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "xetra-gold",
+      "name": "Xetra-Gold",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "allianz",
+      "name": "Allianz",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "microsoft",
+      "name": "Microsoft",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "eli-lilly",
+      "name": "Eli Lilly and Company",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "siemens",
+      "name": "Siemens",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "hsbc",
+      "name": "HSBC",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "apple",
+      "name": "Apple",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "linde",
+      "name": "Linde",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "boerse-de-aktienfonds",
+      "name": "boerse.de-Aktienfonds - V EUR ACC",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "ishares-global-titans-50",
+      "name": "iShares Dow Jones Global Titans 50 UCITS ETF EUR Dis. (DE)",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "boerse-de-technologiefonds",
+      "name": "boerse.de-Technologiefonds - T EUR ACC",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "nvidia",
+      "name": "Nvidia",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "amd",
+      "name": "AMD",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "ishares-core-msci-world",
+      "name": "iShares Core MSCI World UCITS ETF USD Acc.",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "alphabet-c",
+      "name": "Alphabet C (Google)",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "micron-technology",
+      "name": "Micron Technology",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "ishares-msci-world-value-factor",
+      "name": "iShares Edge MSCI World Value Factor UCITS ETF USD Acc.",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "wisdomtree-physical-bitcoin",
+      "name": "WisdomTree Physical Bitcoin",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "marvell-technology",
+      "name": "Marvell Technology",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "tsmc-adr",
+      "name": "TSMC Taiwan Semiconductor (ADR)",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "broadcom",
+      "name": "Broadcom",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    },
+    {
+      "instrument_id": "siemens-energy",
+      "name": "Siemens Energy AG NA O.N.",
+      "missing": [
+        "ticker",
+        "exchange",
+        "price_source"
+      ]
+    }
+  ],
+  "legacy_value_plausibility": [
+    {
+      "depot": "Depot 1",
+      "instrument_id": "berkshire-hathaway-b",
+      "quantity": "33",
+      "legacy_unit_price_eur": "428.100000",
+      "documented_value_eur": "14127.30",
+      "reproduced_value_eur": "14127.300000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "xetra-gold",
+      "quantity": "62",
+      "legacy_unit_price_eur": "124.420000",
+      "documented_value_eur": "7714.04",
+      "reproduced_value_eur": "7714.040000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "allianz",
+      "quantity": "7",
+      "legacy_unit_price_eur": "436.850000",
+      "documented_value_eur": "3057.95",
+      "reproduced_value_eur": "3057.950000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "microsoft",
+      "quantity": "7",
+      "legacy_unit_price_eur": "411.800000",
+      "documented_value_eur": "2882.60",
+      "reproduced_value_eur": "2882.600000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "eli-lilly",
+      "quantity": "2",
+      "legacy_unit_price_eur": "1091.800000",
+      "documented_value_eur": "2183.60",
+      "reproduced_value_eur": "2183.600000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "siemens",
+      "quantity": "7",
+      "legacy_unit_price_eur": "275.950000",
+      "documented_value_eur": "1931.65",
+      "reproduced_value_eur": "1931.650000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "hsbc",
+      "quantity": "97",
+      "legacy_unit_price_eur": "17.670000",
+      "documented_value_eur": "1713.99",
+      "reproduced_value_eur": "1713.990000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "apple",
+      "quantity": "5",
+      "legacy_unit_price_eur": "271.100000",
+      "documented_value_eur": "1355.50",
+      "reproduced_value_eur": "1355.500000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 1",
+      "instrument_id": "linde",
+      "quantity": "2",
+      "legacy_unit_price_eur": "418.600000",
+      "documented_value_eur": "837.20",
+      "reproduced_value_eur": "837.200000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "boerse-de-aktienfonds",
+      "quantity": "164",
+      "legacy_unit_price_eur": "137.540000",
+      "documented_value_eur": "22556.56",
+      "reproduced_value_eur": "22556.560000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "ishares-global-titans-50",
+      "quantity": "121",
+      "legacy_unit_price_eur": "111.880000",
+      "documented_value_eur": "13537.48",
+      "reproduced_value_eur": "13537.480000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "berkshire-hathaway-b",
+      "quantity": "22",
+      "legacy_unit_price_eur": "428.100000",
+      "documented_value_eur": "9418.20",
+      "reproduced_value_eur": "9418.200000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "boerse-de-technologiefonds",
+      "quantity": "32",
+      "legacy_unit_price_eur": "152.630000",
+      "documented_value_eur": "4884.16",
+      "reproduced_value_eur": "4884.160000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "nvidia",
+      "quantity": "25",
+      "legacy_unit_price_eur": "185.600000",
+      "documented_value_eur": "4640.00",
+      "reproduced_value_eur": "4640.000000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "amd",
+      "quantity": "9",
+      "legacy_unit_price_eur": "400.300000",
+      "documented_value_eur": "3602.70",
+      "reproduced_value_eur": "3602.700000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "ishares-core-msci-world",
+      "quantity": "27",
+      "legacy_unit_price_eur": "126.185185",
+      "documented_value_eur": "3407.00",
+      "reproduced_value_eur": "3406.999995",
+      "difference_eur": "-0.000005",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "alphabet-c",
+      "quantity": "11",
+      "legacy_unit_price_eur": "288.300000",
+      "documented_value_eur": "3171.30",
+      "reproduced_value_eur": "3171.300000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "micron-technology",
+      "quantity": "2",
+      "legacy_unit_price_eur": "817.500000",
+      "documented_value_eur": "1635.00",
+      "reproduced_value_eur": "1635.000000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "allianz",
+      "quantity": "3",
+      "legacy_unit_price_eur": "436.850000",
+      "documented_value_eur": "1310.55",
+      "reproduced_value_eur": "1310.550000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "ishares-msci-world-value-factor",
+      "quantity": "17",
+      "legacy_unit_price_eur": "69.840000",
+      "documented_value_eur": "1187.28",
+      "reproduced_value_eur": "1187.280000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "wisdomtree-physical-bitcoin",
+      "quantity": "60",
+      "legacy_unit_price_eur": "14.726000",
+      "documented_value_eur": "883.56",
+      "reproduced_value_eur": "883.560000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "marvell-technology",
+      "quantity": "4",
+      "legacy_unit_price_eur": "206.700000",
+      "documented_value_eur": "826.80",
+      "reproduced_value_eur": "826.800000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "tsmc-adr",
+      "quantity": "2",
+      "legacy_unit_price_eur": "355.000000",
+      "documented_value_eur": "710.00",
+      "reproduced_value_eur": "710.000000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "broadcom",
+      "quantity": "2",
+      "legacy_unit_price_eur": "310.850000",
+      "documented_value_eur": "621.70",
+      "reproduced_value_eur": "621.700000",
+      "difference_eur": "0.000000",
+      "status": "plausible",
+      "price_is_derived": true
+    },
+    {
+      "depot": "Depot 2",
+      "instrument_id": "siemens-energy",
+      "quantity": "4",
+      "legacy_unit_price_eur": "154.04",
+      "documented_value_eur": "616.16",
+      "reproduced_value_eur": "616.16",
+      "difference_eur": "0.00",
+      "status": "plausible",
+      "price_is_derived": false
+    }
+  ]
+}

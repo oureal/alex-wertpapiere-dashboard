@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "paid_features_enabled": false,
+    "alpha_vantage_daily_limit": 25,
+    "same_day_cache": true,
+    "zero_prices_forbidden": true
+  },
+  "mappings": [
+    {
+      "instrument_id": "berkshire-hathaway-b",
+      "primary_provider": "yfinance",
+      "provider_symbol": "BRK-B",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "xetra-gold",
+      "primary_provider": "yfinance",
+      "provider_symbol": "4GLD.DE",
+      "fallback_provider": "official_nav",
+      "fallback_symbol": "xetra-gold",
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "official_nav",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "allianz",
+      "primary_provider": "yfinance",
+      "provider_symbol": "ALV.DE",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "microsoft",
+      "primary_provider": "yfinance",
+      "provider_symbol": "MSFT",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "eli-lilly",
+      "primary_provider": "yfinance",
+      "provider_symbol": "LLY",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "siemens",
+      "primary_provider": "yfinance",
+      "provider_symbol": "SIE.DE",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "hsbc",
+      "primary_provider": "yfinance",
+      "provider_symbol": "HBC1.DE",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "apple",
+      "primary_provider": "yfinance",
+      "provider_symbol": "AAPL",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "linde",
+      "primary_provider": "yfinance",
+      "provider_symbol": "LIN",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "boerse-de-aktienfonds",
+      "primary_provider": "official_nav",
+      "provider_symbol": null,
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Exact share class requires official_nav; legacy remains final fallback.",
+      "provider_chain": [
+        "official_nav",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "ishares-global-titans-50",
+      "primary_provider": "yfinance",
+      "provider_symbol": "EXI2.DE",
+      "fallback_provider": "official_nav",
+      "fallback_symbol": "ishares-global-titans-50",
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "official_nav",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "boerse-de-technologiefonds",
+      "primary_provider": "official_nav",
+      "provider_symbol": null,
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Exact share class requires official_nav; legacy remains final fallback.",
+      "provider_chain": [
+        "official_nav",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "nvidia",
+      "primary_provider": "yfinance",
+      "provider_symbol": "NVDA",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "amd",
+      "primary_provider": "yfinance",
+      "provider_symbol": "AMD",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "ishares-core-msci-world",
+      "primary_provider": "yfinance",
+      "provider_symbol": "EUNL.DE",
+      "fallback_provider": "official_nav",
+      "fallback_symbol": "ishares-core-msci-world",
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "official_nav",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "alphabet-c",
+      "primary_provider": "yfinance",
+      "provider_symbol": "GOOG",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "micron-technology",
+      "primary_provider": "yfinance",
+      "provider_symbol": "MU",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "ishares-msci-world-value-factor",
+      "primary_provider": "yfinance",
+      "provider_symbol": "IS3S.DE",
+      "fallback_provider": "official_nav",
+      "fallback_symbol": "ishares-msci-world-value-factor",
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "official_nav",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "wisdomtree-physical-bitcoin",
+      "primary_provider": "yfinance",
+      "provider_symbol": "WBIT.DE",
+      "fallback_provider": "official_nav",
+      "fallback_symbol": "wisdomtree-physical-bitcoin",
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "official_nav",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "marvell-technology",
+      "primary_provider": "yfinance",
+      "provider_symbol": "MRVL",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "tsmc-adr",
+      "primary_provider": "yfinance",
+      "provider_symbol": "TSM",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "broadcom",
+      "primary_provider": "yfinance",
+      "provider_symbol": "AVGO",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    },
+    {
+      "instrument_id": "siemens-energy",
+      "primary_provider": "yfinance",
+      "provider_symbol": "ENR.DE",
+      "fallback_provider": null,
+      "fallback_symbol": null,
+      "manual_or_legacy_fallback": true,
+      "status": "needs_review",
+      "exchange": null,
+      "currency": null,
+      "free": null,
+      "notes": "Yahoo candidate requires live runtime validation; never auto-accepted.",
+      "provider_chain": [
+        "yfinance",
+        "manual_or_legacy_fallback"
+      ]
+    }
+  ]
+}
