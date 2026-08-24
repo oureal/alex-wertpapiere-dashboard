@@ -145,15 +145,19 @@
     {
       "instrument_id": "boerse-de-aktienfonds",
       "isin": "LU2115464500",
-      "symbol": null,
-      "mapping_status": "official_nav_required",
+      "symbol": "LU2115464500",
+      "mapping_status": "officially_verified_mapping",
       "expected_name_tokens": [],
       "allowed_quote_types": [
         "MUTUALFUND"
       ],
       "preferred_currency": "EUR",
-      "enabled_for_test": false,
-      "notes": "Exact boerse.de share class has no confirmed Yahoo mapping; use official_nav then legacy fallback."
+      "enabled_for_test": true,
+      "notes": "Fixed reviewed boerse.de fund page; accept only the exact ISIN, plausible fund/share-class identity and a positive EUR price, then legacy fallback.",
+      "primary_provider": "boersede_fund",
+      "expected_fund_name": "boerse.de-Aktienfonds - V EUR ACC",
+      "expected_share_class": "V EUR ACC",
+      "source_url": "https://www.boerse.de/fonds/boersede-Aktienfonds-thesaurierend/LU2115464500"
     },
     {
       "instrument_id": "ishares-global-titans-50",
@@ -174,15 +178,19 @@
     {
       "instrument_id": "boerse-de-technologiefonds",
       "isin": "LU2479335734",
-      "symbol": null,
-      "mapping_status": "official_nav_required",
+      "symbol": "LU2479335734",
+      "mapping_status": "officially_verified_mapping",
       "expected_name_tokens": [],
       "allowed_quote_types": [
         "MUTUALFUND"
       ],
       "preferred_currency": "EUR",
-      "enabled_for_test": false,
-      "notes": "Exact boerse.de share class has no confirmed Yahoo mapping; use official_nav then legacy fallback."
+      "enabled_for_test": true,
+      "notes": "Fixed reviewed boerse.de fund page; accept only the exact ISIN, plausible fund/share-class identity and a positive EUR price, then legacy fallback.",
+      "primary_provider": "boersede_fund",
+      "expected_fund_name": "boerse.de-Technologiefonds - T EUR ACC",
+      "expected_share_class": "T EUR ACC",
+      "source_url": "https://www.boerse.de/fonds/boersede-Technologiefonds-thesaurierend/LU2479335734"
     },
     {
       "instrument_id": "nvidia",
@@ -283,7 +291,7 @@
       "instrument_id": "wisdomtree-physical-bitcoin",
       "isin": "GB00BJYDH287",
       "symbol": "WBIT.DE",
-      "mapping_status": "candidate_live_validation",
+      "mapping_status": "officially_verified_mapping",
       "expected_name_tokens": [
         "wisdomtree",
         "physical",
@@ -296,7 +304,18 @@
       ],
       "preferred_currency": "EUR",
       "enabled_for_test": true,
-      "notes": "Candidate must pass Yahoo runtime name, quote-type, currency and exchange validation before use."
+      "notes": "WBIT.DE is tied to official WisdomTree listing WBIT, ISIN GB00BJYDH287, Germany, EUR; yfinance remains the quote transport.",
+      "primary_provider": "yfinance",
+      "officially_verified_mapping": {
+        "isin": "GB00BJYDH287",
+        "product_ticker": "WBIT",
+        "yahoo_symbol": "WBIT.DE",
+        "market": "Germany",
+        "trading_currency": "EUR",
+        "provenance": "wisdomtree_official_listing",
+        "source_url": "https://www.wisdomtree.eu/de-de/products/ucits-etfs-unleveraged-etps/cryptocurrency/wisdomtree-physical-bitcoin",
+        "currency_override": "EUR"
+      }
     },
     {
       "instrument_id": "marvell-technology",

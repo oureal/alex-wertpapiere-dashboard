@@ -89,6 +89,36 @@ def test_equity_and_etf_quote_types_are_mapping_controlled():
         provider(etf).quote("world", "EUNL.DE", expected_name_tokens=["core"], allowed_quote_types=["EQUITY"])
 
 
+def test_officially_verified_wisdomtree_mapping_accepts_incomplete_yahoo_identity():
+    ticker = Ticker({"exchange": "GER"}, [("2026-08-22", 14.8)])
+    verified = {
+        "isin": "GB00BJYDH287", "product_ticker": "WBIT", "market": "Germany",
+        "trading_currency": "EUR", "currency_override": "EUR", "provenance": "wisdomtree_official_listing",
+        "source_url": "https://www.wisdomtree.eu/de-de/products/ucits-etfs-unleveraged-etps/cryptocurrency/wisdomtree-physical-bitcoin",
+    }
+    quote = provider(ticker).quote(
+        "wisdomtree-physical-bitcoin", "WBIT.DE", expected_name_tokens=["wisdomtree", "bitcoin"],
+        allowed_quote_types=["ETP"], preferred_currency="EUR", officially_verified_mapping=verified,
+    )
+    assert quote.price == Decimal("14.8")
+    assert quote.currency == "EUR"
+
+
+def test_official_mapping_does_not_disable_yahoo_identity_checks_globally():
+    ticker = Ticker({"currency": "EUR", "exchange": "GER"}, [("2026-08-22", 14.8)])
+    with pytest.raises(ProviderError, match="identity mismatch"):
+        provider(ticker).quote(
+            "another-instrument", "OTHER.DE", expected_name_tokens=["other"], allowed_quote_types=["ETP"],
+            preferred_currency="EUR", officially_verified_mapping={"isin": "GB00BJYDH287"},
+        )
+
+
+def test_missing_yahoo_currency_remains_an_error_for_other_instruments():
+    ticker = Ticker({"longName": "Microsoft Corporation", "quoteType": "EQUITY", "exchange": "NMS"}, [("2026-08-22", 101)])
+    with pytest.raises(ProviderError, match="currency missing"):
+        provider(ticker).quote("microsoft", "MSFT", **metadata())
+
+
 def test_price_update_keeps_fallback_when_yahoo_fails():
     class Quotes:
         def quote(self, instrument_id, symbol, **_metadata):

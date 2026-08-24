@@ -24,6 +24,7 @@ def test_workflow_uses_yfinance_without_secret_and_uploads_all_required_private_
     text = WORKFLOW.read_text()
     assert "secrets." not in text
     assert "update_yahoo_prices.py" in text
+    assert "boerse.de" in text
     assert "yfinance" in (ROOT / "requirements-dev.txt").read_text()
     for filename in (
         "coverage.json",

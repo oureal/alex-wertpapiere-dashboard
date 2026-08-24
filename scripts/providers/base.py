@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from decimal import Decimal
 from enum import Enum
@@ -66,6 +66,7 @@ class PriceQuote:
     market_time: str
     fetched_at: str
     status: str = "fresh"
+    metadata: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if self.price <= 0:
@@ -74,7 +75,9 @@ class PriceQuote:
 
     def to_dict(self) -> dict[str, Any]:
         result = asdict(self)
+        metadata = result.pop("metadata")
         result["price"] = str(self.price)
+        result.update(metadata)
         return result
 
 
