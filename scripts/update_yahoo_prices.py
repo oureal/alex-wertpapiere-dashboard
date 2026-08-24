@@ -125,6 +125,8 @@ def main() -> int:
     if args.discovery_output:
         args.discovery_output.parent.mkdir(parents=True, exist_ok=True)
         args.discovery_output.write_text(json.dumps({"schema_version": 1, "provider": "free_provider_pipeline", "purpose": "runtime_validation", "mappings": mappings["mappings"]}, ensure_ascii=False, indent=2) + "\n")
+    for warning in result["warnings"]:
+        print(f"Provider warning: {warning}")
     fresh = sum(item["status"] == "fresh" for item in result["prices"])
     print(f"Free-provider update complete: {fresh} fresh, {len(result['prices']) - fresh} stale/fallback")
     return 0
