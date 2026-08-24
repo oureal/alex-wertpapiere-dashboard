@@ -1,0 +1,11 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "dashboard/history/2026-07-19.html": "76b6a29ed55f90f82c3c4b5fcc1eb06ced05a22fb2529beac606ddce2eaf22ac",
+    "dashboard/history/2026-08-20.html": "c31e986f1a9a92584d89cf11cda4748f982ce5bb06b61ef918f812c9bc646925",
+    "dashboard/history/2026-08-21-full-market-update.html": "e472dd11b033eeec6bf8e348c3ce65171afa2d80a457d4f6c0459bde7bb1e78b",
+    "dashboard/history/2026-08-21-transaction.html": "a2e4c28b30aaf073b842948ea7ec00537b92db6834fadd103c18a2485962a736",
+    "data/snapshots/2026-07-17-lookthrough.xlsx": "1b1fbcd9dc755708268c4735aca661dd15d43d5ffa501558815cb4ef353e0497",
+    "data/snapshots/2026-08-20-lookthrough.xlsx": "fd672b1834b326cf6b1f00b0f65fea9d25ce061553de635545f39c38f63cb39a"
+  }
+}

@@ -1,0 +1,3 @@
+depot,balance_eur,as_of,provenance,needs_confirmation
+Depot 1,293.21,2026-08-21,2026-08-20 Ausgangsdepots; unchanged allocation assumed,true
+Depot 2,4472.54,2026-08-21,5088.70 legacy cash minus 616.16 Siemens Energy purchase,false

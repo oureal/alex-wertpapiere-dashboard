@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "prices": [
+    {
+      "instrument_id": "berkshire-hathaway-b",
+      "price": "428.100000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "xetra-gold",
+      "price": "124.420000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "allianz",
+      "price": "436.850000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "microsoft",
+      "price": "411.800000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "eli-lilly",
+      "price": "1091.800000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "siemens",
+      "price": "275.950000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "hsbc",
+      "price": "17.670000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "apple",
+      "price": "271.100000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "linde",
+      "price": "418.600000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "boerse-de-aktienfonds",
+      "price": "137.540000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "ishares-global-titans-50",
+      "price": "111.880000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "boerse-de-technologiefonds",
+      "price": "152.630000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "nvidia",
+      "price": "185.600000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "amd",
+      "price": "400.300000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "ishares-core-msci-world",
+      "price": "126.185185",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "alphabet-c",
+      "price": "288.300000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "micron-technology",
+      "price": "817.500000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "ishares-msci-world-value-factor",
+      "price": "69.840000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "wisdomtree-physical-bitcoin",
+      "price": "14.726000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "marvell-technology",
+      "price": "206.700000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "tsmc-adr",
+      "price": "355.000000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "broadcom",
+      "price": "310.850000",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    },
+    {
+      "instrument_id": "siemens-energy",
+      "price": "154.04",
+      "currency": "EUR",
+      "provider": "manual_or_legacy_fallback",
+      "provider_symbol": null,
+      "exchange": null,
+      "market_time": "2026-08-21",
+      "fetched_at": null,
+      "status": "fallback"
+    }
+  ],
+  "warnings": [
+    "No live provider mappings have been confirmed; all prices are legacy fallbacks."
+  ]
+}

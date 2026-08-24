@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "aliases": [
+    {
+      "alias": "Berkshire Hathaway",
+      "instrument_id": "berkshire-hathaway-b"
+    },
+    {
+      "alias": "Berkshire Hathaway B",
+      "instrument_id": "berkshire-hathaway-b"
+    },
+    {
+      "alias": "Alphabet",
+      "instrument_id": "alphabet-c"
+    },
+    {
+      "alias": "Alphabet C",
+      "instrument_id": "alphabet-c"
+    },
+    {
+      "alias": "Alphabet C (Google)",
+      "instrument_id": "alphabet-c"
+    },
+    {
+      "alias": "Eli Lilly",
+      "instrument_id": "eli-lilly"
+    },
+    {
+      "alias": "Siemens Energy N Ag",
+      "instrument_id": "siemens-energy"
+    },
+    {
+      "alias": "Siemens Energy AG NA O.N.",
+      "instrument_id": "siemens-energy"
+    },
+    {
+      "alias": "TSMC",
+      "instrument_id": "tsmc-adr"
+    },
+    {
+      "alias": "TSMC Taiwan Semiconductor (ADR)",
+      "instrument_id": "tsmc-adr"
+    },
+    {
+      "alias": "Xetra Gold",
+      "instrument_id": "xetra-gold"
+    },
+    {
+      "alias": "Xetra-Gold",
+      "instrument_id": "xetra-gold"
+    },
+    {
+      "alias": "Marvell Technology Inc",
+      "instrument_id": "marvell-technology"
+    }
+  ]
+}
