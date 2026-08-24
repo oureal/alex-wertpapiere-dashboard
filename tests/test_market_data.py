@@ -91,12 +91,27 @@ def test_dry_run_has_no_zero_prices_and_exact_consistent_sums():
     assert Decimal(str(result["resolved"])) + Decimal(str(result["unresolved"])) == Decimal(str(result["total"]))
 
 
-def test_yahoo_mapping_covers_all_instruments_and_funds_use_official_nav():
+def test_known_legacy_asset_total_difference_is_not_a_hard_failure(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    prices = json.loads((root / "data/prices/latest.json").read_text())
+    prices["prices"][0]["price"] = "428.1000001"
+    prices_path = tmp_path / "prices.json"
+    prices_path.write_text(json.dumps(prices))
+
+    result = calculate(prices_path=prices_path)
+
+    assert all(result["validations"].values())
+    assert result["legacy_consistency"]["assets_equal_total"] is False
+
+
+def test_free_provider_mapping_covers_all_instruments_and_funds_use_monega_nav():
     root = Path(__file__).resolve().parents[1]
     instruments = json.loads((root / "data/portfolio/instruments.yml").read_text())["instruments"]
     mappings = json.loads((root / "data/market-data/yahoo-mappings.yml").read_text())["mappings"]
     assert {item["id"] for item in instruments} == {item["instrument_id"] for item in mappings}
     by_id = {item["instrument_id"]: item for item in mappings}
-    assert by_id["boerse-de-aktienfonds"]["mapping_status"] == "official_nav_required"
-    assert by_id["boerse-de-technologiefonds"]["mapping_status"] == "official_nav_required"
+    assert by_id["boerse-de-aktienfonds"]["primary_provider"] == "monega_nav"
+    assert by_id["boerse-de-technologiefonds"]["primary_provider"] == "monega_nav"
+    assert by_id["boerse-de-aktienfonds"]["enabled_for_test"] is True
+    assert by_id["boerse-de-technologiefonds"]["enabled_for_test"] is True
     assert by_id["ishares-core-msci-world"]["allowed_quote_types"] == ["ETF"]
