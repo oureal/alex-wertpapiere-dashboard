@@ -11,6 +11,7 @@ from pathlib import Path
 from providers.base import ProviderError
 from providers.boersede_fund import BoersedeFundProvider
 from providers.monega_nav import MonegaNavProvider
+from providers.simple_page import APPROVED as SIMPLE_PAGE_APPROVED, SimplePageProvider
 from providers.yfinance_provider import YFinanceProvider
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,7 +22,16 @@ def _fresh_today(item: dict, today) -> bool:
     return bool(fetched and item.get("status") == "fresh" and datetime.fromisoformat(fetched.replace("Z", "+00:00")).date() == today)
 
 
-def update_prices(instruments, mappings, existing, provider, now=None, boersede_provider=None, monega_provider=None):
+def update_prices(
+    instruments,
+    mappings,
+    existing,
+    provider,
+    now=None,
+    boersede_provider=None,
+    monega_provider=None,
+    simple_page_provider=None,
+):
     now = now or datetime.now(UTC)
     old = {item["instrument_id"]: item for item in existing["prices"]}
     mapping_by_id = {item["instrument_id"]: item for item in mappings["mappings"]}
@@ -43,6 +53,22 @@ def update_prices(instruments, mappings, existing, provider, now=None, boersede_
         if fallback and _fresh_today(fallback, now.date()):
             prices.append(fallback)
             continue
+
+        # Three exceptional holdings use one explicitly reviewed public page each.
+        # This keeps the private dashboard simple: page works -> use it; otherwise
+        # continue with the existing provider and ultimately keep the last price.
+        if instrument_id in SIMPLE_PAGE_APPROVED and simple_page_provider is not None:
+            try:
+                simple_quote = simple_page_provider.quote(
+                    instrument_id,
+                    mapping.get("symbol") or SIMPLE_PAGE_APPROVED[instrument_id]["provider_symbol"],
+                    url=SIMPLE_PAGE_APPROVED[instrument_id]["url"],
+                ).to_dict()
+                prices.append(simple_quote)
+                continue
+            except ProviderError as error:
+                warnings.append(f"{instrument_id}: simple page failed: {error}")
+
         primary_provider = mapping.get("primary_provider", "yfinance")
         if mapping.get("enabled_for_test") and mapping.get("symbol"):
             try:
@@ -101,6 +127,7 @@ def main() -> int:
         YFinanceProvider(),
         boersede_provider=BoersedeFundProvider(),
         monega_provider=MonegaNavProvider(),
+        simple_page_provider=SimplePageProvider(),
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
@@ -115,7 +142,7 @@ def main() -> int:
                     "isin": item["isin"],
                     "candidate_symbol": next(row["symbol"] for row in mappings["mappings"] if row["instrument_id"] == item["id"]),
                     **price_by_id[item["id"]],
-                    "automatable": price_by_id[item["id"]]["provider"] in {"yfinance", "boersede_fund", "monega_nav"},
+                    "automatable": price_by_id[item["id"]]["provider"] in {"yfinance", "simple_page", "boersede_fund", "monega_nav"},
                 }
                 for item in instruments
             ],
