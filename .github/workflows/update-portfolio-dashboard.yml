@@ -94,6 +94,14 @@ jobs:
           print("Dashboard data matches validated portfolio output.")
           PY
 
+      - name: Upload private dashboard artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-dashboard-${{ github.run_number }}
+          path: index.html
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Verify immutable legacy history after update
         run: python scripts/verify_immutable_history.py
 
