@@ -163,7 +163,7 @@
     },
     {
       "instrument_id": "boerse-de-aktienfonds",
-      "primary_provider": "monega_nav",
+      "primary_provider": "boersede_fund",
       "provider_symbol": "LU2115464500",
       "fallback_provider": null,
       "fallback_symbol": null,
@@ -172,9 +172,9 @@
       "exchange": null,
       "currency": "EUR",
       "free": true,
-      "notes": "Official Monega NAV for exact share class V EUR ACC; legacy remains final fallback.",
+      "notes": "Fixed reviewed boerse.de fund page for the exact share class; legacy remains final fallback.",
       "provider_chain": [
-        "monega_nav",
+        "boersede_fund",
         "manual_or_legacy_fallback"
       ]
     },
@@ -198,7 +198,7 @@
     },
     {
       "instrument_id": "boerse-de-technologiefonds",
-      "primary_provider": "monega_nav",
+      "primary_provider": "boersede_fund",
       "provider_symbol": "LU2479335734",
       "fallback_provider": null,
       "fallback_symbol": null,
@@ -207,9 +207,9 @@
       "exchange": null,
       "currency": "EUR",
       "free": true,
-      "notes": "Official Monega NAV for exact share class T EUR ACC; legacy remains final fallback.",
+      "notes": "Fixed reviewed boerse.de fund page for the exact share class; legacy remains final fallback.",
       "provider_chain": [
-        "monega_nav",
+        "boersede_fund",
         "manual_or_legacy_fallback"
       ]
     },

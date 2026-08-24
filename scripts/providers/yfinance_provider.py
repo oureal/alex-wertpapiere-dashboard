@@ -44,6 +44,7 @@ class YFinanceProvider(MarketDataProvider):
             and mapping.get("product_ticker") == "WBIT"
             and mapping.get("market") == "Germany"
             and mapping.get("trading_currency") == "EUR"
+            and mapping.get("currency_override") == "EUR"
             and mapping.get("provenance") == "wisdomtree_official_listing"
             and str(mapping.get("source_url", "")).startswith("https://www.wisdomtree.eu/")
         )
@@ -63,7 +64,10 @@ class YFinanceProvider(MarketDataProvider):
         currency = str(info.get("currency") or "").upper()
         exchange = str(info.get("fullExchangeName") or info.get("exchange") or "")
         if not currency:
-            raise ProviderError(f"Yahoo currency missing for {symbol}")
+            if verified:
+                currency = str(metadata["officially_verified_mapping"]["currency_override"])
+            else:
+                raise ProviderError(f"Yahoo currency missing for {symbol}")
         if not exchange:
             raise ProviderError(f"Yahoo exchange missing for {symbol}")
         preferred = metadata.get("preferred_currency")

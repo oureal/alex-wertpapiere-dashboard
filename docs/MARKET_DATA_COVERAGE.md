@@ -35,20 +35,21 @@ Yahoo-FX-Kurs `<WÄHRUNG>EUR=X` und speichert neben dem nativen Kurs einen
 `valuation_price_eur`. Ohne positiven FX-Kurs wird der Livekurs nicht für die
 EUR-Depotbewertung verwendet und der positive Legacy-Fallback bleibt aktiv.
 
-Die beiden boerse.de-Fonds werden über ihre offiziellen Monega-Fondsseiten
+Die beiden boerse.de-Fonds werden über ihre offiziellen boerse.de-Fondsseiten
 versorgt. Der Adapter akzeptiert einen NAV nur bei exakter Übereinstimmung von
 ISIN, Fondsname und Anteilsklasse sowie vorhandenem EUR-Anteilspreis und
-Bewertungsdatum. Ihre Kette lautet
-`monega_nav → manual_or_legacy_fallback`. Alpha Vantage bleibt optionale Reserve
+einem Kurs-/Bewertungszeitpunkt, sofern die Seite ihn ausweist. Ihre Kette lautet
+`boersede_fund → manual_or_legacy_fallback`. Alpha Vantage bleibt optionale Reserve
 und wird für den manuellen Testworkflow nicht benötigt.
 
 Für WisdomTree Physical Bitcoin ist die Zuordnung `WBIT.DE` separat durch die
 offizielle WisdomTree-Produktauflistung dokumentiert: ISIN `GB00BJYDH287`,
 Produkt-Ticker `WBIT`, Markt Deutschland und Handelswährung EUR. Nur für diese
 vollständig konfigurierte Zuordnung dürfen unvollständige Yahoo-Namens- oder
-Quote-Type-Metadaten toleriert werden; Währung und Börse müssen weiterhin
-vorhanden sein. Alle anderen Yahoo-Instrumente behalten die vollständige
-Identitätsprüfung.
+Quote-Type-Metadaten toleriert werden. Fehlt bei genau diesem Mapping die
+Yahoo-Währung, wird statisch EUR übernommen; die Börse muss weiterhin vorhanden
+sein. Alle anderen Yahoo-Instrumente behalten einschließlich der Währungsprüfung
+die vollständige Identitätsprüfung.
 
 ## Provider-Kaskade
 
@@ -102,9 +103,9 @@ einem produktiven Lauf auf einen weiteren kostenlosen Adapter umgestellt werden.
 | HSBC | GB0005405286 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | HBC1.DE | EUR | 17.670000 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
 | Apple | US0378331005 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | AAPL | EUR | 271.100000 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
 | Linde | IE000S9YS762 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | LIN | EUR | 418.600000 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
-| boerse.de-Aktienfonds - V EUR ACC | LU2115464500 | offizieller Monega-Anteilspreis | monega_nav | LU2115464500 | EUR | 137.540000 | 2026-08-21 | officially_verified_mapping / fallback | nach erfolgreichem Workflow-Test |
+| boerse.de-Aktienfonds - V EUR ACC | LU2115464500 | offizieller boerse.de-Anteilspreis | boersede_fund | LU2115464500 | EUR | 137.540000 | 2026-08-21 | officially_verified_mapping / fallback | nach erfolgreichem Workflow-Test |
 | iShares Dow Jones Global Titans 50 UCITS ETF EUR Dis. (DE) | DE0006289382 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | EXI2.DE | EUR | 111.880000 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
-| boerse.de-Technologiefonds - T EUR ACC | LU2479335734 | offizieller Monega-Anteilspreis | monega_nav | LU2479335734 | EUR | 152.630000 | 2026-08-21 | officially_verified_mapping / fallback | nach erfolgreichem Workflow-Test |
+| boerse.de-Technologiefonds - T EUR ACC | LU2479335734 | offizieller boerse.de-Anteilspreis | boersede_fund | LU2479335734 | EUR | 152.630000 | 2026-08-21 | officially_verified_mapping / fallback | nach erfolgreichem Workflow-Test |
 | Nvidia | US67066G1040 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | NVDA | EUR | 185.600000 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
 | AMD | US0079031078 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | AMD | EUR | 400.300000 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
 | iShares Core MSCI World UCITS ETF USD Acc. | IE00B4L5Y983 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | EUNL.DE | EUR | 126.185185 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
@@ -117,7 +118,7 @@ einem produktiven Lauf auf einen weiteren kostenlosen Adapter umgestellt werden.
 | Broadcom | US11135F1012 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | AVGO | EUR | 310.850000 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
 | Siemens Energy AG NA O.N. | DE000ENER6Y0 | Yahoo Finance, Live-Validierung im Workflow ausstehend | yfinance | ENR.DE | EUR | 154.04 | 2026-08-21 | candidate_live_validation / fallback | nach erfolgreichem Workflow-Test |
 **Nächster kostenloser Prüfpfad:** Der manuelle GitHub-Actions-Lauf validiert die
-21 Yahoo-Zuordnungen, lädt die zwei offiziellen Monega-NAVs und erzeugt eine
+21 Yahoo-Zuordnungen, lädt die zwei offiziellen boerse.de-NAVs und erzeugt eine
 run-spezifische Coverage. Damit können voraussichtlich alle 23 Instrumente ohne
 Legacy-Kursfallback versorgt werden; Netzwerk- oder Schemafehler bleiben durch
 den positiven, unveränderten Fallback abgesichert.
@@ -128,10 +129,15 @@ Asset ist kein Preis des gehaltenen Instruments.
 
 ## Zwei boerse.de-Fonds
 
-`MonegaNavProvider` liest ausschließlich die offiziellen Monega-Fondsseiten. Er
+`BoersedeFundProvider` liest ausschließlich die zwei fest hinterlegten Seiten
+`https://www.boerse.de/fonds/boersede-Aktienfonds-thesaurierend/LU2115464500`
+und
+`https://www.boerse.de/fonds/boersede-Technologiefonds-thesaurierend/LU2479335734`.
+Er
 übernimmt den Anteilspreis nur, wenn die konfigurierte ISIN und die exakte Klasse
 `V EUR ACC` beziehungsweise `T EUR ACC` zusammen mit Fondsname, positiver
-EUR-Bewertung und Kursdatum in der Antwort stehen. Jede Abweichung führt zurück
+EUR-Bewertung und einem gegebenenfalls ausgewiesenen Kursdatum in der Antwort
+stehen. Jede Abweichung führt zurück
 zum letzten positiven Fallback; es werden weder Nullkurse noch Ersatzwerte
 erzeugt.
 

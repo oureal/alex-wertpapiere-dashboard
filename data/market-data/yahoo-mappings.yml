@@ -153,11 +153,11 @@
       ],
       "preferred_currency": "EUR",
       "enabled_for_test": true,
-      "notes": "Official Monega NAV page; accept only an exact ISIN, fund-name and share-class match, then legacy fallback.",
-      "primary_provider": "monega_nav",
+      "notes": "Fixed reviewed boerse.de fund page; accept only the exact ISIN, plausible fund/share-class identity and a positive EUR price, then legacy fallback.",
+      "primary_provider": "boersede_fund",
       "expected_fund_name": "boerse.de-Aktienfonds - V EUR ACC",
       "expected_share_class": "V EUR ACC",
-      "source_url": "https://www.monega.de/fonds/boersede-aktienfonds/"
+      "source_url": "https://www.boerse.de/fonds/boersede-Aktienfonds-thesaurierend/LU2115464500"
     },
     {
       "instrument_id": "ishares-global-titans-50",
@@ -186,11 +186,11 @@
       ],
       "preferred_currency": "EUR",
       "enabled_for_test": true,
-      "notes": "Official Monega NAV page; accept only an exact ISIN, fund-name and share-class match, then legacy fallback.",
-      "primary_provider": "monega_nav",
+      "notes": "Fixed reviewed boerse.de fund page; accept only the exact ISIN, plausible fund/share-class identity and a positive EUR price, then legacy fallback.",
+      "primary_provider": "boersede_fund",
       "expected_fund_name": "boerse.de-Technologiefonds - T EUR ACC",
       "expected_share_class": "T EUR ACC",
-      "source_url": "https://www.monega.de/fonds/boersede-technologiefonds/"
+      "source_url": "https://www.boerse.de/fonds/boersede-Technologiefonds-thesaurierend/LU2479335734"
     },
     {
       "instrument_id": "nvidia",
@@ -313,7 +313,8 @@
         "market": "Germany",
         "trading_currency": "EUR",
         "provenance": "wisdomtree_official_listing",
-        "source_url": "https://www.wisdomtree.eu/de-de/products/ucits-etfs-unleveraged-etps/cryptocurrency/wisdomtree-physical-bitcoin"
+        "source_url": "https://www.wisdomtree.eu/de-de/products/ucits-etfs-unleveraged-etps/cryptocurrency/wisdomtree-physical-bitcoin",
+        "currency_override": "EUR"
       }
     },
     {
