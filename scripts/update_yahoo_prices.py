@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Load runtime-validated Yahoo quotes and preserve positive fallbacks on failure."""
+"""Load runtime-validated free-provider quotes and preserve positive fallbacks on failure."""
 from __future__ import annotations
 
 import argparse
@@ -10,6 +10,7 @@ from pathlib import Path
 
 from providers.base import ProviderError
 from providers.boersede_fund import BoersedeFundProvider
+from providers.monega_nav import MonegaNavProvider
 from providers.yfinance_provider import YFinanceProvider
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,7 +21,7 @@ def _fresh_today(item: dict, today) -> bool:
     return bool(fetched and item.get("status") == "fresh" and datetime.fromisoformat(fetched.replace("Z", "+00:00")).date() == today)
 
 
-def update_prices(instruments, mappings, existing, provider, now=None, boersede_provider=None):
+def update_prices(instruments, mappings, existing, provider, now=None, boersede_provider=None, monega_provider=None):
     now = now or datetime.now(UTC)
     old = {item["instrument_id"]: item for item in existing["prices"]}
     mapping_by_id = {item["instrument_id"]: item for item in mappings["mappings"]}
@@ -45,10 +46,11 @@ def update_prices(instruments, mappings, existing, provider, now=None, boersede_
         primary_provider = mapping.get("primary_provider", "yfinance")
         if mapping.get("enabled_for_test") and mapping.get("symbol"):
             try:
-                if primary_provider == "boersede_fund":
-                    if boersede_provider is None:
-                        raise ProviderError("boerse.de fund provider is unavailable")
-                    quote = boersede_provider.quote(
+                if primary_provider in {"boersede_fund", "monega_nav"}:
+                    fund_provider = boersede_provider if primary_provider == "boersede_fund" else monega_provider
+                    if fund_provider is None:
+                        raise ProviderError(f"{primary_provider} provider is unavailable")
+                    quote = fund_provider.quote(
                         instrument_id,
                         mapping["symbol"],
                         isin=mapping["isin"],
@@ -92,7 +94,14 @@ def main() -> int:
     instruments = json.loads((ROOT / "data/portfolio/instruments.yml").read_text())["instruments"]
     mappings = json.loads((ROOT / "data/market-data/yahoo-mappings.yml").read_text())
     existing = json.loads(args.existing.read_text())
-    result = update_prices(instruments, mappings, existing, YFinanceProvider(), boersede_provider=BoersedeFundProvider())
+    result = update_prices(
+        instruments,
+        mappings,
+        existing,
+        YFinanceProvider(),
+        boersede_provider=BoersedeFundProvider(),
+        monega_provider=MonegaNavProvider(),
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     price_by_id = {item["instrument_id"]: item for item in result["prices"]}
@@ -106,7 +115,7 @@ def main() -> int:
                     "isin": item["isin"],
                     "candidate_symbol": next(row["symbol"] for row in mappings["mappings"] if row["instrument_id"] == item["id"]),
                     **price_by_id[item["id"]],
-                    "automatable": price_by_id[item["id"]]["provider"] in {"yfinance", "boersede_fund"},
+                    "automatable": price_by_id[item["id"]]["provider"] in {"yfinance", "boersede_fund", "monega_nav"},
                 }
                 for item in instruments
             ],
