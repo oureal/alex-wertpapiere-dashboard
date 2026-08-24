@@ -7,6 +7,7 @@ import json
 import re
 from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_FIELDS = {
@@ -50,6 +51,32 @@ def _asof(prices: dict) -> str:
         return datetime.now().strftime("%d.%m.%Y")
     newest = max(datetime.fromisoformat(stamp.replace("Z", "+00:00")) for stamp in stamps)
     return newest.strftime("%d.%m.%Y")
+
+
+def _update_notice(prices: dict) -> str:
+    rows = prices.get("prices", [])
+    stamps = [item.get("fetched_at") for item in rows if item.get("fetched_at")]
+    if stamps:
+        newest = max(datetime.fromisoformat(stamp.replace("Z", "+00:00")) for stamp in stamps)
+        local = newest.astimezone(ZoneInfo("Europe/Vienna"))
+        when = local.strftime("%d.%m.%Y, %H:%M Uhr")
+    else:
+        when = datetime.now(ZoneInfo("Europe/Vienna")).strftime("%d.%m.%Y, %H:%M Uhr")
+
+    total = len(rows)
+    positive = sum(1 for item in rows if float(item.get("price", 0) or 0) > 0)
+    fresh = sum(1 for item in rows if item.get("status") == "fresh")
+    stale = sum(1 for item in rows if item.get("status") == "stale")
+    fallback = sum(1 for item in rows if item.get("status") == "fallback")
+    warning_count = len(prices.get("warnings", []))
+
+    status_parts = [f"{positive}/{total} Kurse verfügbar", f"{fresh} frisch"]
+    if stale or fallback:
+        status_parts.append(f"{stale} veraltet · {fallback} fallback")
+    else:
+        status_parts.append("0 veraltet/fallback")
+    status_parts.append("keine Warnungen" if warning_count == 0 else f"{warning_count} Warnung(en)")
+    return "Letzte Kursaktualisierung: " + when + " · " + " · ".join(status_parts)
 
 
 def _previous_total(history: list[dict], asof: str, fallback: float) -> float:
@@ -138,6 +165,14 @@ def refresh_document(index_text: str, portfolio: dict, prices: dict) -> str:
     updated = re.sub(r"Look-through Dashboard · Stand \d{2}\.\d{2}\.\d{4}", f"Look-through Dashboard · Stand {asof}", updated)
     updated = re.sub(r"Datenstand \d{2}\.\d{2}\.\d{4}", f"Datenstand {asof}", updated)
     updated = re.sub(r"Depotwerte \d{2}\.\d{2}\.\d{4}", f"Depotwerte {asof}", updated)
+    notice = _update_notice(prices)
+    updated = re.sub(
+        r'<div class="notice small" style="margin-bottom:16px">.*?</div>',
+        f'<div class="notice small" style="margin-bottom:16px">{notice}</div>',
+        updated,
+        count=1,
+        flags=re.S,
+    )
     return updated
 
 
