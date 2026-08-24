@@ -65,19 +65,19 @@ def test_boersede_technologiefonds_headline_price():
     assert str(quote.price) == "156.32"
 
 
-def test_wbit_marketscreener_xetra_price():
+def test_wbit_onvista_eur_price():
     document = """
     <html><body>
-    WisdomTree Physical Bitcoin - USD WBIT GB00BJYDH287
-    Market Closed - Xetra 17:36:01 21/08/2026 15,86 EUR +7,28 %
+    WisdomTree Physical Bitcoin WKN A3GKGK ISIN GB00BJYDH287 Emittent WisdomTree Ticker WBIT
+    Baader Trading (EUR) Geld 2.300 Stk. 13,364 EUR -0,48 % heute, 12:40:27
     </body></html>
     """
     quote = provider(document).quote(
         "wisdomtree-physical-bitcoin", "WBIT",
-        url="https://www.marketscreener.com/quote/etf/WISDOMTREE-PHYSICAL-BITCO-121444436/quotes/",
+        url="https://www.onvista.de/derivate/ETCs/166422207-A3GKGK-GB00BJYDH287",
     )
-    assert str(quote.price) == "15.86"
-    assert quote.exchange == "Xetra"
+    assert str(quote.price) == "13.364"
+    assert quote.exchange == "Baader Trading"
 
 
 def test_wrong_url_or_missing_isin_is_rejected():

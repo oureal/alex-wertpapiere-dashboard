@@ -33,10 +33,10 @@ APPROVED = {
     },
     "wisdomtree-physical-bitcoin": {
         "isin": "GB00BJYDH287",
-        "url": "https://www.marketscreener.com/quote/etf/WISDOMTREE-PHYSICAL-BITCO-121444436/quotes/",
+        "url": "https://www.onvista.de/derivate/ETCs/166422207-A3GKGK-GB00BJYDH287",
         "provider_symbol": "WBIT",
-        "exchange": "Xetra",
-        "kind": "marketscreener_wbit",
+        "exchange": "Baader Trading",
+        "kind": "onvista_wbit",
     },
 }
 
@@ -103,16 +103,15 @@ class SimplePageProvider(MarketDataProvider):
             raise ProviderError(f"ISIN not found on quote page: {isin}")
 
         if approved["kind"] == "boerse_de_fund":
-            # boerse.de renders the headline quote directly after the ISIN / asset type.
             patterns = [
                 rf"ISIN\s*:?\s*{re.escape(isin)}.*?Typ\s*:?\s*Aktienfonds\s+([0-9]{{1,4}}(?:[.,][0-9]{{1,6}})?)\s*EUR",
                 r"aktueller Kurs\s*:?\s*([0-9]{1,4}(?:[.,][0-9]{1,6})?)",
             ]
         else:
-            # MarketScreener Xetra page: WBIT + ISIN, followed by delayed/closed quote in EUR.
+            # onvista exposes the reviewed WBIT page with the ISIN and a EUR quote.
             patterns = [
-                rf"{re.escape(isin)}.*?Xetra.*?([0-9]{{1,4}}(?:[.,][0-9]{{1,6}})?)\s*(?:EUR|€)",
-                rf"WBIT.*?{re.escape(isin)}.*?([0-9]{{1,4}}(?:[.,][0-9]{{1,6}})?)\s*(?:EUR|€)",
+                rf"{re.escape(isin)}.*?Baader Trading\s*\(EUR\).*?(?:Geld|Brief).*?([0-9]{{1,4}}(?:[.,][0-9]{{1,6}})?)\s*EUR",
+                rf"WBIT.*?{re.escape(isin)}.*?([0-9]{{1,4}}(?:[.,][0-9]{{1,6}})?)\s*EUR",
             ]
 
         match = next((re.search(pattern, text, flags=re.I | re.S) for pattern in patterns if re.search(pattern, text, flags=re.I | re.S)), None)
