@@ -18,6 +18,7 @@ button,input,select{font:inherit}.app{display:grid;grid-template-columns:250px 1
 .detail{min-height:260px}.detail h2{margin-top:0}.source-line{display:grid;grid-template-columns:1fr 120px;gap:10px;margin:7px 0}.small{font-size:12px}.footer{color:#71809e;text-align:center;padding:26px 0 8px;font-size:11px}
 @media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{position:static;height:auto}.nav{display:flex;overflow:auto}.nav button{min-width:190px}.kpis,.two,.equal{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.main{padding:14px}.kpis,.two,.equal{grid-template-columns:1fr}.header{display:block}.chart,.chart.tall,.treemap{height:480px}.bar-row{grid-template-columns:1fr 2fr 80px}}
+.manual-update{display:block;margin:18px 4px 0;padding:11px 12px;border:1px solid #36527a;border-radius:10px;background:#14263c;color:#dbeafe;text-decoration:none;font-weight:700;text-align:center}.manual-update:hover{background:#1b3554;color:white}.manual-update-note{display:block;margin:6px 8px 0;color:#71809e;font-size:10px;text-align:center}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iNCIgeT0iMTIiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0MCIgcng9IjYiIGZpbGw9IiMyZjllNmYiLz48cmVjdCB4PSI4IiB5PSIxNiIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iI2I5ZTZjOSIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjEyIiBmaWxsPSIjZjRkMzVlIi8+PHRleHQgeD0iMzIiIHk9IjQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTc0ZjNiIj7igqw8L3RleHQ+PGNpcmNsZSBjeD0iMTIiIGN5PSIyMCIgcj0iMiIgZmlsbD0iIzJmOWU2ZiIvPjxjaXJjbGUgY3g9IjUyIiBjeT0iNDQiIHI9IjIiIGZpbGw9IiMyZjllNmYiLz48L3N2Zz4=">
 <link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3QgeD0iNCIgeT0iMTIiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0MCIgcng9IjYiIGZpbGw9IiMyZjllNmYiLz48cmVjdCB4PSI4IiB5PSIxNiIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iI2I5ZTZjOSIvPjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjEyIiBmaWxsPSIjZjRkMzVlIi8+PHRleHQgeD0iMzIiIHk9IjQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMTc0ZjNiIj7igqw8L3RleHQ+PGNpcmNsZSBjeD0iMTIiIGN5PSIyMCIgcj0iMiIgZmlsbD0iIzJmOWU2ZiIvPjxjaXJjbGUgY3g9IjUyIiBjeT0iNDQiIHI9IjIiIGZpbGw9IiMyZjllNmYiLz48L3N2Zz4=">
@@ -35,6 +36,8 @@ button,input,select{font:inherit}.app{display:grid;grid-template-columns:250px 1
     <button data-page="history"><span class="n">5</span>Depotentwicklung</button>
     <button data-page="risk"><span class="n">6</span>Risiko</button>
   </nav>
+<a class="manual-update" id="manualUpdateLink" href="https://github.com/oureal/alex-wertpapiere-dashboard/actions/workflows/update-portfolio-dashboard.yml" target="_blank" rel="noopener noreferrer">↻ Kurse jetzt aktualisieren</a>
+<span class="manual-update-note">öffnet GitHub Actions</span>
 </aside>
 <main class="main">
 <section id="dashboard" class="page active">
