@@ -52,6 +52,13 @@ def _asof(prices: dict) -> str:
     return newest.strftime("%d.%m.%Y")
 
 
+def _previous_total(history: list[dict], asof: str, fallback: float) -> float:
+    for point in reversed(history):
+        if point.get("date") != asof:
+            return float(point["value"])
+    return float(fallback)
+
+
 def refresh_document(index_text: str, portfolio: dict, prices: dict) -> str:
     match = re.search(r"const DATA=(\{.*?\});\n", index_text, flags=re.S)
     if not match:
@@ -64,7 +71,7 @@ def refresh_document(index_text: str, portfolio: dict, prices: dict) -> str:
     asof = _asof(prices)
 
     history = list(data.get("history", []))
-    previous_total = history[-1]["value"] if history else data.get("meta", {}).get("total", total)
+    previous_total = _previous_total(history, asof, data.get("meta", {}).get("previousTotal", data.get("meta", {}).get("total", total)))
     if history and history[-1].get("date") == asof:
         history[-1]["value"] = total
     else:
