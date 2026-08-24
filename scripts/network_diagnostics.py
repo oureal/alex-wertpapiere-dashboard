@@ -17,6 +17,7 @@ SOURCES = (
     ("boerse_frankfurt", "https://www.boerse-frankfurt.de/"),
     ("ishares", "https://www.ishares.com/"),
     ("boerse_de", "https://www.boerse.de/"),
+    ("monega", "https://www.monega.de/"),
     ("wisdomtree", "https://www.wisdomtree.eu/"),
 )
 
