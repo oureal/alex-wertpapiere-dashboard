@@ -1,0 +1,26 @@
+depot,instrument_id,quantity,legacy_market_value_eur,derived_legacy_unit_price_eur,as_of,quantity_provenance
+Depot 1,berkshire-hathaway-b,33,14127.30,428.100000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 1,xetra-gold,62,7714.04,124.420000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 1,allianz,7,3057.95,436.850000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 1,microsoft,7,2882.60,411.800000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 1,eli-lilly,2,2183.60,1091.800000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 1,siemens,7,1931.65,275.950000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 1,hsbc,97,1713.99,17.670000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 1,apple,5,1355.50,271.100000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 1,linde,2,837.20,418.600000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,boerse-de-aktienfonds,164,22556.56,137.540000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,ishares-global-titans-50,121,13537.48,111.880000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,berkshire-hathaway-b,22,9418.20,428.100000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,boerse-de-technologiefonds,32,4884.16,152.630000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,nvidia,25,4640.00,185.600000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,amd,9,3602.70,400.300000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,ishares-core-msci-world,27,3407.00,126.185185,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,alphabet-c,11,3171.30,288.300000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,micron-technology,2,1635.00,817.500000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,allianz,3,1310.55,436.850000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,ishares-msci-world-value-factor,17,1187.28,69.840000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,wisdomtree-physical-bitcoin,60,883.56,14.726000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,marvell-technology,4,826.80,206.700000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,tsmc-adr,2,710.00,355.000000,2026-08-21,2026-07-17-lookthrough.xlsx Direktbestand; account split derived from 2026-08-20 Ausgangsdepots
+Depot 2,broadcom,2,621.70,310.850000,2026-08-21,user-confirmed portfolio data 2026-08-24
+Depot 2,siemens-energy,4,616.16,154.04,2026-08-21,user-confirmed Depot 2 transaction 2026-08-21

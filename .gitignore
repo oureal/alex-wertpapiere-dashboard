@@ -2,3 +2,33 @@
 Thumbs.db
 *.tmp
 ~$*.xlsx
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local
+secrets/
+*.secret
+
+# Temporary build output
+build/
+dist/
+tmp/
+*.bak
+data/market-data/discovery-results.local.json
