@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Ensure the dashboard contains a safe link to the manual GitHub Actions update."""
 from pathlib import Path
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
@@ -10,7 +11,7 @@ STYLE = """
 """.strip()
 
 BUTTON = """
-<a class="manual-update" id="manualUpdateLink" href="https://github.com/oureal/alex-wertpapiere-dashboard/actions/workflows/update-portfolio-dashboard.yml" target="_blank" rel="noopener noreferrer">↻ Kurse jetzt aktualisieren</a>
+<a class="manual-update" id="manualUpdateLink" href="https://github.com/oureal/dashboard-wp/actions/workflows/update-portfolio-dashboard.yml" target="_blank" rel="noopener noreferrer">↻ Kurse jetzt aktualisieren</a>
 <span class="manual-update-note">öffnet GitHub Actions</span>
 """.strip()
 
@@ -23,7 +24,13 @@ def main() -> int:
         text = text.replace("</style>", STYLE + "\n</style>", 1)
         changed = True
 
-    if 'id="manualUpdateLink"' not in text:
+    pattern = r'<a class="manual-update" id="manualUpdateLink".*?</a>\s*<span class="manual-update-note">.*?</span>'
+    if re.search(pattern, text, flags=re.S):
+        updated = re.sub(pattern, BUTTON, text, count=1, flags=re.S)
+        if updated != text:
+            text = updated
+            changed = True
+    else:
         marker = "</nav>"
         if marker not in text:
             raise SystemExit("Dashboard navigation marker not found")
@@ -32,9 +39,9 @@ def main() -> int:
 
     if changed:
         INDEX.write_text(text)
-        print("Manual update link added to dashboard.")
+        print("Manual update link synchronized in dashboard.")
     else:
-        print("Manual update link already present.")
+        print("Manual update link already current.")
     return 0
 
 
