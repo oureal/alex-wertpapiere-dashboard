@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh the inline dashboard DATA object from validated portfolio output."""
+"""Refresh the dashboard from validated portfolio output and persist the daily total history."""
 from __future__ import annotations
 
 import argparse
@@ -10,6 +10,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_HISTORY = ROOT / "data/history/portfolio-history.json"
 SOURCE_FIELDS = {
     "boerse-de-aktienfonds": ("boerse", "boerse.de-Aktienfonds"),
     "ishares-global-titans-50": ("titans", "Global Titans 50"),
@@ -48,9 +49,9 @@ ASSET_NAMES = {
 def _asof(prices: dict) -> str:
     stamps = [item.get("fetched_at") for item in prices.get("prices", []) if item.get("fetched_at")]
     if not stamps:
-        return datetime.now().strftime("%d.%m.%Y")
+        return datetime.now(ZoneInfo("Europe/Vienna")).strftime("%d.%m.%Y")
     newest = max(datetime.fromisoformat(stamp.replace("Z", "+00:00")) for stamp in stamps)
-    return newest.strftime("%d.%m.%Y")
+    return newest.astimezone(ZoneInfo("Europe/Vienna")).strftime("%d.%m.%Y")
 
 
 def _update_notice(prices: dict) -> str:
@@ -79,6 +80,55 @@ def _update_notice(prices: dict) -> str:
     return "Letzte Kursaktualisierung: " + when + " · " + " · ".join(status_parts)
 
 
+def _date_key(value: str) -> datetime:
+    return datetime.strptime(value, "%d.%m.%Y")
+
+
+def _normalize_history(points: list[dict]) -> list[dict]:
+    by_date: dict[str, float] = {}
+    for point in points:
+        date = str(point.get("date", "")).strip()
+        if not date:
+            continue
+        try:
+            _date_key(date)
+            value = float(point["value"])
+        except (ValueError, TypeError, KeyError):
+            continue
+        by_date[date] = value
+    return [{"date": date, "value": by_date[date]} for date in sorted(by_date, key=_date_key)]
+
+
+def _load_inline_data(index_text: str) -> tuple[re.Match[str], dict]:
+    match = re.search(r"const DATA=(\{.*?\});\n", index_text, flags=re.S)
+    if not match:
+        raise ValueError("Could not find inline dashboard DATA object")
+    return match, json.loads(match.group(1))
+
+
+def _load_history(history_path: Path, inline_history: list[dict]) -> list[dict]:
+    if history_path.exists():
+        doc = json.loads(history_path.read_text())
+        if isinstance(doc, dict):
+            points = doc.get("history", [])
+        elif isinstance(doc, list):
+            points = doc
+        else:
+            points = []
+        return _normalize_history(points)
+    return _normalize_history(inline_history)
+
+
+def _store_history(history_path: Path, history: list[dict]) -> None:
+    history_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "schema_version": 1,
+        "description": "Daily validated total portfolio values used by the Gesamtdepotentwicklung dashboard.",
+        "history": history,
+    }
+    history_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+
+
 def _previous_total(history: list[dict], asof: str, fallback: float) -> float:
     for point in reversed(history):
         if point.get("date") != asof:
@@ -86,23 +136,23 @@ def _previous_total(history: list[dict], asof: str, fallback: float) -> float:
     return float(fallback)
 
 
-def refresh_document(index_text: str, portfolio: dict, prices: dict) -> str:
-    match = re.search(r"const DATA=(\{.*?\});\n", index_text, flags=re.S)
-    if not match:
-        raise ValueError("Could not find inline dashboard DATA object")
-    data = json.loads(match.group(1))
+def refresh_document(index_text: str, portfolio: dict, prices: dict, history: list[dict]) -> str:
+    match, data = _load_inline_data(index_text)
     total = float(portfolio["total"])
     direct_total = float(portfolio["direct_total"])
     resolved = float(portfolio["resolved"])
     unresolved = float(portfolio["unresolved"])
     asof = _asof(prices)
 
-    history = list(data.get("history", []))
-    previous_total = _previous_total(history, asof, data.get("meta", {}).get("previousTotal", data.get("meta", {}).get("total", total)))
-    if history and history[-1].get("date") == asof:
-        history[-1]["value"] = total
-    else:
-        history.append({"date": asof, "value": total})
+    history = _normalize_history(history)
+    previous_total = _previous_total(
+        history,
+        asof,
+        data.get("meta", {}).get("previousTotal", data.get("meta", {}).get("total", total)),
+    )
+    by_date = {point["date"]: float(point["value"]) for point in history}
+    by_date[asof] = total
+    history = _normalize_history([{"date": d, "value": v} for d, v in by_date.items()])
 
     meta = data.setdefault("meta", {})
     meta.update({
@@ -181,10 +231,19 @@ def main() -> int:
     parser.add_argument("--index", type=Path, default=ROOT / "index.html")
     parser.add_argument("--portfolio", type=Path, default=ROOT / "data/generated/dry-run-portfolio.json")
     parser.add_argument("--prices", type=Path, default=ROOT / "data/prices/latest.json")
+    parser.add_argument("--history", type=Path, default=DEFAULT_HISTORY)
     args = parser.parse_args()
+
+    index_text = args.index.read_text()
+    _, inline_data = _load_inline_data(index_text)
+    history = _load_history(args.history, inline_data.get("history", []))
     portfolio = json.loads(args.portfolio.read_text())
     prices = json.loads(args.prices.read_text())
-    args.index.write_text(refresh_document(args.index.read_text(), portfolio, prices))
+    updated = refresh_document(index_text, portfolio, prices, history)
+    _, updated_data = _load_inline_data(updated)
+    _store_history(args.history, updated_data["history"])
+    args.index.write_text(updated)
+    print(f"Stored {len(updated_data['history'])} portfolio history points in {args.history}.")
     return 0
 
 
