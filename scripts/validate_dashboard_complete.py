@@ -46,7 +46,6 @@ def main() -> int:
     depot1 = json.loads(TX1.read_text(encoding="utf-8"))["transactions"]
     depot2 = json.loads(TX2.read_text(encoding="utf-8"))["transactions"]
 
-    # Shell/navigation: exactly the eight intended pages, all reachable from navigation.
     for page_id, title in PAGES.items():
         assert re.search(rf'<section id="{page_id}" class="page(?: active)?">', html), f"Page {page_id} missing"
         assert f'data-page="{page_id}"' in html, f"Navigation for {page_id} missing"
@@ -62,7 +61,6 @@ def main() -> int:
     assert 'responsive-dashboard-v2' in html, "Responsive CSS marker missing"
     assert 'id="manualUpdateLink"' in html, "Manual update control missing"
 
-    # Core current portfolio data used by Dashboard, Treemap, Sectors, Regions and Risk.
     assert float(data["meta"]["total"]) > 0
     assert abs(float(data["meta"]["total"]) - float(portfolio["total"])) < 1e-6
     assert len(data.get("companies", [])) >= 100, "Look-through company data unexpectedly sparse"
@@ -73,7 +71,6 @@ def main() -> int:
     for element_id in ("kpis", "topBars", "assetDonut", "assetLegend", "directIndirect", "resolution", "treemapBox", "companyDetail", "sectorBars", "sectorDonut", "sectorLegend", "sectorCompanies", "directCountries", "nonEquity", "riskKpis", "riskMeters", "overlapList", "riskNotes"):
         require_dom_id(html, element_id)
 
-    # Long-term history must be cash-flow-aware and not be overwritten by the obsolete block.
     history = data.get("history", [])
     assert history == persisted_history, "Inline/persisted history mismatch"
     assert len(history) > 300, f"History too short: {len(history)}"
@@ -81,16 +78,15 @@ def main() -> int:
     assert all("net_contributions" in row and "gain" in row for row in history), "Cash-flow fields missing"
     assert abs(float(history[-1]["value"]) - float(data["meta"]["total"])) < 1e-6
     assert "dynamic-history-labels-v2" not in html, "Obsolete history KPI override still present"
-    # Check the semantic contract, not a brittle exact JavaScript source fragment.
     assert "Kumulierter Geldfluss" in html, "Cumulative cash-flow wording missing"
     assert "net_contributions" in html, "Cash-flow series missing from rendered dashboard"
-    assert "Q1" in html and "Q2" in html and "Q3" in html and "Q4" in html, "Quarter labels missing"
-    assert "H1" in html or "H2" in html or "halfYearRows" in html, "Half-year checkpoint renderer missing"
+    # Source-level check uses stable semantic markers; browser gate verifies actual Q1-Q4/H1-H2 text after rendering.
+    assert "history-quarter-label" in html and "Q${q}" in html, "Quarter-axis renderer missing"
+    assert "halfYearRows" in html and "H${half}" in html, "Half-year checkpoint renderer missing"
     require_dom_id(html, "historyChart")
     require_dom_id(html, "historyKpis")
     require_dom_id(html, "historyBars")
 
-    # Movers: every requested period must have a real comparison baseline and at least one comparable security.
     movers = data.get("movers", {})
     periods = movers.get("periods", {})
     assert set(periods) >= {"day", "week", "month", "total"}, "Mover periods incomplete"
@@ -103,7 +99,6 @@ def main() -> int:
     require_dom_id(html, "moversGrid")
     require_dom_id(html, "moversAsOf")
 
-    # Transactions: both depots and all 439 imported historical records must be visible.
     assert len(depot1) == 199 and len(depot2) == 240
     assert "439 Vorgänge" in html
     section = re.search(r'<section id="transactions" class="page">(.*?)</section>', html, flags=re.S)
