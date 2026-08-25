@@ -54,10 +54,10 @@ def _load_inline_data(text):
     return m,json.loads(m.group(1))
 def _load_history(path,inline):
     if path.exists():
-        doc=json.loads(path.read_text());return _enrich_cashflows(doc.get("history",[]) if isinstance(doc,dict) else doc if isinstance(doc,list) else [])
+        doc=json.loads(path.read_text(encoding="utf-8"));return _enrich_cashflows(doc.get("history",[]) if isinstance(doc,dict) else doc if isinstance(doc,list) else [])
     return _enrich_cashflows(inline)
 def _store_history(path,history):
-    history=_enrich_cashflows(history);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps({"schema_version":4,"description":"Combined Depot 1 + Depot 2 cash-flow-aware portfolio history.","history":history},ensure_ascii=False,indent=2)+"\n")
+    history=_enrich_cashflows(history);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps({"schema_version":4,"description":"Combined Depot 1 + Depot 2 cash-flow-aware portfolio history.","history":history},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 def _previous_total(history,asof,fallback):
     for p in reversed(history):
         if p.get("date")!=asof:return float(p["value"])
@@ -77,7 +77,10 @@ def refresh_document(index_text,portfolio,prices,history=None):
             if field:row[field[0]]=float(amount);contained.append(field[1]) if float(amount)>0 else None
         row["contained"]="; ".join(contained);companies.append(row)
     data["companies"]=companies;data["sectors"]=[{"name":r["name"],"value":float(r["value"])} for r in portfolio["sectors"]];data["assets"]=[{"name":ASSET_NAMES.get(r["name"],r["name"]),"value":float(r["value"])} for r in portfolio["assets"]];data["history"]=history
-    encoded=json.dumps(data,ensure_ascii=False,separators=(",",":"));updated=index_text[:match.start(1)]+encoded+index_text[match.end(1):];updated=re.sub(r"<title>Depot Look-through Dashboard · [^<]+</title>",f"<title>Depot Look-through Dashboard · {asof}</title>",updated);updated=re.sub(r"Look-through Dashboard · Stand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?",f"Look-through Dashboard · Stand {asof}",updated);updated=re.sub(r"Datenstand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?",f"Datenstand {asof}",updated);updated=re.sub(r"Depotwerte \d{2}\.\d{2}\.\d{4}",f"Depotwerte {asof}",updated);updated=re.sub(r'<div class="notice small" style="margin-bottom:16px">.*?</div>',f'<div class="notice small" style="margin-bottom:16px">{_update_notice(prices)}</div>',updated,count=1,flags=re.S);return updated
+    encoded=json.dumps(data,ensure_ascii=False,separators=(",",":"));updated=index_text[:match.start(1)]+encoded+index_text[match.end(1):]
+    updated=re.sub(r"<title>[^<]*</title>",f"<title>Portfolio · {asof}</title>",updated,count=1)
+    updated=re.sub(r'(<section id="dashboard" class="page">\s*<div class="header"><div><h1>Depotübersicht</h1>)<div class="muted">.*?</div>',r'\1<div class="muted">Konsolidierte Direkt- und Fondspositionen · Kurse: aktuell bzw. letztverfügbar</div>',updated,count=1,flags=re.S)
+    updated=re.sub(r"Datenstand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?",f"Datenstand {asof}",updated);updated=re.sub(r"Depotwerte \d{2}\.\d{2}\.\d{4}",f"Depotwerte {asof}",updated);updated=re.sub(r'<div class="notice small" style="margin-bottom:16px">.*?</div>',f'<div class="notice small" style="margin-bottom:16px">{_update_notice(prices)}</div>',updated,count=1,flags=re.S);return updated
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--index",type=Path,default=ROOT/"index.html");p.add_argument("--portfolio",type=Path,default=ROOT/"data/generated/dry-run-portfolio.json");p.add_argument("--prices",type=Path,default=ROOT/"data/prices/latest.json");p.add_argument("--history",type=Path,default=DEFAULT_HISTORY);a=p.parse_args();text=a.index.read_text();_,inline=_load_inline_data(text);history=_load_history(a.history,inline.get("history",[]));portfolio=json.loads(a.portfolio.read_text());prices=json.loads(a.prices.read_text());updated=refresh_document(text,portfolio,prices,history);_,d=_load_inline_data(updated);_store_history(a.history,d["history"]);a.index.write_text(updated);print(f"Stored {len(d['history'])} combined cash-flow-aware history points.")
+    p=argparse.ArgumentParser();p.add_argument("--index",type=Path,default=ROOT/"index.html");p.add_argument("--portfolio",type=Path,default=ROOT/"data/generated/dry-run-portfolio.json");p.add_argument("--prices",type=Path,default=ROOT/"data/prices/latest.json");p.add_argument("--history",type=Path,default=DEFAULT_HISTORY);a=p.parse_args();text=a.index.read_text(encoding="utf-8");_,inline=_load_inline_data(text);history=_load_history(a.history,inline.get("history",[]));portfolio=json.loads(a.portfolio.read_text(encoding="utf-8"));prices=json.loads(a.prices.read_text(encoding="utf-8"));updated=refresh_document(text,portfolio,prices,history);_,d=_load_inline_data(updated);_store_history(a.history,d["history"]);a.index.write_text(updated,encoding="utf-8");print(f"Stored {len(d['history'])} combined cash-flow-aware history points.")
 if __name__=="__main__":main()
