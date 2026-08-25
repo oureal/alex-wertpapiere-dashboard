@@ -16,7 +16,11 @@ const historyKpis=[['Gesamtdepot · '+lastHistory.date,eur.format(lastHistory.va
 document.getElementById('historyKpis').innerHTML=historyKpis.map(x=>`<div class="card kpi"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="note">${x[2]}</div></div>`).join('');
 document.getElementById('historyPeriodBadge').textContent=firstHistory.date+' → '+lastHistory.date;
 const sample=(()=>{const h=chartHistory;if(h.length<=8)return h;return Array.from({length:8},(_,i)=>h[Math.round(i*(h.length-1)/7)]).filter((x,i,a)=>i===0||x.date!==a[i-1].date)})();
-bars('historyBars',sample.map(x=>({name:x.date,value:x.value})),Math.max(...sample.map(x=>x.value)),10);
+function renderHistoryBars(){
+ const maxValue=Math.max(...sample.map(x=>Number(x.value)||0),1);
+ document.getElementById('historyBars').innerHTML=sample.map(x=>`<div class="bar-row"><span>${x.date}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.max(0,Math.min(100,100*Number(x.value||0)/maxValue))}%"></div></div><div class="bar-value">${eur.format(Number(x.value||0))}</div></div>`).join('');
+}
+renderHistoryBars();
 function renderHistoryChart(){
  const el=document.getElementById('historyChart'),W=Math.max(520,el.clientWidth||700),H=340,pad={l:70,r:30,t:28,b:52};
  const vals=chartHistory.flatMap(x=>[Number(x.value),Number(x.net_contributions||0)]),rawMin=Math.min(...vals),rawMax=Math.max(...vals),margin=Math.max(1,(rawMax-rawMin)*.04),min=Math.max(0,rawMin-margin),max=rawMax+margin,span=Math.max(1,max-min);
@@ -37,6 +41,6 @@ def main():
  if not pat.search(text): raise ValueError('Could not locate history chart block')
  text=pat.sub(BLOCK,text,count=1)
  text=re.sub(r'<div class="notice small" style="margin-top:18px">.*?</div>',f'<div class="notice small" style="margin-top:18px">{NOTICE}</div>',text,count=1,flags=re.S)
- INDEX.write_text(text,encoding='utf-8');print('Updated history UI for corrected positive, unshifted reconstruction.')
- subprocess.run([sys.executable,str(ROOT/'scripts/update_asset_labels.py')],check=True)
+ INDEX.write_text(text,encoding='utf-8');print('Updated history UI; checkpoint comparison shows EUR values without percentages.')
+ subprocess.run([sys.executable,str(ROOT/'scripts/update_donut_labels.py')],check=True)
 if __name__=='__main__':main()
