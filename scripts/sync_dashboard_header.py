@@ -27,6 +27,7 @@ def main() -> int:
     text = INDEX.read_text()
     original = text
     text = text.replace("Portfolio Lens", "Portfolio")
+    text = text.replace('<div class="muted">Fortlaufende Entwicklung des Depotwerts über alle dokumentierten Stichtage</div>', '')
     stamp = latest_stamp()
     if stamp:
         text = re.sub(r'<div class="sub">.*?</div>', f'<div class="sub">Stand {stamp}</div>', text, count=1, flags=re.S)
@@ -39,6 +40,8 @@ def main() -> int:
         raise SystemExit("Sidebar status element missing")
     if "Look-through Dashboard" in sidebar.group(0):
         raise SystemExit("Sidebar label removal failed")
+    if "Fortlaufende Entwicklung des Depotwerts über alle dokumentierten Stichtage" in text:
+        raise SystemExit("History subtitle removal failed")
 
     if text != original:
         INDEX.write_text(text)
