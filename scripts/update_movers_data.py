@@ -42,9 +42,28 @@ NAME_TO_ID = {
 }
 ID_TO_NAME = {v: k for k, v in NAME_TO_ID.items()}
 
+MOVERS_UI = r'''/* movers-dashboard-v1 */
+(function(){
+  const m=DATA.movers, grid=document.getElementById('moversGrid');
+  if(!m||!grid){return;}
+  const badge=document.getElementById('moversAsOf');
+  if(badge)badge.textContent=`Stand ${m.asof}${m.time?', '+m.time+' Uhr':''}`;
+  const defs=[['day','Aktueller Tag'],['week','Aktuelle Woche'],['month','Aktueller Monat'],['total','Gesamtzeitraum']];
+  const signedPct=v=>(v>=0?'+':'')+pct.format(v);
+  const signedEur=v=>(v>=0?'+':'')+eur.format(v);
+  const side=(rows,kind,hasBaseline)=>{
+    const title=kind==='plus'?'Top 3 PLUS':'Top 3 MINUS';
+    if(!hasBaseline)return `<div class="mover-side ${kind}"><h4>${title}</h4><div class="mover-empty">Noch kein geeigneter Vergleichsstichtag.</div></div>`;
+    if(!rows||!rows.length){const msg=kind==='plus'?'Keine positiven Veränderungen.':'Keine negativen Veränderungen.';return `<div class="mover-side ${kind}"><h4>${title}</h4><div class="mover-empty">${msg}</div></div>`;}
+    const max=Math.max(...rows.map(r=>Math.abs(r.pct)),.000001);
+    return `<div class="mover-side ${kind}"><h4>${title}</h4>${rows.map(r=>`<div class="mover-row"><div class="mover-name" title="${r.name}">${r.name}</div><div class="mover-pct">${signedPct(r.pct)}</div><div class="mover-eur">${signedEur(r.value)}</div><div class="mover-barbox"><div class="mover-bar" style="width:${Math.max(3,100*Math.abs(r.pct)/max)}%"></div></div></div>`).join('')}</div>`;
+  };
+  grid.innerHTML=defs.map(([key,title])=>{const p=m.periods[key]||{};const hasBaseline=!!p.from;const range=hasBaseline?`${p.from} → ${p.to}`:'Vergleich noch nicht verfügbar';return `<div class="card mover-card"><div class="mover-period"><h3>${title}</h3><div class="mover-range">${range}</div></div><div class="mover-columns">${side(p.gainers,'plus',hasBaseline)}${side(p.losers,'minus',hasBaseline)}</div></div>`}).join('');
+})();'''
+
 
 def load_inline(path: Path) -> tuple[str, re.Match[str], dict]:
-    text = path.read_text()
+    text = path.read_text(encoding="utf-8")
     match = re.search(r"const DATA=(\{.*?\});\n", text, flags=re.S)
     if not match:
         raise SystemExit(f"DATA object missing in {path}")
@@ -57,7 +76,7 @@ def parse_date(s: str) -> datetime:
 
 def load_existing() -> list[dict]:
     if HISTORY.exists():
-        doc = json.loads(HISTORY.read_text())
+        doc = json.loads(HISTORY.read_text(encoding="utf-8"))
         return list(doc.get("snapshots", []))
     return []
 
@@ -97,9 +116,11 @@ def current_time(prices: dict) -> tuple[str, str]:
 def current_values(portfolio: dict) -> dict[str, float]:
     values: dict[str, float] = {}
     for row in portfolio.get("positions", []):
-        iid = row.get("instrument_id")
+        iid = str(row.get("instrument_id") or "").strip()
         if iid and iid != "cash":
-            values[iid] = values.get(iid, 0.0) + float(row.get("market_value_eur", 0) or 0)
+            value = float(row.get("market_value_eur", 0) or 0)
+            if value > 0:
+                values[iid] = values.get(iid, 0.0) + value
     return values
 
 
@@ -114,29 +135,35 @@ def normalize(points: list[dict]) -> list[dict]:
         except ValueError:
             continue
         old = by_date.get(date)
-        # Prefer the newer/current snapshot for duplicate dates.
         if old is None or p.get("source") == "current":
             by_date[date] = p
     return [by_date[d] for d in sorted(by_date, key=parse_date)]
 
 
+def has_overlap(snapshot: dict, current: dict) -> bool:
+    base = snapshot.get("values", {})
+    return any(float(base.get(iid, 0) or 0) > 0 and float(now or 0) > 0 for iid, now in current.get("values", {}).items())
+
+
 def baseline_for(period: str, snaps: list[dict], current: dict) -> dict | None:
     cur_dt = parse_date(current["date"])
-    previous = [s for s in snaps if parse_date(s["date"]) < cur_dt]
+    previous = [s for s in snaps if parse_date(s["date"]) < cur_dt and has_overlap(s, current)]
+    if not previous:
+        return None
     if period == "day":
-        return previous[-1] if previous else None
+        return previous[-1]
     if period == "week":
-        same = [s for s in snaps if parse_date(s["date"]).isocalendar()[:2] == cur_dt.isocalendar()[:2]]
-        return same[0] if same and same[0]["date"] != current["date"] else (previous[-1] if previous else None)
+        same = [s for s in previous if parse_date(s["date"]).isocalendar()[:2] == cur_dt.isocalendar()[:2]]
+        return same[0] if same else previous[-1]
     if period == "month":
-        same = [s for s in snaps if (parse_date(s["date"]).year, parse_date(s["date"]).month) == (cur_dt.year, cur_dt.month)]
-        return same[0] if same and same[0]["date"] != current["date"] else (previous[-1] if previous else None)
-    return snaps[0] if snaps and snaps[0]["date"] != current["date"] else None
+        same = [s for s in previous if (parse_date(s["date"]).year, parse_date(s["date"]).month) == (cur_dt.year, cur_dt.month)]
+        return same[0] if same else previous[-1]
+    return previous[0]
 
 
 def ranking(base: dict | None, current: dict) -> dict:
     if not base:
-        return {"from": None, "to": current["date"], "gainers": [], "losers": []}
+        return {"from": None, "to": current["date"], "coverage": 0, "gainers": [], "losers": []}
     rows = []
     for iid, now in current["values"].items():
         before = float(base.get("values", {}).get(iid, 0) or 0)
@@ -144,32 +171,45 @@ def ranking(base: dict | None, current: dict) -> dict:
         if before <= 0 or now <= 0:
             continue
         delta = now - before
-        pct = delta / before
-        rows.append({"id": iid, "name": ID_TO_NAME.get(iid, iid), "pct": pct, "value": delta, "current": now, "base": before})
+        change = delta / before
+        rows.append({"id": iid, "name": ID_TO_NAME.get(iid, iid), "pct": change, "value": delta, "current": now, "base": before})
     gainers = sorted((r for r in rows if r["value"] > 0), key=lambda r: (r["pct"], r["value"]), reverse=True)[:3]
     losers = sorted((r for r in rows if r["value"] < 0), key=lambda r: (r["pct"], r["value"]))[:3]
-    return {"from": base["date"], "to": current["date"], "gainers": gainers, "losers": losers}
+    return {"from": base["date"], "to": current["date"], "coverage": len(rows), "gainers": gainers, "losers": losers}
+
+
+def patch_movers_ui(text: str) -> str:
+    pattern = re.compile(r"/\* movers-dashboard-v1 \*/\n\(function\(\)\{.*?\n\}\)\(\);", flags=re.S)
+    if not pattern.search(text):
+        raise SystemExit("Movers UI block missing")
+    return pattern.sub(MOVERS_UI, text, count=1)
 
 
 def main() -> int:
-    portfolio = json.loads(PORTFOLIO.read_text())
-    prices = json.loads(PRICES.read_text())
+    portfolio = json.loads(PORTFOLIO.read_text(encoding="utf-8"))
+    prices = json.loads(PRICES.read_text(encoding="utf-8"))
     date, time = current_time(prices)
     current = {"date": date, "time": time, "values": current_values(portfolio), "source": "current"}
+    if not current["values"]:
+        raise SystemExit("Current security values are empty")
 
     snaps = normalize(legacy_snapshots() + load_existing() + [current])
     HISTORY.parent.mkdir(parents=True, exist_ok=True)
-    HISTORY.write_text(json.dumps({"schema_version": 1, "snapshots": snaps}, ensure_ascii=False, indent=2) + "\n")
+    HISTORY.write_text(json.dumps({"schema_version": 2, "snapshots": snaps}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    periods = {}
-    for key in ("day", "week", "month", "total"):
-        periods[key] = ranking(baseline_for(key, snaps, current), current)
+    periods = {key: ranking(baseline_for(key, snaps, current), current) for key in ("day", "week", "month", "total")}
+    empty = [key for key, value in periods.items() if not value.get("from") or int(value.get("coverage", 0)) <= 0]
+    if empty:
+        raise SystemExit(f"Movers have no comparable securities for: {', '.join(empty)}")
 
     text, match, data = load_inline(INDEX)
     data["movers"] = {"asof": date, "time": time, "periods": periods}
     encoded = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
-    INDEX.write_text(text[:match.start(1)] + encoded + text[match.end(1):])
-    print(f"Stored {len(snaps)} security snapshots and embedded movers for {date} {time}.")
+    text = text[:match.start(1)] + encoded + text[match.end(1):]
+    text = patch_movers_ui(text)
+    INDEX.write_text(text, encoding="utf-8")
+    coverage = ", ".join(f"{key}={periods[key]['coverage']}" for key in ("day", "week", "month", "total"))
+    print(f"Stored {len(snaps)} security snapshots and embedded movers for {date} {time}; coverage {coverage}.")
     return 0
 
 
