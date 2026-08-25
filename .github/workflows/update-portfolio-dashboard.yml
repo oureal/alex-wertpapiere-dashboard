@@ -12,6 +12,8 @@ name: Update portfolio dashboard
       - "scripts/update_dashboard_data.py"
       - "scripts/update_movers_data.py"
       - "scripts/update_transactions_data.py"
+      - "scripts/reconstruct_portfolio_history.py"
+      - "scripts/update_history_ui.py"
       - "data/transactions.json"
 
 permissions:
@@ -92,6 +94,9 @@ jobs:
           print("All portfolio invariants passed.")
           PY
 
+      - name: Reconstruct portfolio history from depot beginning
+        run: python scripts/reconstruct_portfolio_history.py
+
       - name: Refresh visible dashboard data and daily history
         run: python scripts/update_dashboard_data.py
 
@@ -104,10 +109,14 @@ jobs:
       - name: Render transaction history
         run: python scripts/update_transactions_data.py
 
+      - name: Render long-term history UI
+        run: python scripts/update_history_ui.py
+
       - name: Verify dashboard and persisted history
         run: |
           python - <<'PY'
           import json, re
+          from datetime import datetime
           from pathlib import Path
           html = Path("index.html").read_text()
           portfolio = json.loads(Path("data/generated/dry-run-portfolio.json").read_text())
@@ -116,11 +125,15 @@ jobs:
           dashboard = json.loads(match.group(1))
           history_doc = json.loads(Path("data/history/portfolio-history.json").read_text())
           history = history_doc["history"]
+          reconstructed = json.loads(Path("data/history/reconstructed-history.json").read_text())
           security_history = json.loads(Path("data/history/security-history.json").read_text())["snapshots"]
           transactions = json.loads(Path("data/transactions.json").read_text()).get("transactions", [])
           assert abs(float(dashboard["meta"]["total"]) - float(portfolio["total"])) < 0.000001
           assert len(dashboard["companies"]) == len(portfolio["companies"])
           assert dashboard["history"] == history, "Inline and persisted history differ"
+          assert history[0]["date"] == "16.08.2022", "History does not begin at documented depot start"
+          assert len(history) > 150, f"Expected long-term history, got only {len(history)} points"
+          assert reconstructed["meta"]["transactions"] == 240, "Reconstruction does not use all imported transactions"
           assert history[-1]["date"] == dashboard["meta"]["asof"], "Latest history date is not current as-of date"
           assert abs(float(history[-1]["value"]) - float(portfolio["total"])) < 0.000001
           assert dashboard.get("movers", {}).get("periods"), "Movers data missing"
@@ -128,13 +141,13 @@ jobs:
           assert len(transactions) == 240, f"Expected 240 transactions, got {len(transactions)}"
           assert 'id="manualUpdateLink"' in html, "Manual update link missing"
           assert 'id="historyPeriodBadge"' in html, "Dynamic history badge missing"
-          assert 'id="moversGrid"' in html, "Movers page missing"
+          assert 'Gesamtdepotentwicklung seit Depotbeginn' in html, "Long-term history chart missing"
           assert 'data-page="transactions"' in html, "Transactions navigation missing"
           assert 'id="transactions"' in html, "Transactions page missing"
           assert '240 Vorgänge' in html, "Rendered transaction count missing"
           assert 'Siemens Energy' in html and 'LVMH' in html, "Transaction content missing"
           assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0), "Old sidebar label still present"
-          print(f"Dashboard matches portfolio output with {len(history)} portfolio, {len(security_history)} security history points and {len(transactions)} transactions.")
+          print(f"Dashboard matches portfolio output with {len(history)} total history points, {len(reconstructed['history'])} reconstructed points, {len(security_history)} security history points and {len(transactions)} transactions.")
           PY
 
       - name: Upload private dashboard artifact
@@ -149,16 +162,16 @@ jobs:
         run: python scripts/verify_immutable_history.py
 
       - name: Show intended production changes
-        run: git diff -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json data/transactions.json index.html
+        run: git diff -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json index.html
 
       - name: Commit validated production data, history and dashboard
         run: |
-          if git diff --quiet -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json data/transactions.json index.html; then
+          if git diff --quiet -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json index.html; then
             echo "No production data changes to commit."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json data/transactions.json index.html
+            git add data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json index.html
             git commit -m "Update validated portfolio dashboard"
             git push origin HEAD:main
           fi
