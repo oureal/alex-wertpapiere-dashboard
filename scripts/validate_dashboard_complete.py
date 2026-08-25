@@ -80,12 +80,14 @@ def main() -> int:
     assert "dynamic-history-labels-v2" not in html, "Obsolete history KPI override still present"
     assert "Kumulierter Geldfluss" in html, "Cumulative cash-flow wording missing"
     assert "net_contributions" in html, "Cash-flow series missing from rendered dashboard"
-    # Source-level check uses stable semantic markers; browser gate verifies actual Q1-Q4/H1-H2 text after rendering.
+    # Source-level checks use stable semantic markers; browser gate verifies actual rendered controls and labels.
     assert "history-quarter-label" in html and "Q${q}" in html, "Quarter-axis renderer missing"
-    assert "halfYearRows" in html and "H${half}" in html, "Half-year checkpoint renderer missing"
-    require_dom_id(html, "historyChart")
-    require_dom_id(html, "historyKpis")
-    require_dom_id(html, "historyBars")
+    assert "checkpointRows" in html and "H${half}" in html, "Checkpoint renderer missing"
+    for element_id in ("historyChart", "historyKpis", "historyBars", "historyRangeControls", "checkpointControls"):
+        require_dom_id(html, element_id)
+    for token in ('data-range="m1"', 'data-range="m6"', 'data-range="y1"', 'data-range="y3"', 'data-range="y5"', 'data-range="max"'):
+        assert token in html, f"History range control missing: {token}"
+    assert 'data-mode="year"' in html and 'data-mode="half"' in html, "Checkpoint mode controls missing"
 
     movers = data.get("movers", {})
     periods = movers.get("periods", {})
