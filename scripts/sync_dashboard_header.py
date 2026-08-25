@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# This script is intentionally the single safe header synchronizer used by the production workflow.
 from pathlib import Path
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -33,7 +34,10 @@ def main() -> int:
     else:
         text = re.sub(r'<div class="sub">\s*Look-through Dashboard\s*·?\s*(.*?)</div>', r'<div class="sub">\1</div>', text, count=1, flags=re.S)
 
-    if "Look-through Dashboard" in re.search(r'<div class="sub">.*?</div>', text, flags=re.S).group(0):
+    sidebar = re.search(r'<div class="sub">.*?</div>', text, flags=re.S)
+    if not sidebar:
+        raise SystemExit("Sidebar status element missing")
+    if "Look-through Dashboard" in sidebar.group(0):
         raise SystemExit("Sidebar label removal failed")
 
     if text != original:
