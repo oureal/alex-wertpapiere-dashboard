@@ -48,7 +48,11 @@ def load_transactions():
             row=dict(r); row.setdefault('depot',depot); alltx.append(row)
     return sorted(alltx,key=lambda r:(iso(r['date']),r.get('depot',''),r.get('type','')))
 def reconstruct():
-    txs=load_transactions(); start=iso(txs[0]['date']); points=weekly(start,VALIDATED_START)
+    txs=load_transactions()
+    # Do not chart setup fees/trades before capital exists. Start exactly at the
+    # first positive external contribution, so the left edge is economically meaningful.
+    first_contribution=min(iso(t['date']) for t in txs if t.get('type')=='Einzahlung' and float(t.get('amount_eur') or 0)>0)
+    start=first_contribution; points=weekly(start,VALIDATED_START)
     isins=sorted({r.get('isin') for r in txs if r.get('isin')}); market={i:series(MARKET[i][0],start,VALIDATED_START) for i in isins if i in MARKET}
     currencies={MARKET[i][1] for i in isins if i in MARKET and MARKET[i][1]!='EUR'}; fx={c:series(f'{c}EUR=X',start,VALIDATED_START) for c in currencies}
     holdings=defaultdict(float); fallback={}; cash=0.0; contrib=0.0; cursor=0; rows=[]; yahoo=0; fb=0
@@ -97,7 +101,7 @@ def merge(rows,meta):
     print(f"Reconstructed {len(rows)} combined historical points from {meta['transactions']} transactions; retained {len(validated)} validated points.")
 def main():
     rows,meta=reconstruct()
-    if not rows or rows[0]['date']!='02.06.2020':raise ValueError('Combined history does not begin at Depot 1 start 02.06.2020')
+    if not rows or rows[0]['net_contributions']<=0:raise ValueError('Combined history must begin at the first positive external contribution')
     if meta['transactions']!=439:raise ValueError(f"Expected 439 transactions, got {meta['transactions']}")
     merge(rows,meta)
 if __name__=='__main__':main()
