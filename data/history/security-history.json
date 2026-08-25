@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "snapshots": [
+    {
+      "date": "17.07.2026",
+      "time": null,
+      "values": {
+        "boerse-de-aktienfonds": 22535.81,
+        "ishares-global-titans-50": 13305.16,
+        "boerse-de-technologiefonds": 4734.08,
+        "ishares-core-msci-world": 3363.12,
+        "ishares-msci-world-value-factor": 1141.04,
+        "xetra-gold": 6988.64,
+        "wisdomtree-physical-bitcoin": 799.08
+      },
+      "source": "legacy-dashboard"
+    },
+    {
+      "date": "20.08.2026",
+      "time": null,
+      "values": {
+        "boerse-de-aktienfonds": 22556.56,
+        "ishares-global-titans-50": 13537.48,
+        "boerse-de-technologiefonds": 4884.16,
+        "ishares-core-msci-world": 3407.0,
+        "ishares-msci-world-value-factor": 1187.28,
+        "xetra-gold": 7712.18,
+        "wisdomtree-physical-bitcoin": 883.56
+      },
+      "source": "legacy-dashboard"
+    },
+    {
+      "date": "21.08.2026",
+      "time": null,
+      "values": {
+        "boerse-de-aktienfonds": 22556.56,
+        "ishares-global-titans-50": 13537.48,
+        "boerse-de-technologiefonds": 4884.16,
+        "ishares-core-msci-world": 3407.0,
+        "ishares-msci-world-value-factor": 1187.28,
+        "xetra-gold": 7714.04,
+        "wisdomtree-physical-bitcoin": 883.56
+      },
+      "source": "legacy-dashboard"
+    },
+    {
+      "date": "25.08.2026",
+      "time": "08:55",
+      "values": {
+        "berkshire-hathaway-b": 23796.088037,
+        "xetra-gold": 7866.55983,
+        "allianz": 4407.999878,
+        "microsoft": 2926.442808,
+        "eli-lilly": 2139.482645,
+        "siemens": 1962.450043,
+        "hsbc": 1722.720022,
+        "apple": 1331.203451,
+        "linde": 840.793495,
+        "boerse-de-aktienfonds": 22796.0,
+        "ishares-global-titans-50": 13595.560074,
+        "boerse-de-technologiefonds": 4875.2,
+        "nvidia": 4471.374831,
+        "amd": 3526.612521,
+        "ishares-core-msci-world": 3415.634926,
+        "alphabet-c": 3251.861425,
+        "micron-technology": 1562.115824,
+        "ishares-msci-world-value-factor": 1194.589943,
+        "wisdomtree-physical-bitcoin": 984.66,
+        "marvell-technology": 786.831562,
+        "tsmc-adr": 703.683907,
+        "broadcom": 615.560442,
+        "siemens-energy": 613.440002
+      },
+      "source": "current"
+    }
+  ]
+}

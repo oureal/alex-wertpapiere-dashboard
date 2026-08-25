@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "description": "Daily validated total portfolio values used by the Gesamtdepotentwicklung dashboard.",
+  "history": [
+    {
+      "date": "17.07.2026",
+      "value": 110400.89
+    },
+    {
+      "date": "20.08.2026",
+      "value": 113494.18
+    },
+    {
+      "date": "21.08.2026",
+      "value": 113575.36
+    },
+    {
+      "date": "24.08.2026",
+      "value": 113757.048589
+    },
+    {
+      "date": "25.08.2026",
+      "value": 114152.615665
+    }
+  ]
+}
