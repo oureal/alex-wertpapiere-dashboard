@@ -214,7 +214,7 @@ function renderHistoryChart(){
 renderHistoryChart();
 const oldTotal=DATA.meta.previousTotal, newTotal=DATA.meta.total;
 document.getElementById('historyNotes').innerHTML=`
- <p><b>Gesamtwert:</b> von ${eur.format(oldTotal)} auf ${eur.format(newTotal)} – eine Veränderung von <b>${eur.format(historyDelta)} (${historyDelta>=0?'+':''}${pct.format(historyPct)})</b>.</p>
+ <p><b>Gesamtwert:</b> von ${eur.format(oldTotal)} auf ${eur.format(newTotal)} – eine Veränderung von <b>${eur.format(historyGain)} (${historyGain>=0?'+':''}${pct.format(historyPct)})</b>.</p>
  <p><b>Aktuelle Struktur:</b> direkte Aktien ${eur.format(DATA.meta.directTotal)}, indirekt aufgelöste Aktien ${eur.format(DATA.meta.indirectTotal)} und ${eur.format(DATA.meta.unresolved)} nicht aufgelöste bzw. Nicht-Aktien-Bausteine.</p>
  <p><b>Neue Direktpositionen gegenüber dem Juli-Datensatz:</b> Marvell Technology und Broadcom sind nun als direkte Aktienpositionen berücksichtigt. Sämtliche fünf Arbeitsblätter der Juli-Datei wurden für Unternehmensnamen, Sektoren, Quellpositionen, Direktbestände und Auflösungsannahmen herangezogen.</p>`;
 
