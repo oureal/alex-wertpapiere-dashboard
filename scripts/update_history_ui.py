@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render cash-flow-aware Gesamtdepotentwicklung."""
+"""Render cash-flow-aware Gesamtdepotentwicklung and keep the production rebuild deterministic."""
 from __future__ import annotations
 import re
 from pathlib import Path
