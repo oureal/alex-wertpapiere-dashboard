@@ -49,8 +49,6 @@ def load_transactions():
     return sorted(alltx,key=lambda r:(iso(r['date']),r.get('depot',''),r.get('type','')))
 def reconstruct():
     txs=load_transactions()
-    # Do not chart setup fees/trades before capital exists. Start exactly at the
-    # first positive external contribution, so the left edge is economically meaningful.
     first_contribution=min(iso(t['date']) for t in txs if t.get('type')=='Einzahlung' and float(t.get('amount_eur') or 0)>0)
     start=first_contribution; points=weekly(start,VALIDATED_START)
     isins=sorted({r.get('isin') for r in txs if r.get('isin')}); market={i:series(MARKET[i][0],start,VALIDATED_START) for i in isins if i in MARKET}
@@ -86,19 +84,34 @@ def reconstruct():
             securities+=q*unit
         value=cash+securities; gain=value-contrib
         rows.append({'date':de(point),'value':round(value,2),'net_contributions':round(contrib,2),'gain':round(gain,2),'simple_return':round(gain/contrib,8) if contrib>0 else None,'reconstructed':True,'unresolved_positions':unresolved})
-    meta={'schema_version':3,'method':'weekly combined Depot 1 + Depot 2 transaction-ledger reconstruction','start':start.isoformat(),'end_exclusive':VALIDATED_START.isoformat(),'points':len(rows),'transactions':len(txs),'depot1_transactions':199,'depot2_transactions':240,'market_mapped_isins':len([i for i in isins if i in MARKET]),'all_isins':len(isins),'yahoo_valuation_uses':yahoo,'fallback_valuation_uses':fb,'warning':'Historical values are reconstructed estimates and are not broker-verified statements.'}
+    meta={'schema_version':4,'method':'weekly combined Depot 1 + Depot 2 transaction-ledger reconstruction, level-anchored to first validated snapshot','start':start.isoformat(),'end_exclusive':VALIDATED_START.isoformat(),'points':len(rows),'transactions':len(txs),'depot1_transactions':199,'depot2_transactions':240,'market_mapped_isins':len([i for i in isins if i in MARKET]),'all_isins':len(isins),'yahoo_valuation_uses':yahoo,'fallback_valuation_uses':fb,'warning':'Pre-17.07.2026 values are reconstructed estimates; their absolute level is anchored to the first validated snapshot to remove ledger/snapshot basis mismatch.'}
     return rows,meta
 def merge(rows,meta):
-    old=json.loads(HISTORY.read_text(encoding='utf-8')) if HISTORY.exists() else {'history':[]}; validated=[]; lastc=rows[-1]['net_contributions']
+    old=json.loads(HISTORY.read_text(encoding='utf-8')) if HISTORY.exists() else {'history':[]}
+    validated=[]
     for r in old.get('history',[]):
         try:
-            if deparse(r['date'])>=VALIDATED_START:
-                v=float(r['value']); g=v-lastc; validated.append({'date':r['date'],'value':v,'net_contributions':lastc,'gain':round(g,2),'simple_return':round(g/lastc,8) if lastc>0 else None,'validated':True})
-        except Exception:pass
-    combined=[{k:v for k,v in r.items() if k not in {'reconstructed','unresolved_positions'}} for r in rows]+validated
-    HISTORY.write_text(json.dumps({'schema_version':4,'description':'Combined Depot 1 + Depot 2 cash-flow-aware history; reconstructed before 17.07.2026 and validated thereafter.','reconstruction':meta,'history':combined},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    RECONSTRUCTED.write_text(json.dumps({'schema_version':3,'meta':meta,'history':rows},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(f"Reconstructed {len(rows)} combined historical points from {meta['transactions']} transactions; retained {len(validated)} validated points.")
+            if deparse(r['date'])>=VALIDATED_START: validated.append(dict(r))
+        except Exception: pass
+    if not validated: raise ValueError('No validated 17.07.2026+ history available for anchoring')
+    validated.sort(key=lambda r:deparse(r['date']))
+    anchor=float(validated[0]['value'])
+    raw_end=float(rows[-1]['value'])
+    level_adjustment=anchor-raw_end
+    # The ledger and the validated snapshot are different bases. Preserve every
+    # reconstructed week-to-week move, but translate the reconstructed level so
+    # its endpoint meets the independently validated 17 July snapshot exactly.
+    adjusted=[]
+    for r in rows:
+        x=dict(r); x['value']=round(float(x['value'])+level_adjustment,2); x['gain']=round(x['value']-float(x['net_contributions']),2); x['simple_return']=round(x['gain']/float(x['net_contributions']),8) if float(x['net_contributions'])>0 else None; adjusted.append(x)
+    meta['anchor_date']=validated[0]['date']; meta['anchor_value_eur']=anchor; meta['raw_reconstructed_end_value_eur']=raw_end; meta['level_adjustment_eur']=round(level_adjustment,2)
+    # Avoid two points for the same boundary date. Reconstruction ends on 16 July;
+    # the first independently validated observation remains 17 July.
+    adjusted=[r for r in adjusted if deparse(r['date'])<VALIDATED_START]
+    combined=[{k:v for k,v in r.items() if k not in {'reconstructed','unresolved_positions'}} for r in adjusted]+validated
+    HISTORY.write_text(json.dumps({'schema_version':5,'description':'Combined Depot 1 + Depot 2 cash-flow-aware history; reconstructed level anchored to the validated 17.07.2026 snapshot, validated thereafter.','reconstruction':meta,'history':combined},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    RECONSTRUCTED.write_text(json.dumps({'schema_version':4,'meta':meta,'history':adjusted},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print(f"Reconstructed {len(adjusted)} historical points; anchored endpoint by {level_adjustment:.2f} EUR to {validated[0]['date']} validated value {anchor:.2f} EUR; retained {len(validated)} validated points.")
 def main():
     rows,meta=reconstruct()
     if not rows or rows[0]['net_contributions']<=0:raise ValueError('Combined history must begin at the first positive external contribution')
