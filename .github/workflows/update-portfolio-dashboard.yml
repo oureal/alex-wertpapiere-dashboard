@@ -14,6 +14,7 @@ name: Update portfolio dashboard
       - "scripts/update_transactions_data.py"
       - "scripts/reconstruct_portfolio_history.py"
       - "scripts/update_history_ui.py"
+      - "scripts/validate_dashboard_complete.py"
       - "data/transactions.json"
       - "data/transactions-depot1.json"
 
@@ -111,6 +112,9 @@ jobs:
 
       - name: Render long-term history UI
         run: python scripts/update_history_ui.py
+
+      - name: Validate all eight dashboard pages
+        run: python scripts/validate_dashboard_complete.py
 
       - name: Verify dashboard and persisted history
         run: |
