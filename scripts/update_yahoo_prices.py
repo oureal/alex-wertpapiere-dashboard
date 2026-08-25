@@ -17,11 +17,6 @@ from providers.yfinance_provider import YFinanceProvider
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def _fresh_today(item: dict, today) -> bool:
-    fetched = item.get("fetched_at")
-    return bool(fetched and item.get("status") == "fresh" and datetime.fromisoformat(fetched.replace("Z", "+00:00")).date() == today)
-
-
 def update_prices(
     instruments,
     mappings,
@@ -50,13 +45,12 @@ def update_prices(
         instrument_id = instrument["id"]
         fallback = old.get(instrument_id)
         mapping = mapping_by_id[instrument_id]
-        if fallback and _fresh_today(fallback, now.date()):
-            prices.append(fallback)
-            continue
 
-        # Three exceptional holdings use one explicitly reviewed public page each.
-        # This keeps the private dashboard simple: page works -> use it; otherwise
-        # continue with the existing provider and ultimately keep the last price.
+        # Every workflow execution is an intentional refresh request. Do not reuse
+        # a quote merely because it was already fetched earlier on the same day;
+        # otherwise the scheduled evening update would keep the morning timestamp.
+        # Provider failures still fall back to the last positive stored quote below.
+
         if instrument_id in SIMPLE_PAGE_APPROVED and simple_page_provider is not None:
             try:
                 simple_quote = simple_page_provider.quote(
