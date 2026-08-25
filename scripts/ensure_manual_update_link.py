@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep dashboard navigation, manual update link and responsive layout synchronized."""
+"""Keep dashboard navigation, history view, manual update link and responsive layout synchronized."""
 from pathlib import Path
 import re
 
@@ -45,6 +45,41 @@ NAV = """<nav class="nav" id="nav">
     <button data-page="risk"><span class="n">6</span>Risiko</button>
   </nav>"""
 
+HISTORY_HEADER = """<div class="header"><div><h1>Gesamtdepotentwicklung</h1><div class="muted">Fortlaufende Zeitreihe aller erfolgreich gespeicherten Depot-Stichtage</div></div><div class="badge" id="historyPeriodBadge"></div></div>"""
+
+HISTORY_JS = r"""
+const parseHistoryDate=s=>{const [d,m,y]=s.split('.').map(Number);return new Date(Date.UTC(y,m-1,d));};
+const historyFirst=DATA.history[0], historyLast=DATA.history[DATA.history.length-1];
+const historyDelta=historyLast.value-historyFirst.value;
+const historyPct=historyFirst.value?historyDelta/historyFirst.value:0;
+const historyDays=Math.round((parseHistoryDate(historyLast.date)-parseHistoryDate(historyFirst.date))/86400000);
+document.getElementById('historyPeriodBadge').textContent=`${historyFirst.date} → ${historyLast.date}`;
+const historyKpis=[
+ [`Erster Stichtag · ${historyFirst.date}`,eur.format(historyFirst.value),'Beginn der gespeicherten Zeitreihe'],
+ [`Aktueller Stichtag · ${historyLast.date}`,eur.format(historyLast.value),'letzter erfolgreicher Depotstand'],
+ ['Veränderung seit Beginn',eur.format(historyDelta),(historyDelta>=0?'+':'')+pct.format(historyPct)],
+ ['Historie',`${DATA.history.length} Stichtage`,`${historyDays} Kalendertage`]
+];
+document.getElementById('historyKpis').innerHTML=historyKpis.map(x=>`<div class="card kpi"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="note">${x[2]}</div></div>`).join('');
+bars('historyBars',DATA.history.map(x=>({name:x.date,value:x.value})),Math.max(...DATA.history.map(x=>x.value)),Math.min(12,DATA.history.length));
+function renderHistoryChart(){
+ const el=document.getElementById('historyChart'), W=Math.max(520,el.clientWidth||700), H=340, pad={l:70,r:30,t:28,b:52};
+ const vals=DATA.history.map(x=>x.value), min=Math.min(...vals)*.985, max=Math.max(...vals)*1.015, span=Math.max(1,max-min);
+ const pts=DATA.history.map((x,i)=>({x:pad.l+i*(W-pad.l-pad.r)/(Math.max(1,DATA.history.length-1)),y:pad.t+(max-x.value)/span*(H-pad.t-pad.b),...x}));
+ const grid=[0,.25,.5,.75,1].map(f=>{const v=min+(max-min)*(1-f),y=pad.t+f*(H-pad.t-pad.b);return `<line x1="${pad.l}" y1="${y}" x2="${W-pad.r}" y2="${y}" stroke="#2a3656"/><text x="${pad.l-10}" y="${y+4}" text-anchor="end" fill="#9aa7c2" font-size="11">${eur.format(v)}</text>`}).join('');
+ const line=pts.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ');
+ const area=`M ${pts[0].x} ${H-pad.b} ${pts.map(p=>`L ${p.x} ${p.y}`).join(' ')} L ${pts[pts.length-1].x} ${H-pad.b} Z`;
+ const labelEvery=Math.max(1,Math.ceil(pts.length/6));
+ const dots=pts.map((p,i)=>`<circle cx="${p.x}" cy="${p.y}" r="5" fill="#6ee7b7" stroke="#0b1020" stroke-width="3"/>${(i%labelEvery===0||i===pts.length-1)?`<text x="${p.x}" y="${p.y-13}" text-anchor="middle" fill="#eef2ff" font-size="11" font-weight="700">${eur.format(p.value)}</text><text x="${p.x}" y="${H-20}" text-anchor="middle" fill="#9aa7c2" font-size="10">${p.date}</text>`:''}`).join('');
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" role="img" aria-label="Gesamtdepotentwicklung">${grid}<path d="${area}" fill="#60a5fa" opacity=".10"/><path d="${line}" fill="none" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>${dots}</svg>`;
+}
+renderHistoryChart();
+document.getElementById('historyNotes').innerHTML=`
+ <p><b>Gesamtwert:</b> von ${eur.format(historyFirst.value)} am ${historyFirst.date} auf ${eur.format(historyLast.value)} am ${historyLast.date} – eine Veränderung von <b>${eur.format(historyDelta)} (${historyDelta>=0?'+':''}${pct.format(historyPct)})</b>.</p>
+ <p><b>Aktuelle Struktur:</b> direkte Aktien ${eur.format(DATA.meta.directTotal)}, indirekt aufgelöste Aktien ${eur.format(DATA.meta.indirectTotal)} und ${eur.format(DATA.meta.unresolved)} nicht aufgelöste bzw. Nicht-Aktien-Bausteine.</p>
+ <p class="muted small"><b>Hinweis:</b> Jeder erfolgreiche tägliche oder manuelle Aktualisierungslauf speichert maximal einen Depotwert pro Kalendertag. Die Zeitreihe zeigt Depotwerte, keine um Käufe, Verkäufe oder Ein-/Auszahlungen bereinigte Investment-Performance.</p>`;
+""".strip()
+
 
 def main() -> int:
     text = INDEX.read_text()
@@ -62,9 +97,20 @@ def main() -> int:
     else:
         raise SystemExit("Dashboard navigation block not found")
 
-    # The bare URL should open Gesamtdepotentwicklung.
     text = re.sub(r'<section id="dashboard" class="page(?: active)?">', '<section id="dashboard" class="page">', text, count=1)
     text = re.sub(r'<section id="history" class="page(?: active)?">', '<section id="history" class="page active">', text, count=1)
+
+    history_header_pattern = r'(<section id="history" class="page active">\s*)<div class="header">.*?</div>\s*(?=<div class="grid kpis" id="historyKpis">)'
+    if re.search(history_header_pattern, text, flags=re.S):
+        text = re.sub(history_header_pattern, r'\1' + HISTORY_HEADER + "\n ", text, count=1, flags=re.S)
+    else:
+        raise SystemExit("History header block not found")
+
+    history_js_pattern = r'const historyDelta=.*?(?=const directCountries=)'
+    if re.search(history_js_pattern, text, flags=re.S):
+        text = re.sub(history_js_pattern, HISTORY_JS + "\n", text, count=1, flags=re.S)
+    else:
+        raise SystemExit("History JavaScript block not found")
 
     button_pattern = r'<a class="manual-update" id="manualUpdateLink".*?</a>\s*<span class="manual-update-note">.*?</span>'
     if re.search(button_pattern, text, flags=re.S):
@@ -77,7 +123,7 @@ def main() -> int:
 
     if text != original:
         INDEX.write_text(text)
-        print("Dashboard shell synchronized: history start page, navigation, manual update link and responsive layout.")
+        print("Dashboard shell synchronized: dynamic history, history start page, navigation, manual update link and responsive layout.")
     else:
         print("Dashboard shell already current.")
     return 0
