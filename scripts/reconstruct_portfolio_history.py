@@ -15,6 +15,10 @@ VALIDATED_START=date(2026,7,17)
 MARKET={
 'US0846707026':('BRK-B','USD'),'DE0008404005':('ALV.DE','EUR'),'US0079031078':('AMD','USD'),'US02079K1079':('GOOG','USD'),'US67066G1040':('NVDA','USD'),'US5951121038':('MU','USD'),'US8740391003':('TSM','USD'),'US11135F1012':('AVGO','USD'),'US5738741041':('MRVL','USD'),'FR0000121014':('MC.PA','EUR'),'DE0007037129':('RWE.DE','EUR'),'DE0007100000':('MBG.DE','EUR'),'CH0038863350':('NESN.SW','CHF'),'US61174X1090':('MNST','USD'),'US2441991054':('DE','USD'),'US53814L1089':('LTHM','USD'),'US35834F1049':('FREY','USD'),'DE0006289382':('EXI2.DE','EUR'),'IE00BP3QZB59':('IS3S.DE','EUR'),'GB00BJYDH287':('WBIT.DE','EUR'),'IE00B1XNHC34':('IQQH.DE','EUR'),'IE00B4L5Y983':('EUNL.DE','EUR'),'IE00BF4RFH31':('IUSN.DE','EUR'),'DE000A0F5UH1':('ISPA.DE','EUR'),'DE000ENER6Y0':('ENR.DE','EUR'),'DE000ENERGY0':('ENR.DE','EUR'),
 'US5949181045':('MSFT','USD'),'DE0007236101':('SIE.DE','EUR'),'US5324571083':('LLY','USD'),'US0378331005':('AAPL','USD'),'IE000S9YS762':('LIN','USD'),'GB0005405286':('HSBA.L','GBP'),'DE000A0S9GB0':('4GLD.DE','EUR'),'US7427181091':('PG','USD'),'US88160R1014':('TSLA','USD'),'US8334451098':('SNOW','USD'),'US81762P1021':('NOW','USD'),'US70450Y1038':('PYPL','USD'),'DE000BASF111':('BAS.DE','EUR'),'FR0000125486':('DG.PA','EUR'),'AT0000746409':('VER.VI','EUR'),'DE0005552004':('DHL.DE','EUR'),'DE0007664039':('VOW3.DE','EUR'),'US62914V1061':('NIO','USD')}
+# Yahoo quotes London-listed HSBC in GBp (pence), not GBP. Convert the quote
+# to pounds before applying the GBP/EUR exchange rate. Missing this factor was
+# the source of the ~EUR 50k jump in Dec-2021 and most of the end-level error.
+QUOTE_SCALE={'HSBA.L':0.01}
 
 def iso(v): return datetime.strptime(v,'%Y-%m-%d').date()
 def de(v): return v.strftime('%d.%m.%Y')
@@ -31,7 +35,8 @@ def weekly(start,end):
 def series(symbol,start,end):
     try:
         f=yf.Ticker(symbol).history(start=start.isoformat(),end=(end+timedelta(days=1)).isoformat(),auto_adjust=False,actions=False)
-        return {i.date():float(v) for i,v in f['Close'].items() if float(v)>0} if f is not None and not f.empty and 'Close' in f else {}
+        scale=QUOTE_SCALE.get(symbol,1.0)
+        return {i.date():float(v)*scale for i,v in f['Close'].items() if float(v)>0} if f is not None and not f.empty and 'Close' in f else {}
     except Exception as e:
         print(f'Historical quote fallback for {symbol}: {e}'); return {}
 def prev(s,day):
@@ -84,7 +89,7 @@ def reconstruct():
             securities+=q*unit
         value=cash+securities; gain=value-contrib
         rows.append({'date':de(point),'value':round(value,2),'net_contributions':round(contrib,2),'gain':round(gain,2),'simple_return':round(gain/contrib,8) if contrib>0 else None,'reconstructed':True,'unresolved_positions':unresolved})
-    meta={'schema_version':4,'method':'weekly combined Depot 1 + Depot 2 transaction-ledger reconstruction, level-anchored to first validated snapshot','start':start.isoformat(),'end_exclusive':VALIDATED_START.isoformat(),'points':len(rows),'transactions':len(txs),'depot1_transactions':199,'depot2_transactions':240,'market_mapped_isins':len([i for i in isins if i in MARKET]),'all_isins':len(isins),'yahoo_valuation_uses':yahoo,'fallback_valuation_uses':fb,'warning':'Pre-17.07.2026 values are reconstructed estimates; their absolute level is anchored to the first validated snapshot to remove ledger/snapshot basis mismatch.'}
+    meta={'schema_version':5,'method':'weekly combined Depot 1 + Depot 2 transaction-ledger reconstruction without artificial level offset','start':start.isoformat(),'end_exclusive':VALIDATED_START.isoformat(),'points':len(rows),'transactions':len(txs),'depot1_transactions':199,'depot2_transactions':240,'market_mapped_isins':len([i for i in isins if i in MARKET]),'all_isins':len(isins),'yahoo_valuation_uses':yahoo,'fallback_valuation_uses':fb,'quote_unit_fixes':['HSBA.L: GBp -> GBP (x0.01)'],'warning':'Pre-17.07.2026 values are reconstructed estimates from documented transactions and historical prices; no additive or multiplicative level adjustment is applied.'}
     return rows,meta
 def merge(rows,meta):
     old=json.loads(HISTORY.read_text(encoding='utf-8')) if HISTORY.exists() else {'history':[]}
@@ -93,25 +98,21 @@ def merge(rows,meta):
         try:
             if deparse(r['date'])>=VALIDATED_START: validated.append(dict(r))
         except Exception: pass
-    if not validated: raise ValueError('No validated 17.07.2026+ history available for anchoring')
+    if not validated: raise ValueError('No validated 17.07.2026+ history available')
     validated.sort(key=lambda r:deparse(r['date']))
-    anchor=float(validated[0]['value'])
-    raw_end=float(rows[-1]['value'])
-    level_adjustment=anchor-raw_end
-    # The ledger and the validated snapshot are different bases. Preserve every
-    # reconstructed week-to-week move, but translate the reconstructed level so
-    # its endpoint meets the independently validated 17 July snapshot exactly.
-    adjusted=[]
-    for r in rows:
-        x=dict(r); x['value']=round(float(x['value'])+level_adjustment,2); x['gain']=round(x['value']-float(x['net_contributions']),2); x['simple_return']=round(x['gain']/float(x['net_contributions']),8) if float(x['net_contributions'])>0 else None; adjusted.append(x)
-    meta['anchor_date']=validated[0]['date']; meta['anchor_value_eur']=anchor; meta['raw_reconstructed_end_value_eur']=raw_end; meta['level_adjustment_eur']=round(level_adjustment,2)
-    # Avoid two points for the same boundary date. Reconstruction ends on 16 July;
-    # the first independently validated observation remains 17 July.
-    adjusted=[r for r in adjusted if deparse(r['date'])<VALIDATED_START]
-    combined=[{k:v for k,v in r.items() if k not in {'reconstructed','unresolved_positions'}} for r in adjusted]+validated
-    HISTORY.write_text(json.dumps({'schema_version':5,'description':'Combined Depot 1 + Depot 2 cash-flow-aware history; reconstructed level anchored to the validated 17.07.2026 snapshot, validated thereafter.','reconstruction':meta,'history':combined},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    RECONSTRUCTED.write_text(json.dumps({'schema_version':4,'meta':meta,'history':adjusted},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(f"Reconstructed {len(adjusted)} historical points; anchored endpoint by {level_adjustment:.2f} EUR to {validated[0]['date']} validated value {anchor:.2f} EUR; retained {len(validated)} validated points.")
+    rows=[r for r in rows if deparse(r['date'])<VALIDATED_START]
+    raw_end=float(rows[-1]['value']); anchor=float(validated[0]['value'])
+    gap=raw_end-anchor; gap_pct=abs(gap)/max(anchor,1.0)
+    meta['first_validated_date']=validated[0]['date']; meta['first_validated_value_eur']=anchor
+    meta['raw_reconstructed_end_value_eur']=raw_end; meta['reconstruction_to_validated_gap_eur']=round(gap,2); meta['reconstruction_to_validated_gap_pct']=round(gap_pct,6)
+    if any(float(r['value'])<0 for r in rows):
+        raise ValueError('Negative reconstructed depot value detected; historical valuation is not plausible')
+    # Do not falsify history to force a match. A residual transition gap is recorded
+    # explicitly and can be investigated, while the validated series remains untouched.
+    combined=[{k:v for k,v in r.items() if k not in {'reconstructed','unresolved_positions'}} for r in rows]+validated
+    HISTORY.write_text(json.dumps({'schema_version':6,'description':'Combined Depot 1 + Depot 2 cash-flow-aware history; transaction-based reconstruction without artificial level adjustment, validated from 17.07.2026 onward.','reconstruction':meta,'history':combined},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    RECONSTRUCTED.write_text(json.dumps({'schema_version':5,'meta':meta,'history':rows},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print(f"Reconstructed {len(rows)} positive historical points without level offset. End {raw_end:.2f} EUR vs validated {anchor:.2f} EUR; gap {gap:.2f} EUR ({gap_pct:.2%}).")
 def main():
     rows,meta=reconstruct()
     if not rows or rows[0]['net_contributions']<=0:raise ValueError('Combined history must begin at the first positive external contribution')
