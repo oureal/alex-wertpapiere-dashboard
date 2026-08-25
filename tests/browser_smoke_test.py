@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
-"""Real-browser smoke test for the generated dashboard.
-
-This is intentionally small: it starts a local HTTP server, loads index.html in
-headless Chromium, clicks every navigation page, fails on JavaScript errors, and
-checks that the main dynamic regions actually rendered.
-"""
+"""Real-browser smoke test for the generated dashboard."""
 from __future__ import annotations
 
 import contextlib
+import re
 import socket
 import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -64,15 +60,27 @@ def main() -> int:
                     count = page.locator(selector).count()
                     assert count >= minimum, f"Page {page_id}: expected >= {minimum} elements for {selector}, got {count}"
 
-            # Stichtagsvergleich intentionally shows only date, bar and EUR value, never percentages.
-            history_values = page.locator("#historyBars .bar-value")
-            assert history_values.count() > 0
-            for i in range(history_values.count()):
-                text = history_values.nth(i).inner_text()
-                assert "%" not in text, f"Unexpected percentage in Stichtagsvergleich row {i}: {text}"
-                assert "€" in text, f"Missing EUR value in Stichtagsvergleich row {i}: {text}"
+            # History axis must use years with quarter labels, not arbitrary dates.
+            years = page.locator("#historyChart .history-year-label")
+            quarters = page.locator("#historyChart .history-quarter-label")
+            assert years.count() >= 6, f"Expected year labels, got {years.count()}"
+            assert quarters.count() >= 20, f"Expected quarterly labels, got {quarters.count()}"
+            assert all(re.fullmatch(r"20\d{2}", years.nth(i).inner_text()) for i in range(years.count()))
+            assert all(re.fullmatch(r"Q[1-4]", quarters.nth(i).inner_text()) for i in range(quarters.count()))
+            chart_text = page.locator("#historyChart").inner_text()
+            assert "Kumulierter Geldfluss" in chart_text
+            assert "Nettoeinzahlungen" not in chart_text
 
-            # Every donut segment must expose a native SVG title tooltip with name + percentage.
+            # Checkpoint comparison uses only year + half-year intervals and EUR values.
+            history_rows = page.locator("#historyBars .bar-row")
+            assert history_rows.count() >= 10
+            for i in range(history_rows.count()):
+                row_text = history_rows.nth(i).inner_text()
+                assert re.search(r"20\d{2}\s*·\s*H[12]", row_text), f"Missing half-year interval in row {i}: {row_text}"
+                assert "%" not in row_text, f"Unexpected percentage in Stichtagsvergleich row {i}: {row_text}"
+                assert "€" in row_text, f"Missing EUR value in Stichtagsvergleich row {i}: {row_text}"
+                assert not re.search(r"\d{2}\.\d{2}\.20\d{2}", row_text), f"Raw date still shown in row {i}: {row_text}"
+
             for selector in ("#assetDonut .donut-segment", "#sectorDonut .donut-segment"):
                 segments = page.locator(selector)
                 assert segments.count() > 0
@@ -86,7 +94,7 @@ def main() -> int:
         server.shutdown()
         server.server_close()
 
-    print("Browser gate passed: all 8 pages, checkpoint EUR-only rows, donut callouts and tooltips render with no JavaScript errors.")
+    print("Browser gate passed: all pages render; history uses year/quarter axis, half-year checkpoints and cumulative cash-flow wording.")
     return 0
 
 
