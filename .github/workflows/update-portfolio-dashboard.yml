@@ -15,6 +15,7 @@ name: Update portfolio dashboard
       - "scripts/reconstruct_portfolio_history.py"
       - "scripts/update_history_ui.py"
       - "scripts/validate_dashboard_complete.py"
+      - "tests/**"
       - "data/transactions.json"
       - "data/transactions-depot1.json"
 
