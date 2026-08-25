@@ -28,14 +28,17 @@ function renderHistoryChart(){
  const labelCount=Math.min(7,pts.length),idx=new Set(Array.from({length:labelCount},(_,i)=>Math.round(i*(pts.length-1)/Math.max(1,labelCount-1))));
  const labels=pts.map((p,i)=>idx.has(i)?`<text x="${p.x}" y="${H-20}" text-anchor="middle" fill="#9aa7c2" font-size="10">${p.date}</text>`:'').join('');
  const legend=`<g transform="translate(${pad.l+8},12)"><line x1="0" y1="0" x2="24" y2="0" stroke="#60a5fa" stroke-width="3"/><text x="30" y="4" fill="#eef2ff" font-size="11">Gesamtdepot</text><line x1="120" y1="0" x2="144" y2="0" stroke="#fbbf24" stroke-width="3" stroke-dasharray="6 5"/><text x="150" y="4" fill="#eef2ff" font-size="11">Nettoeinzahlungen</text></g>`;
- el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" role="img" aria-label="Gesamtdepotentwicklung Depot 1 und Depot 2 seit 2020">${grid}<path d="${path(cpts)}" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="6 5"/><path d="${path(pts)}" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>${labels}${legend}</svg>`;
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="100%" role="img" aria-label="Gesamtdepotentwicklung Depot 1 und Depot 2 seit erster Einzahlung">${grid}<path d="${path(cpts)}" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="6 5"/><path d="${path(pts)}" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>${labels}${legend}</svg>`;
 }
 renderHistoryChart();'''
-NOTICE='''Die Historie umfasst jetzt <b>Depot 1 und Depot 2</b>. Werte vor 17.07.2026 sind aus den insgesamt 439 dokumentierten Onvista-Transaktionen und historischen Kursen rekonstruiert; spätere Werte sind validierte Dashboard-Stichtage. Die gelbe Linie zeigt die kumulierten Nettoeinzahlungen beider Depots. Rekonstruierte historische Werte können von damaligen Broker-Stichtagen abweichen.'''
+NOTICE='''Die Historie umfasst <b>Depot 1 und Depot 2</b>. Werte vor 17.07.2026 sind aus den insgesamt 439 dokumentierten Onvista-Transaktionen und historischen Kursen rekonstruiert und auf den ersten validierten Gesamtdepot-Stichtag abgestimmt; spätere Werte sind validierte Dashboard-Stichtage. Die gelbe Linie zeigt die kumulierten Nettoeinzahlungen beider Depots. Rekonstruierte historische Werte können von damaligen Broker-Stichtagen abweichen.'''
 def main():
- text=INDEX.read_text(encoding='utf-8');pat=re.compile(r"const firstHistory=DATA\.history\[0\], lastHistory=DATA\.history\[DATA\.history\.length-1\];.*?renderHistoryChart\(\);",re.S)
+ text=INDEX.read_text(encoding='utf-8')
+ # Remove the obsolete late-running block that used to overwrite the cash-flow-aware KPIs.
+ text=re.sub(r'/\* dynamic-history-labels-v2 \*/\s*\(function\(\)\{.*?\}\)\(\);\s*', '', text, flags=re.S)
+ pat=re.compile(r"const firstHistory=DATA\.history\[0\], lastHistory=DATA\.history\[DATA\.history\.length-1\];.*?renderHistoryChart\(\);",re.S)
  if not pat.search(text):raise ValueError('Could not locate history chart block')
  text=pat.sub(BLOCK,text,count=1)
- text=re.sub(r'Die historischen Onvista-Transaktionen bilden <b>Depot 2</b>.*?Nettoeinzahlungen von Depot 2\.',NOTICE,text,flags=re.S)
- INDEX.write_text(text,encoding='utf-8');print('Updated unified Depot 1 + Depot 2 history UI.')
+ text=re.sub(r'<div class="notice small" style="margin-top:18px">.*?</div>',f'<div class="notice small" style="margin-top:18px">{NOTICE}</div>',text,count=1,flags=re.S)
+ INDEX.write_text(text,encoding='utf-8');print('Updated unified Depot 1 + Depot 2 history UI and removed obsolete KPI override.')
 if __name__=='__main__':main()
