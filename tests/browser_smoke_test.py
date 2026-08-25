@@ -64,6 +64,14 @@ def main() -> int:
                     count = page.locator(selector).count()
                     assert count >= minimum, f"Page {page_id}: expected >= {minimum} elements for {selector}, got {count}"
 
+            # Stichtagsvergleich intentionally shows only date, bar and EUR value, never percentages.
+            history_values = page.locator("#historyBars .bar-value")
+            assert history_values.count() > 0
+            for i in range(history_values.count()):
+                text = history_values.nth(i).inner_text()
+                assert "%" not in text, f"Unexpected percentage in Stichtagsvergleich row {i}: {text}"
+                assert "€" in text, f"Missing EUR value in Stichtagsvergleich row {i}: {text}"
+
             # Every donut segment must expose a native SVG title tooltip with name + percentage.
             for selector in ("#assetDonut .donut-segment", "#sectorDonut .donut-segment"):
                 segments = page.locator(selector)
@@ -78,7 +86,7 @@ def main() -> int:
         server.shutdown()
         server.server_close()
 
-    print("Browser gate passed: all 8 pages, donut callouts and tooltips render with no JavaScript errors.")
+    print("Browser gate passed: all 8 pages, checkpoint EUR-only rows, donut callouts and tooltips render with no JavaScript errors.")
     return 0
 
 
