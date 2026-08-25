@@ -59,10 +59,11 @@ def test_same_day_refresh_keeps_previous_day_as_change_baseline():
     updated = refresh_document(index, portfolio, prices)
     data = _dashboard_data(updated)
 
-    assert data["history"] == [
-        {"date": "21.08.2026", "value": 100.0},
-        {"date": "24.08.2026", "value": 125.0},
+    assert [(row["date"], row["value"]) for row in data["history"]] == [
+        ("21.08.2026", 100.0),
+        ("24.08.2026", 125.0),
     ]
+    assert all("net_contributions" in row for row in data["history"])
     assert data["meta"]["previousTotal"] == 100.0
     assert data["meta"]["change"] == 25.0
     assert data["meta"]["changePct"] == 0.25
