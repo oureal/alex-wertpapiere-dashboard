@@ -8,7 +8,7 @@ name: Update portfolio dashboard
   push:
     paths:
       - ".github/workflows/update-portfolio-dashboard.yml"
-      - "scripts/ensure_manual_update_link.py"
+      - "scripts/sync_dashboard_header.py"
       - "scripts/update_dashboard_data.py"
       - "scripts/update_movers_data.py"
 
@@ -96,8 +96,8 @@ jobs:
       - name: Refresh security movers history and rankings
         run: python scripts/update_movers_data.py
 
-      - name: Ensure dashboard shell is current
-        run: python scripts/ensure_manual_update_link.py
+      - name: Synchronize dashboard header
+        run: python scripts/sync_dashboard_header.py
 
       - name: Verify dashboard and persisted history
         run: |
@@ -122,6 +122,7 @@ jobs:
           assert 'id="manualUpdateLink"' in html, "Manual update link missing"
           assert 'id="historyPeriodBadge"' in html, "Dynamic history badge missing"
           assert 'id="moversGrid"' in html, "Movers page missing"
+          assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0), "Old sidebar label still present"
           print(f"Dashboard matches portfolio output with {len(history)} portfolio and {len(security_history)} security history points.")
           PY
 
