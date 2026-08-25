@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Keep dashboard navigation, history view, manual update link and responsive layout synchronized."""
 from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
+import json
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -77,6 +80,17 @@ def main() -> int:
     original = text
 
     text = text.replace("Portfolio Lens", "Portfolio")
+    prices_path = ROOT / "data/prices/latest.json"
+    if prices_path.exists():
+        prices = json.loads(prices_path.read_text())
+        stamps = [x.get("fetched_at") for x in prices.get("prices", []) if x.get("fetched_at")]
+        if stamps:
+            newest = max(datetime.fromisoformat(s.replace("Z", "+00:00")) for s in stamps)
+            local = newest.astimezone(ZoneInfo("Europe/Vienna"))
+            stamp = local.strftime("%d.%m.%Y, %H:%M Uhr")
+            text = re.sub(r"Look-through Dashboard · Stand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?", f"Look-through Dashboard · Stand {stamp}", text)
+            text = re.sub(r"Datenstand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?", f"Datenstand {stamp}", text)
+
     if ".manual-update{" not in text:
         text = text.replace("</style>", STYLE + "\n</style>", 1)
     if "/* responsive-dashboard-v2 */" not in text:
