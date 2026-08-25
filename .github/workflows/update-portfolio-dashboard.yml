@@ -156,7 +156,7 @@ jobs:
           assert security_history, "Security history missing"
           assert '439 Vorgänge' in html, "Rendered combined transaction count missing"
           assert 'Depot 1' in html and 'Depot 2' in html, "Depot labels missing from transactions"
-          assert 'Gesamtdepotentwicklung' in html and 'Nettoeinzahlungen' in html
+          assert 'Gesamtdepotentwicklung' in html and 'Kumulierter Geldfluss' in html
           assert 'id="manualUpdateLink"' in html
           assert 'data-page="transactions"' in html and 'id="transactions"' in html
           assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0)
