@@ -1,8 +1,6 @@
-name: Deploy dashboard to GitHub Pages
+name: Deploy dashboard to GitHub Pages (manual fallback)
 
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +9,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-manual-fallback"
   cancel-in-progress: true
 
 jobs:
