@@ -76,6 +76,7 @@ def main() -> int:
     text = INDEX.read_text()
     original = text
 
+    text = text.replace("Portfolio Lens", "Portfolio")
     if ".manual-update{" not in text:
         text = text.replace("</style>", STYLE + "\n</style>", 1)
     if "/* responsive-dashboard-v2 */" not in text:
@@ -85,7 +86,6 @@ def main() -> int:
     text = re.sub(r'<section id="dashboard" class="page(?: active)?">', '<section id="dashboard" class="page">', text, count=1)
     text = re.sub(r'<section id="history" class="page(?: active)?">', '<section id="history" class="page active">', text, count=1)
 
-    # Replace the static history header directly and reliably.
     history_section = re.search(r'<section id="history" class="page active">(.*?)<div class="grid kpis" id="historyKpis">', text, flags=re.S)
     if not history_section:
         raise SystemExit("History section/header not found")
@@ -102,7 +102,6 @@ def main() -> int:
     else:
         text = text.replace("</nav>", "</nav>\n" + BUTTON, 1)
 
-    # Remove any earlier dynamic override, then inject the current one before closing script.
     text = re.sub(r'/\* dynamic-history-labels-v2 \*/.*?\}\)\(\);\s*', '', text, flags=re.S)
     if "</script>" not in text:
         raise SystemExit("Closing script tag not found")
