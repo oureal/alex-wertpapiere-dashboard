@@ -20,9 +20,9 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGES = {
     "history": [("#historyKpis .card", 4), ("#historyChart svg", 1), ("#historyBars .bar-row", 1)],
     "movers": [("#moversGrid .mover-card", 4), ("#moversGrid .mover-side", 8)],
-    "dashboard": [("#kpis .card", 4), ("#topBars .bar-row", 1), ("#assetLegend .legend-row", 1)],
+    "dashboard": [("#kpis .card", 4), ("#topBars .bar-row", 1), ("#assetLegend .legend-row", 1), ("#assetDonut .donut-segment", 1), ("#assetDonut .donut-callout", 8)],
     "treemap": [("#treemapBox .tile", 1)],
-    "sectors": [("#sectorBars .bar-row", 1), ("#sectorLegend .legend-row", 1)],
+    "sectors": [("#sectorBars .bar-row", 1), ("#sectorLegend .legend-row", 1), ("#sectorDonut .donut-segment", 1), ("#sectorDonut .donut-callout", 8)],
     "regions": [("#directCountries .bar-row", 1), ("#nonEquity .bar-row", 1)],
     "risk": [("#riskKpis .card", 4), ("#riskMeters .risk", 1), ("#riskNotes p", 1)],
     "transactions": [("#transactions tbody tr", 439)],
@@ -64,13 +64,21 @@ def main() -> int:
                     count = page.locator(selector).count()
                     assert count >= minimum, f"Page {page_id}: expected >= {minimum} elements for {selector}, got {count}"
 
+            # Every donut segment must expose a native SVG title tooltip with name + percentage.
+            for selector in ("#assetDonut .donut-segment", "#sectorDonut .donut-segment"):
+                segments = page.locator(selector)
+                assert segments.count() > 0
+                for i in range(segments.count()):
+                    title = segments.nth(i).locator("title").text_content() or ""
+                    assert "·" in title and "%" in title, f"Missing name/percentage tooltip for {selector} segment {i}"
+
             assert not browser_errors, "Browser JavaScript/console errors:\n" + "\n".join(browser_errors)
             browser.close()
     finally:
         server.shutdown()
         server.server_close()
 
-    print("Browser gate passed: all 8 pages render with no JavaScript errors.")
+    print("Browser gate passed: all 8 pages, donut callouts and tooltips render with no JavaScript errors.")
     return 0
 
 
