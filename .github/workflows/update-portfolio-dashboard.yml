@@ -8,6 +8,7 @@ name: Update portfolio dashboard
   push:
     paths:
       - ".github/workflows/update-portfolio-dashboard.yml"
+      - "requirements-dev.txt"
       - "scripts/sync_dashboard_header.py"
       - "scripts/update_dashboard_data.py"
       - "scripts/update_movers_data.py"
@@ -161,6 +162,12 @@ jobs:
           assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0)
           print(f"Validated combined history with {len(history)} points and 439 transactions.")
           PY
+
+      - name: Install Chromium for browser deployment gate
+        run: python -m playwright install --with-deps chromium
+
+      - name: Browser end-to-end deployment gate
+        run: python tests/browser_smoke_test.py
 
       - name: Upload private dashboard artifact
         uses: actions/upload-artifact@v7
