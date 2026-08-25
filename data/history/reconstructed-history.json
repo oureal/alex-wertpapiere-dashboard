@@ -1,8 +1,8 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "meta": {
-    "schema_version": 1,
-    "method": "weekly transaction-ledger reconstruction with Yahoo historical close where available and last transaction EUR price fallback",
+    "schema_version": 2,
+    "method": "weekly transaction-ledger reconstruction with external cashflows separated from portfolio valuation",
     "start": "2022-08-16",
     "end_exclusive": "2026-07-17",
     "points": 206,
@@ -17,1236 +17,1854 @@
     {
       "date": "16.08.2022",
       "value": 4000.0,
+      "net_contributions": 4000.0,
+      "gain": 0.0,
+      "simple_return": 0.0,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.08.2022",
       "value": 4941.57,
+      "net_contributions": 4999.99,
+      "gain": -58.42,
+      "simple_return": -0.01168403,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.08.2022",
       "value": 4866.29,
+      "net_contributions": 4999.99,
+      "gain": -133.7,
+      "simple_return": -0.02674005,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "02.09.2022",
       "value": 5779.15,
+      "net_contributions": 5999.99,
+      "gain": -220.84,
+      "simple_return": -0.03680706,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "09.09.2022",
       "value": 6871.94,
+      "net_contributions": 6999.99,
+      "gain": -128.05,
+      "simple_return": -0.01829232,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.09.2022",
       "value": 6737.91,
+      "net_contributions": 6999.99,
+      "gain": -262.08,
+      "simple_return": -0.03744064,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "23.09.2022",
       "value": 7579.94,
+      "net_contributions": 7999.99,
+      "gain": -420.05,
+      "simple_return": -0.05250631,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "30.09.2022",
       "value": 8990.47,
+      "net_contributions": 9499.99,
+      "gain": -509.52,
+      "simple_return": -0.05363394,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "07.10.2022",
       "value": 9990.9,
+      "net_contributions": 10489.97,
+      "gain": -499.07,
+      "simple_return": -0.04757592,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "14.10.2022",
       "value": 9936.78,
+      "net_contributions": 10489.97,
+      "gain": -553.19,
+      "simple_return": -0.05273476,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "21.10.2022",
       "value": 9919.66,
+      "net_contributions": 10470.19,
+      "gain": -550.53,
+      "simple_return": -0.05258035,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "28.10.2022",
       "value": 10059.61,
+      "net_contributions": 10470.19,
+      "gain": -410.58,
+      "simple_return": -0.03921395,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "04.11.2022",
       "value": 11565.09,
+      "net_contributions": 11939.64,
+      "gain": -374.55,
+      "simple_return": -0.03137047,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "11.11.2022",
       "value": 11760.91,
+      "net_contributions": 11939.64,
+      "gain": -178.73,
+      "simple_return": -0.01496976,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "18.11.2022",
       "value": 13212.98,
+      "net_contributions": 13444.42,
+      "gain": -231.44,
+      "simple_return": -0.0172145,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "25.11.2022",
       "value": 13324.26,
+      "net_contributions": 13434.5,
+      "gain": -110.24,
+      "simple_return": -0.00820594,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "02.12.2022",
       "value": 19612.69,
+      "net_contributions": 19605.06,
+      "gain": 7.63,
+      "simple_return": 0.00038934,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "09.12.2022",
       "value": 19409.82,
+      "net_contributions": 19605.06,
+      "gain": -195.24,
+      "simple_return": -0.00995887,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.12.2022",
       "value": 19112.21,
+      "net_contributions": 19605.06,
+      "gain": -492.85,
+      "simple_return": -0.02513879,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "23.12.2022",
       "value": 20370.3,
+      "net_contributions": 21076.93,
+      "gain": -706.63,
+      "simple_return": -0.03352616,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "30.12.2022",
       "value": 21313.2,
+      "net_contributions": 22076.93,
+      "gain": -763.73,
+      "simple_return": -0.03459413,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "06.01.2023",
       "value": 21341.79,
+      "net_contributions": 22076.93,
+      "gain": -735.14,
+      "simple_return": -0.03329905,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "13.01.2023",
       "value": 21587.13,
+      "net_contributions": 22080.3,
+      "gain": -493.17,
+      "simple_return": -0.02233531,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "20.01.2023",
       "value": 21433.03,
+      "net_contributions": 22102.43,
+      "gain": -669.4,
+      "simple_return": -0.03028608,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "27.01.2023",
       "value": 21585.36,
+      "net_contributions": 22102.43,
+      "gain": -517.07,
+      "simple_return": -0.0233941,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.02.2023",
       "value": 23043.52,
+      "net_contributions": 23102.43,
+      "gain": -58.91,
+      "simple_return": -0.00254981,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.02.2023",
       "value": 22913.66,
+      "net_contributions": 23102.43,
+      "gain": -188.77,
+      "simple_return": -0.00817107,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "17.02.2023",
       "value": 22978.17,
+      "net_contributions": 23150.76,
+      "gain": -172.59,
+      "simple_return": -0.00745513,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "24.02.2023",
       "value": 22777.13,
+      "net_contributions": 23150.76,
+      "gain": -373.63,
+      "simple_return": -0.01613917,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.03.2023",
       "value": 24011.63,
+      "net_contributions": 24150.76,
+      "gain": -139.13,
+      "simple_return": -0.00576089,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.03.2023",
       "value": 23778.57,
+      "net_contributions": 24150.76,
+      "gain": -372.19,
+      "simple_return": -0.01541113,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "17.03.2023",
       "value": 23459.59,
+      "net_contributions": 24151.24,
+      "gain": -691.65,
+      "simple_return": -0.02863816,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "24.03.2023",
       "value": 23447.64,
+      "net_contributions": 24151.24,
+      "gain": -703.6,
+      "simple_return": -0.02913319,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "31.03.2023",
       "value": 24300.16,
+      "net_contributions": 24151.24,
+      "gain": 148.92,
+      "simple_return": 0.0061662,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "07.04.2023",
       "value": 24857.54,
+      "net_contributions": 24951.24,
+      "gain": -93.7,
+      "simple_return": -0.0037552,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "14.04.2023",
       "value": 24990.97,
+      "net_contributions": 24940.27,
+      "gain": 50.7,
+      "simple_return": 0.00203285,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "21.04.2023",
       "value": 25027.59,
+      "net_contributions": 24940.27,
+      "gain": 87.32,
+      "simple_return": 0.00350104,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "28.04.2023",
       "value": 24837.99,
+      "net_contributions": 24940.27,
+      "gain": -102.28,
+      "simple_return": -0.0041009,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "05.05.2023",
       "value": 25192.17,
+      "net_contributions": 25261.68,
+      "gain": -69.51,
+      "simple_return": -0.00275179,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "12.05.2023",
       "value": 25947.36,
+      "net_contributions": 25275.97,
+      "gain": 671.39,
+      "simple_return": 0.02656224,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.05.2023",
       "value": 26052.64,
+      "net_contributions": 25275.97,
+      "gain": 776.67,
+      "simple_return": 0.03072777,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.05.2023",
       "value": 26084.3,
+      "net_contributions": 25275.97,
+      "gain": 808.33,
+      "simple_return": 0.03198006,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "02.06.2023",
       "value": 27146.2,
+      "net_contributions": 26288.88,
+      "gain": 857.32,
+      "simple_return": 0.03261154,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "09.06.2023",
       "value": 27161.42,
+      "net_contributions": 26288.88,
+      "gain": 872.54,
+      "simple_return": 0.03319039,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.06.2023",
       "value": 27227.03,
+      "net_contributions": 26288.88,
+      "gain": 938.15,
+      "simple_return": 0.03568606,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "23.06.2023",
       "value": 26849.67,
+      "net_contributions": 26288.88,
+      "gain": 560.79,
+      "simple_return": 0.02133166,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "30.06.2023",
       "value": 27048.2,
+      "net_contributions": 26288.88,
+      "gain": 759.32,
+      "simple_return": 0.02888372,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "07.07.2023",
       "value": 27355.06,
+      "net_contributions": 26788.88,
+      "gain": 566.18,
+      "simple_return": 0.02113507,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "14.07.2023",
       "value": 27490.42,
+      "net_contributions": 26788.88,
+      "gain": 701.54,
+      "simple_return": 0.02618785,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "21.07.2023",
       "value": 27553.65,
+      "net_contributions": 26788.88,
+      "gain": 764.77,
+      "simple_return": 0.02854801,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "28.07.2023",
       "value": 27621.5,
+      "net_contributions": 26821.63,
+      "gain": 799.87,
+      "simple_return": 0.02982188,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "04.08.2023",
       "value": 27859.14,
+      "net_contributions": 27321.63,
+      "gain": 537.51,
+      "simple_return": 0.01967346,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "11.08.2023",
       "value": 27759.91,
+      "net_contributions": 27321.63,
+      "gain": 438.28,
+      "simple_return": 0.01604137,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "18.08.2023",
       "value": 27469.0,
+      "net_contributions": 27321.63,
+      "gain": 147.37,
+      "simple_return": 0.00539387,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "25.08.2023",
       "value": 27541.28,
+      "net_contributions": 27321.63,
+      "gain": 219.65,
+      "simple_return": 0.00803954,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "01.09.2023",
       "value": 28328.79,
+      "net_contributions": 28243.63,
+      "gain": 85.16,
+      "simple_return": 0.00301509,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "08.09.2023",
       "value": 28280.03,
+      "net_contributions": 28341.38,
+      "gain": -61.35,
+      "simple_return": -0.00216484,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "15.09.2023",
       "value": 28338.48,
+      "net_contributions": 28341.38,
+      "gain": -2.9,
+      "simple_return": -0.00010219,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "22.09.2023",
       "value": 28082.86,
+      "net_contributions": 28341.38,
+      "gain": -258.52,
+      "simple_return": -0.00912162,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "29.09.2023",
       "value": 29030.22,
+      "net_contributions": 29341.38,
+      "gain": -311.16,
+      "simple_return": -0.01060487,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "06.10.2023",
       "value": 28909.62,
+      "net_contributions": 29329.45,
+      "gain": -419.83,
+      "simple_return": -0.01431421,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "13.10.2023",
       "value": 28796.5,
+      "net_contributions": 29329.42,
+      "gain": -532.92,
+      "simple_return": -0.01817008,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "20.10.2023",
       "value": 28653.71,
+      "net_contributions": 29329.76,
+      "gain": -676.05,
+      "simple_return": -0.02304984,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "27.10.2023",
       "value": 28478.05,
+      "net_contributions": 29329.56,
+      "gain": -851.51,
+      "simple_return": -0.02903242,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.11.2023",
       "value": 30093.64,
+      "net_contributions": 30329.56,
+      "gain": -235.92,
+      "simple_return": -0.0077786,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.11.2023",
       "value": 30126.62,
+      "net_contributions": 30329.56,
+      "gain": -202.94,
+      "simple_return": -0.00669125,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "17.11.2023",
       "value": 30275.46,
+      "net_contributions": 30329.56,
+      "gain": -54.1,
+      "simple_return": -0.00178372,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "24.11.2023",
       "value": 30284.91,
+      "net_contributions": 30329.56,
+      "gain": -44.65,
+      "simple_return": -0.00147202,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "01.12.2023",
       "value": 32319.1,
+      "net_contributions": 32331.05,
+      "gain": -11.95,
+      "simple_return": -0.00036952,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "08.12.2023",
       "value": 32503.77,
+      "net_contributions": 32340.88,
+      "gain": 162.89,
+      "simple_return": 0.0050368,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "15.12.2023",
       "value": 32480.15,
+      "net_contributions": 32339.44,
+      "gain": 140.71,
+      "simple_return": 0.00435104,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "22.12.2023",
       "value": 33469.09,
+      "net_contributions": 33340.72,
+      "gain": 128.37,
+      "simple_return": 0.0038501,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "29.12.2023",
       "value": 33547.4,
+      "net_contributions": 33340.72,
+      "gain": 206.68,
+      "simple_return": 0.00619891,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "05.01.2024",
       "value": 33438.35,
+      "net_contributions": 33329.67,
+      "gain": 108.68,
+      "simple_return": 0.00326076,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "12.01.2024",
       "value": 33699.71,
+      "net_contributions": 33329.67,
+      "gain": 370.04,
+      "simple_return": 0.01110244,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.01.2024",
       "value": 33875.0,
+      "net_contributions": 33329.67,
+      "gain": 545.33,
+      "simple_return": 0.01636166,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.01.2024",
       "value": 34364.81,
+      "net_contributions": 33329.67,
+      "gain": 1035.14,
+      "simple_return": 0.03105764,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "02.02.2024",
       "value": 35461.79,
+      "net_contributions": 34329.67,
+      "gain": 1132.12,
+      "simple_return": 0.03297796,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "09.02.2024",
       "value": 35622.28,
+      "net_contributions": 34329.67,
+      "gain": 1292.61,
+      "simple_return": 0.03765275,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.02.2024",
       "value": 35688.73,
+      "net_contributions": 34329.67,
+      "gain": 1359.06,
+      "simple_return": 0.03958838,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "23.02.2024",
       "value": 35914.82,
+      "net_contributions": 34329.67,
+      "gain": 1585.15,
+      "simple_return": 0.04617426,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "01.03.2024",
       "value": 37687.19,
+      "net_contributions": 35329.67,
+      "gain": 2357.52,
+      "simple_return": 0.06672927,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "08.03.2024",
       "value": 37633.4,
+      "net_contributions": 35329.67,
+      "gain": 2303.73,
+      "simple_return": 0.06520653,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "15.03.2024",
       "value": 37625.47,
+      "net_contributions": 35329.67,
+      "gain": 2295.8,
+      "simple_return": 0.06498224,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "22.03.2024",
       "value": 37577.29,
+      "net_contributions": 35327.46,
+      "gain": 2249.83,
+      "simple_return": 0.06368494,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "29.03.2024",
       "value": 37681.9,
+      "net_contributions": 35327.46,
+      "gain": 2354.44,
+      "simple_return": 0.06664617,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "05.04.2024",
       "value": 37364.47,
+      "net_contributions": 35327.46,
+      "gain": 2037.01,
+      "simple_return": 0.05766089,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "12.04.2024",
       "value": 37281.35,
+      "net_contributions": 35327.46,
+      "gain": 1953.89,
+      "simple_return": 0.05530798,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.04.2024",
       "value": 36991.09,
+      "net_contributions": 35327.46,
+      "gain": 1663.63,
+      "simple_return": 0.04709174,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.04.2024",
       "value": 37126.02,
+      "net_contributions": 35327.46,
+      "gain": 1798.56,
+      "simple_return": 0.05091117,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.05.2024",
       "value": 37834.02,
+      "net_contributions": 36133.02,
+      "gain": 1701.0,
+      "simple_return": 0.04707598,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.05.2024",
       "value": 38027.23,
+      "net_contributions": 36133.02,
+      "gain": 1894.21,
+      "simple_return": 0.05242321,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "17.05.2024",
       "value": 38113.56,
+      "net_contributions": 36133.02,
+      "gain": 1980.54,
+      "simple_return": 0.05481238,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "24.05.2024",
       "value": 37139.84,
+      "net_contributions": 36148.21,
+      "gain": 991.63,
+      "simple_return": 0.02743242,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "31.05.2024",
       "value": 38043.42,
+      "net_contributions": 37148.21,
+      "gain": 895.21,
+      "simple_return": 0.02409822,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "07.06.2024",
       "value": 38758.4,
+      "net_contributions": 37148.21,
+      "gain": 1610.19,
+      "simple_return": 0.0433449,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "14.06.2024",
       "value": 39695.32,
+      "net_contributions": 37148.21,
+      "gain": 2547.11,
+      "simple_return": 0.06856603,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "21.06.2024",
       "value": 39784.43,
+      "net_contributions": 37148.21,
+      "gain": 2636.22,
+      "simple_return": 0.07096486,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "28.06.2024",
       "value": 40797.37,
+      "net_contributions": 38158.85,
+      "gain": 2638.52,
+      "simple_return": 0.0691458,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "05.07.2024",
       "value": 40908.12,
+      "net_contributions": 38145.63,
+      "gain": 2762.49,
+      "simple_return": 0.07241952,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "12.07.2024",
       "value": 41127.36,
+      "net_contributions": 38145.63,
+      "gain": 2981.73,
+      "simple_return": 0.07816711,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.07.2024",
       "value": 40208.58,
+      "net_contributions": 38145.63,
+      "gain": 2062.95,
+      "simple_return": 0.05408092,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.07.2024",
       "value": 39989.44,
+      "net_contributions": 38145.63,
+      "gain": 1843.81,
+      "simple_return": 0.0483361,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "02.08.2024",
       "value": 39519.14,
+      "net_contributions": 38145.63,
+      "gain": 1373.51,
+      "simple_return": 0.03600696,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "09.08.2024",
       "value": 40202.57,
+      "net_contributions": 39145.63,
+      "gain": 1056.94,
+      "simple_return": 0.02700016,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.08.2024",
       "value": 40930.41,
+      "net_contributions": 39145.63,
+      "gain": 1784.78,
+      "simple_return": 0.04559323,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "23.08.2024",
       "value": 41088.41,
+      "net_contributions": 39145.63,
+      "gain": 1942.78,
+      "simple_return": 0.04962967,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "30.08.2024",
       "value": 42200.79,
+      "net_contributions": 40121.47,
+      "gain": 2079.32,
+      "simple_return": 0.05182573,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "06.09.2024",
       "value": 41914.14,
+      "net_contributions": 40121.47,
+      "gain": 1792.67,
+      "simple_return": 0.04468116,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "13.09.2024",
       "value": 42340.81,
+      "net_contributions": 40121.47,
+      "gain": 2219.34,
+      "simple_return": 0.0553154,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "20.09.2024",
       "value": 42375.83,
+      "net_contributions": 40145.61,
+      "gain": 2230.22,
+      "simple_return": 0.05555318,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "27.09.2024",
       "value": 42587.47,
+      "net_contributions": 40145.61,
+      "gain": 2441.86,
+      "simple_return": 0.0608251,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "04.10.2024",
       "value": 43887.46,
+      "net_contributions": 41135.22,
+      "gain": 2752.24,
+      "simple_return": 0.06690702,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "11.10.2024",
       "value": 44144.8,
+      "net_contributions": 41135.22,
+      "gain": 3009.58,
+      "simple_return": 0.07316309,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "18.10.2024",
       "value": 44334.91,
+      "net_contributions": 41135.22,
+      "gain": 3199.69,
+      "simple_return": 0.07778472,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "25.10.2024",
       "value": 44249.84,
+      "net_contributions": 41135.22,
+      "gain": 3114.62,
+      "simple_return": 0.07571652,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "01.11.2024",
       "value": 43878.56,
+      "net_contributions": 41138.57,
+      "gain": 2739.99,
+      "simple_return": 0.06660384,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "08.11.2024",
       "value": 44477.68,
+      "net_contributions": 41138.57,
+      "gain": 3339.11,
+      "simple_return": 0.08116739,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "15.11.2024",
       "value": 44611.0,
+      "net_contributions": 41135.77,
+      "gain": 3475.23,
+      "simple_return": 0.08448202,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "22.11.2024",
       "value": 44962.99,
+      "net_contributions": 41135.77,
+      "gain": 3827.22,
+      "simple_return": 0.09303877,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "29.11.2024",
       "value": 46907.46,
+      "net_contributions": 43135.77,
+      "gain": 3771.69,
+      "simple_return": 0.08743774,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "06.12.2024",
       "value": 46944.54,
+      "net_contributions": 43135.77,
+      "gain": 3808.77,
+      "simple_return": 0.08829734,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "13.12.2024",
       "value": 46770.28,
+      "net_contributions": 43135.77,
+      "gain": 3634.51,
+      "simple_return": 0.08425743,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "20.12.2024",
       "value": 46710.96,
+      "net_contributions": 43135.77,
+      "gain": 3575.19,
+      "simple_return": 0.08288221,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "27.12.2024",
       "value": 46806.86,
+      "net_contributions": 43141.37,
+      "gain": 3665.49,
+      "simple_return": 0.0849647,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.01.2025",
       "value": 48011.21,
+      "net_contributions": 44129.54,
+      "gain": 3881.67,
+      "simple_return": 0.08796086,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.01.2025",
       "value": 47512.49,
+      "net_contributions": 44098.61,
+      "gain": 3413.88,
+      "simple_return": 0.07741467,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "17.01.2025",
       "value": 48174.77,
+      "net_contributions": 44090.53,
+      "gain": 4084.24,
+      "simple_return": 0.09263309,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "24.01.2025",
       "value": 48078.94,
+      "net_contributions": 44090.53,
+      "gain": 3988.41,
+      "simple_return": 0.09045959,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "31.01.2025",
       "value": 49082.59,
+      "net_contributions": 45090.53,
+      "gain": 3992.06,
+      "simple_return": 0.08853438,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "07.02.2025",
       "value": 49644.24,
+      "net_contributions": 45090.53,
+      "gain": 4553.71,
+      "simple_return": 0.1009904,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "14.02.2025",
       "value": 49790.88,
+      "net_contributions": 45090.53,
+      "gain": 4700.35,
+      "simple_return": 0.10424262,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "21.02.2025",
       "value": 49675.66,
+      "net_contributions": 45090.53,
+      "gain": 4585.13,
+      "simple_return": 0.10168727,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "28.02.2025",
       "value": 50676.93,
+      "net_contributions": 46077.37,
+      "gain": 4599.56,
+      "simple_return": 0.09982246,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "07.03.2025",
       "value": 49115.52,
+      "net_contributions": 46077.37,
+      "gain": 3038.15,
+      "simple_return": 0.06593582,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "14.03.2025",
       "value": 48590.75,
+      "net_contributions": 46077.37,
+      "gain": 2513.38,
+      "simple_return": 0.05454693,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "21.03.2025",
       "value": 48771.67,
+      "net_contributions": 46083.98,
+      "gain": 2687.69,
+      "simple_return": 0.05832162,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "28.03.2025",
       "value": 48563.04,
+      "net_contributions": 46083.98,
+      "gain": 2479.06,
+      "simple_return": 0.0537945,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "04.04.2025",
       "value": 47176.56,
+      "net_contributions": 47072.3,
+      "gain": 104.26,
+      "simple_return": 0.00221492,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "11.04.2025",
       "value": 46451.19,
+      "net_contributions": 47072.3,
+      "gain": -621.11,
+      "simple_return": -0.01319472,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "18.04.2025",
       "value": 46053.69,
+      "net_contributions": 47072.3,
+      "gain": -1018.61,
+      "simple_return": -0.02163918,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "25.04.2025",
       "value": 47147.19,
+      "net_contributions": 47072.3,
+      "gain": 74.89,
+      "simple_return": 0.00159095,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "02.05.2025",
       "value": 48862.8,
+      "net_contributions": 48072.3,
+      "gain": 790.5,
+      "simple_return": 0.01644395,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "09.05.2025",
       "value": 48458.76,
+      "net_contributions": 48072.3,
+      "gain": 386.46,
+      "simple_return": 0.00803906,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.05.2025",
       "value": 49565.45,
+      "net_contributions": 48072.3,
+      "gain": 1493.15,
+      "simple_return": 0.03106041,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "23.05.2025",
       "value": 48873.87,
+      "net_contributions": 48072.3,
+      "gain": 801.57,
+      "simple_return": 0.0166742,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "30.05.2025",
       "value": 50036.37,
+      "net_contributions": 49072.3,
+      "gain": 964.07,
+      "simple_return": 0.01964599,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "06.06.2025",
       "value": 50087.87,
+      "net_contributions": 49072.3,
+      "gain": 1015.57,
+      "simple_return": 0.02069547,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "13.06.2025",
       "value": 49763.3,
+      "net_contributions": 49072.3,
+      "gain": 691.0,
+      "simple_return": 0.01408128,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "20.06.2025",
       "value": 49750.39,
+      "net_contributions": 49099.14,
+      "gain": 651.25,
+      "simple_return": 0.01326395,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "27.06.2025",
       "value": 51110.1,
+      "net_contributions": 50099.14,
+      "gain": 1010.96,
+      "simple_return": 0.02017927,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "04.07.2025",
       "value": 51052.4,
+      "net_contributions": 50099.14,
+      "gain": 953.26,
+      "simple_return": 0.01902754,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "11.07.2025",
       "value": 52255.7,
+      "net_contributions": 50099.14,
+      "gain": 2156.56,
+      "simple_return": 0.04304592,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "18.07.2025",
       "value": 52620.88,
+      "net_contributions": 50099.14,
+      "gain": 2521.74,
+      "simple_return": 0.05033501,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "25.07.2025",
       "value": 52881.75,
+      "net_contributions": 50099.14,
+      "gain": 2782.61,
+      "simple_return": 0.055542,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "01.08.2025",
       "value": 53853.16,
+      "net_contributions": 50987.5,
+      "gain": 2865.66,
+      "simple_return": 0.05620313,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "08.08.2025",
       "value": 53865.71,
+      "net_contributions": 50987.5,
+      "gain": 2878.21,
+      "simple_return": 0.0564494,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "15.08.2025",
       "value": 54279.21,
+      "net_contributions": 50987.5,
+      "gain": 3291.71,
+      "simple_return": 0.06455912,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "22.08.2025",
       "value": 54442.9,
+      "net_contributions": 50987.5,
+      "gain": 3455.4,
+      "simple_return": 0.0677695,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "29.08.2025",
       "value": 54590.45,
+      "net_contributions": 50987.5,
+      "gain": 3602.95,
+      "simple_return": 0.07066349,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "05.09.2025",
       "value": 55742.93,
+      "net_contributions": 51987.5,
+      "gain": 3755.43,
+      "simple_return": 0.07223718,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "12.09.2025",
       "value": 56023.96,
+      "net_contributions": 51987.5,
+      "gain": 4036.46,
+      "simple_return": 0.07764281,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.09.2025",
       "value": 55717.01,
+      "net_contributions": 51987.5,
+      "gain": 3729.51,
+      "simple_return": 0.07173867,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.09.2025",
       "value": 55898.04,
+      "net_contributions": 51987.5,
+      "gain": 3910.54,
+      "simple_return": 0.07522087,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.10.2025",
       "value": 57181.55,
+      "net_contributions": 52987.5,
+      "gain": 4194.05,
+      "simple_return": 0.07915164,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.10.2025",
       "value": 57370.37,
+      "net_contributions": 52987.5,
+      "gain": 4382.87,
+      "simple_return": 0.08271521,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "17.10.2025",
       "value": 57084.55,
+      "net_contributions": 52592.13,
+      "gain": 4492.42,
+      "simple_return": 0.08541999,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "24.10.2025",
       "value": 57759.35,
+      "net_contributions": 52592.13,
+      "gain": 5167.22,
+      "simple_return": 0.09825084,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "31.10.2025",
       "value": 59129.05,
+      "net_contributions": 53454.46,
+      "gain": 5674.59,
+      "simple_return": 0.10615746,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "07.11.2025",
       "value": 58722.38,
+      "net_contributions": 53405.43,
+      "gain": 5316.95,
+      "simple_return": 0.09955831,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "14.11.2025",
       "value": 59089.71,
+      "net_contributions": 53405.43,
+      "gain": 5684.28,
+      "simple_return": 0.10643646,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "21.11.2025",
       "value": 58734.38,
+      "net_contributions": 53405.43,
+      "gain": 5328.95,
+      "simple_return": 0.09978286,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "28.11.2025",
       "value": 59565.86,
+      "net_contributions": 53405.43,
+      "gain": 6160.43,
+      "simple_return": 0.1153521,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "05.12.2025",
       "value": 60903.6,
+      "net_contributions": 54905.43,
+      "gain": 5998.17,
+      "simple_return": 0.10924542,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "12.12.2025",
       "value": 60186.36,
+      "net_contributions": 54905.43,
+      "gain": 5280.93,
+      "simple_return": 0.09618229,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.12.2025",
       "value": 60239.82,
+      "net_contributions": 54908.46,
+      "gain": 5331.36,
+      "simple_return": 0.0970954,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.12.2025",
       "value": 60500.9,
+      "net_contributions": 54908.46,
+      "gain": 5592.44,
+      "simple_return": 0.10185025,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "02.01.2026",
       "value": 61553.5,
+      "net_contributions": 55908.46,
+      "gain": 5645.04,
+      "simple_return": 0.10096925,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "09.01.2026",
       "value": 62148.0,
+      "net_contributions": 55893.96,
+      "gain": 6254.04,
+      "simple_return": 0.11189111,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.01.2026",
       "value": 62300.43,
+      "net_contributions": 55865.34,
+      "gain": 6435.09,
+      "simple_return": 0.11518933,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "23.01.2026",
       "value": 61720.14,
+      "net_contributions": 55865.34,
+      "gain": 5854.8,
+      "simple_return": 0.10480194,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "30.01.2026",
       "value": 62442.96,
+      "net_contributions": 56865.34,
+      "gain": 5577.62,
+      "simple_return": 0.09808465,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "06.02.2026",
       "value": 62757.98,
+      "net_contributions": 56865.34,
+      "gain": 5892.64,
+      "simple_return": 0.10362453,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "13.02.2026",
       "value": 62115.45,
+      "net_contributions": 56865.34,
+      "gain": 5250.11,
+      "simple_return": 0.09232538,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "20.02.2026",
       "value": 62674.78,
+      "net_contributions": 56865.34,
+      "gain": 5809.44,
+      "simple_return": 0.10216127,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "27.02.2026",
       "value": 63532.97,
+      "net_contributions": 57865.34,
+      "gain": 5667.63,
+      "simple_return": 0.09794513,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "06.03.2026",
       "value": 63267.1,
+      "net_contributions": 57865.34,
+      "gain": 5401.76,
+      "simple_return": 0.0933506,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "13.03.2026",
       "value": 63366.36,
+      "net_contributions": 57865.34,
+      "gain": 5501.02,
+      "simple_return": 0.09506593,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "20.03.2026",
       "value": 60763.03,
+      "net_contributions": 57871.75,
+      "gain": 2891.28,
+      "simple_return": 0.04996008,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "27.03.2026",
       "value": 59899.21,
+      "net_contributions": 57871.75,
+      "gain": 2027.46,
+      "simple_return": 0.0350337,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.04.2026",
       "value": 61511.64,
+      "net_contributions": 58861.56,
+      "gain": 2650.08,
+      "simple_return": 0.04502223,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.04.2026",
       "value": 62490.23,
+      "net_contributions": 58861.56,
+      "gain": 3628.67,
+      "simple_return": 0.06164747,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "17.04.2026",
       "value": 63596.48,
+      "net_contributions": 58861.56,
+      "gain": 4734.92,
+      "simple_return": 0.08044157,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "24.04.2026",
       "value": 64367.33,
+      "net_contributions": 58861.56,
+      "gain": 5505.77,
+      "simple_return": 0.09353753,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "01.05.2026",
       "value": 64860.11,
+      "net_contributions": 58861.56,
+      "gain": 5998.55,
+      "simple_return": 0.10190942,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "08.05.2026",
       "value": 67729.87,
+      "net_contributions": 59861.56,
+      "gain": 7868.31,
+      "simple_return": 0.13144182,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "15.05.2026",
       "value": 68126.4,
+      "net_contributions": 59894.23,
+      "gain": 8232.17,
+      "simple_return": 0.13744507,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "22.05.2026",
       "value": 68647.35,
+      "net_contributions": 59894.23,
+      "gain": 8753.12,
+      "simple_return": 0.14614302,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "29.05.2026",
       "value": 69179.93,
+      "net_contributions": 59894.23,
+      "gain": 9285.7,
+      "simple_return": 0.15503505,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "05.06.2026",
       "value": 70090.45,
+      "net_contributions": 61394.23,
+      "gain": 8696.22,
+      "simple_return": 0.14164558,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "12.06.2026",
       "value": 70390.5,
+      "net_contributions": 61394.23,
+      "gain": 8996.27,
+      "simple_return": 0.14653286,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "19.06.2026",
       "value": 71568.74,
+      "net_contributions": 61394.23,
+      "gain": 10174.51,
+      "simple_return": 0.16572419,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "26.06.2026",
       "value": 70961.07,
+      "net_contributions": 61394.23,
+      "gain": 9566.84,
+      "simple_return": 0.15582633,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "03.07.2026",
       "value": 73618.21,
+      "net_contributions": 62138.65,
+      "gain": 11479.56,
+      "simple_return": 0.18474113,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "10.07.2026",
       "value": 74150.24,
+      "net_contributions": 62138.65,
+      "gain": 12011.59,
+      "simple_return": 0.19330301,
       "reconstructed": true,
       "unresolved_positions": 0
     },
     {
       "date": "16.07.2026",
       "value": 73299.58,
+      "net_contributions": 62138.65,
+      "gain": 11160.93,
+      "simple_return": 0.17961326,
       "reconstructed": true,
       "unresolved_positions": 0
     }
