@@ -11,6 +11,7 @@ name: Update portfolio dashboard
       - "scripts/sync_dashboard_header.py"
       - "scripts/update_dashboard_data.py"
       - "scripts/update_movers_data.py"
+      - "scripts/update_transactions_data.py"
       - "data/transactions.json"
 
 permissions:
@@ -100,6 +101,9 @@ jobs:
       - name: Synchronize dashboard shell
         run: python scripts/sync_dashboard_header.py
 
+      - name: Render transaction history
+        run: python scripts/update_transactions_data.py
+
       - name: Verify dashboard and persisted history
         run: |
           python - <<'PY'
@@ -121,11 +125,14 @@ jobs:
           assert abs(float(history[-1]["value"]) - float(portfolio["total"])) < 0.000001
           assert dashboard.get("movers", {}).get("periods"), "Movers data missing"
           assert security_history, "Security history missing"
+          assert len(transactions) == 240, f"Expected 240 transactions, got {len(transactions)}"
           assert 'id="manualUpdateLink"' in html, "Manual update link missing"
           assert 'id="historyPeriodBadge"' in html, "Dynamic history badge missing"
           assert 'id="moversGrid"' in html, "Movers page missing"
           assert 'data-page="transactions"' in html, "Transactions navigation missing"
           assert 'id="transactions"' in html, "Transactions page missing"
+          assert '240 Vorgänge' in html, "Rendered transaction count missing"
+          assert 'Siemens Energy' in html and 'LVMH' in html, "Transaction content missing"
           assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0), "Old sidebar label still present"
           print(f"Dashboard matches portfolio output with {len(history)} portfolio, {len(security_history)} security history points and {len(transactions)} transactions.")
           PY
@@ -142,16 +149,16 @@ jobs:
         run: python scripts/verify_immutable_history.py
 
       - name: Show intended production changes
-        run: git diff -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json index.html
+        run: git diff -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json data/transactions.json index.html
 
       - name: Commit validated production data, history and dashboard
         run: |
-          if git diff --quiet -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json index.html; then
+          if git diff --quiet -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json data/transactions.json index.html; then
             echo "No production data changes to commit."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json index.html
+            git add data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/security-history.json data/transactions.json index.html
             git commit -m "Update validated portfolio dashboard"
             git push origin HEAD:main
           fi
