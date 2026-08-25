@@ -121,7 +121,7 @@ def main() -> int:
             newest = max(datetime.fromisoformat(s.replace("Z", "+00:00")) for s in stamps)
             local = newest.astimezone(ZoneInfo("Europe/Vienna"))
             stamp = local.strftime("%d.%m.%Y, %H:%M Uhr")
-            text = re.sub(r"Look-through Dashboard · Stand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?", f"Look-through Dashboard · Stand {stamp}", text)
+            text = re.sub(r"Look-through Dashboard · Stand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?", f"Stand {stamp}", text)
             text = re.sub(r"Datenstand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?", f"Datenstand {stamp}", text)
 
     if ".manual-update{" not in text:
