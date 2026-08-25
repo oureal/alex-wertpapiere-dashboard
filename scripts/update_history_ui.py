@@ -2,8 +2,6 @@
 """Render unified long-term history for Depot 1 + Depot 2."""
 from __future__ import annotations
 import re
-import subprocess
-import sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];INDEX=ROOT/'index.html'
 BLOCK=r'''const chartHistory=DATA.history;
@@ -42,5 +40,4 @@ def main():
  text=pat.sub(BLOCK,text,count=1)
  text=re.sub(r'<div class="notice small" style="margin-top:18px">.*?</div>',f'<div class="notice small" style="margin-top:18px">{NOTICE}</div>',text,count=1,flags=re.S)
  INDEX.write_text(text,encoding='utf-8');print('Updated history UI; checkpoint comparison shows EUR values without percentages.')
- subprocess.run([sys.executable,str(ROOT/'scripts/update_donut_labels.py')],check=True)
 if __name__=='__main__':main()
