@@ -45,38 +45,31 @@ NAV = """<nav class="nav" id="nav">
     <button data-page="risk"><span class="n">6</span>Risiko</button>
   </nav>"""
 
-DYNAMIC_HISTORY_SCRIPT = r'''<!-- dynamic-history-labels-v3 -->
-<script>
+HISTORY_HEADER = """<div class="header"><div><h1>Gesamtdepotentwicklung</h1><div class="muted">Fortlaufende Entwicklung des Depotwerts über alle dokumentierten Stichtage</div></div><div class="badge" id="historyPeriodBadge"></div></div>"""
+
+DYNAMIC_HISTORY_JS = r"""
+/* dynamic-history-labels-v2 */
 (function(){
-  if(!window.DATA || !Array.isArray(DATA.history) || !DATA.history.length) return;
-  const eur2=new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
-  const pct2=new Intl.NumberFormat('de-DE',{style:'percent',maximumFractionDigits:1});
-  const parseDate=s=>{const [d,m,y]=s.split('.').map(Number);return new Date(Date.UTC(y,m-1,d));};
+  if(!Array.isArray(DATA.history)||!DATA.history.length)return;
+  const parseD=s=>{const [d,m,y]=s.split('.').map(Number);return new Date(Date.UTC(y,m-1,d));};
   const first=DATA.history[0], last=DATA.history[DATA.history.length-1];
   const delta=last.value-first.value;
   const deltaPct=first.value?delta/first.value:0;
-  const days=Math.round((parseDate(last.date)-parseDate(first.date))/86400000);
-
-  const section=document.getElementById('history');
-  if(section){
-    const header=section.querySelector('.header');
-    if(header){
-      header.innerHTML=`<div><h1>Gesamtdepotentwicklung</h1><div class="muted">Fortlaufende Entwicklung des Depotwerts über alle dokumentierten Stichtage</div></div><div class="badge">${first.date} → ${last.date}</div>`;
-    }
-  }
-
-  const kpis=document.getElementById('historyKpis');
-  if(kpis){
+  const days=Math.round((parseD(last.date)-parseD(first.date))/86400000);
+  const badge=document.getElementById('historyPeriodBadge');
+  if(badge)badge.textContent=`${first.date} → ${last.date}`;
+  const el=document.getElementById('historyKpis');
+  if(el){
     const rows=[
-      [`Erster Stichtag · ${first.date}`,eur2.format(first.value),'Beginn der gespeicherten Zeitreihe'],
-      [`Aktueller Stichtag · ${last.date}`,eur2.format(last.value),'letzter erfolgreicher Depotstand'],
-      ['Veränderung seit Beginn',eur2.format(delta),(delta>=0?'+':'')+pct2.format(deltaPct)],
+      [`Erster Stichtag · ${first.date}`,eur.format(first.value),'Beginn der gespeicherten Zeitreihe'],
+      [`Aktueller Stichtag · ${last.date}`,eur.format(last.value),'letzter erfolgreicher Depotstand'],
+      ['Veränderung seit Beginn',eur.format(delta),(delta>=0?'+':'')+pct.format(deltaPct)],
       ['Historie',`${DATA.history.length} Stichtage`,`${days} Kalendertage`]
     ];
-    kpis.innerHTML=rows.map(x=>`<div class="card kpi"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="note">${x[2]}</div></div>`).join('');
+    el.innerHTML=rows.map(x=>`<div class="card kpi"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="note">${x[2]}</div></div>`).join('');
   }
 })();
-</script>'''
+""".strip()
 
 
 def main() -> int:
@@ -88,34 +81,36 @@ def main() -> int:
     if "/* responsive-dashboard-v2 */" not in text:
         text = text.replace("</style>", RESPONSIVE_STYLE + "\n</style>", 1)
 
-    nav_pattern = r'<nav class="nav" id="nav">.*?</nav>'
-    if re.search(nav_pattern, text, flags=re.S):
-        text = re.sub(nav_pattern, NAV, text, count=1, flags=re.S)
-    else:
-        raise SystemExit("Dashboard navigation block not found")
-
+    text = re.sub(r'<nav class="nav" id="nav">.*?</nav>', NAV, text, count=1, flags=re.S)
     text = re.sub(r'<section id="dashboard" class="page(?: active)?">', '<section id="dashboard" class="page">', text, count=1)
     text = re.sub(r'<section id="history" class="page(?: active)?">', '<section id="history" class="page active">', text, count=1)
+
+    # Replace the static history header directly and reliably.
+    history_section = re.search(r'<section id="history" class="page active">(.*?)<div class="grid kpis" id="historyKpis">', text, flags=re.S)
+    if not history_section:
+        raise SystemExit("History section/header not found")
+    prefix = history_section.group(1)
+    header_match = re.search(r'<div class="header">.*?</div>\s*$', prefix, flags=re.S)
+    if not header_match:
+        raise SystemExit("History header not found")
+    new_prefix = prefix[:header_match.start()] + "\n " + HISTORY_HEADER + "\n "
+    text = text[:history_section.start(1)] + new_prefix + text[history_section.end(1):]
 
     button_pattern = r'<a class="manual-update" id="manualUpdateLink".*?</a>\s*<span class="manual-update-note">.*?</span>'
     if re.search(button_pattern, text, flags=re.S):
         text = re.sub(button_pattern, BUTTON, text, count=1, flags=re.S)
     else:
-        marker = "</nav>"
-        if marker not in text:
-            raise SystemExit("Dashboard navigation marker not found")
-        text = text.replace(marker, marker + "\n" + BUTTON, 1)
+        text = text.replace("</nav>", "</nav>\n" + BUTTON, 1)
 
-    # Replace or append the dynamic history labels script. It intentionally runs after the main dashboard script.
-    dyn_pattern = r'<!-- dynamic-history-labels-v3 -->.*?</script>'
-    if re.search(dyn_pattern, text, flags=re.S):
-        text = re.sub(dyn_pattern, DYNAMIC_HISTORY_SCRIPT, text, count=1, flags=re.S)
-    else:
-        text = text.replace("</body>", DYNAMIC_HISTORY_SCRIPT + "\n</body>", 1)
+    # Remove any earlier dynamic override, then inject the current one before closing script.
+    text = re.sub(r'/\* dynamic-history-labels-v2 \*/.*?\}\)\(\);\s*', '', text, flags=re.S)
+    if "</script>" not in text:
+        raise SystemExit("Closing script tag not found")
+    text = text.replace("</script>", DYNAMIC_HISTORY_JS + "\n</script>", 1)
 
     if text != original:
         INDEX.write_text(text)
-        print("Dashboard shell synchronized: dynamic history labels, history start page, navigation, manual update link and responsive layout.")
+        print("Dashboard shell synchronized with dynamic history labels.")
     else:
         print("Dashboard shell already current.")
     return 0
