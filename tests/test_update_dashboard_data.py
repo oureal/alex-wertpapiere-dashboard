@@ -29,7 +29,7 @@ def test_refresh_document_replaces_dynamic_dashboard_values():
     }
     prices = {"prices": [{"fetched_at": "2026-08-24T13:33:00Z"}]}
     updated = refresh_document(index, portfolio, prices)
-    assert 'Depot Look-through Dashboard · 24.08.2026' in updated
+    assert '<title>Portfolio · 24.08.2026</title>' in updated
     assert '"total":120.0' in updated
     assert '"name":"Acme"' in updated
     assert '"boerse":5.0' in updated
