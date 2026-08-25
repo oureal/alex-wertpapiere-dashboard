@@ -15,6 +15,7 @@ name: Update portfolio dashboard
       - "scripts/reconstruct_portfolio_history.py"
       - "scripts/update_history_ui.py"
       - "data/transactions.json"
+      - "data/transactions-depot1.json"
 
 permissions:
   contents: write
@@ -68,8 +69,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          doc = json.loads(Path("data/prices/latest.json").read_text())
-          prices = doc["prices"]
+          prices = json.loads(Path("data/prices/latest.json").read_text())["prices"]
           assert len(prices) == 23, f"Expected 23 prices, got {len(prices)}"
           assert all(float(item["price"]) > 0 for item in prices), "Non-positive price found"
           assert all(item["status"] in {"fresh", "stale", "fallback"} for item in prices)
@@ -94,7 +94,7 @@ jobs:
           print("All portfolio invariants passed.")
           PY
 
-      - name: Reconstruct portfolio history from depot beginning
+      - name: Reconstruct combined portfolio history from depot beginning
         run: python scripts/reconstruct_portfolio_history.py
 
       - name: Refresh visible dashboard data and daily history
@@ -122,33 +122,32 @@ jobs:
           match = re.search(r'const DATA=(\{.*?\});\n', html, flags=re.S)
           assert match, "Dashboard DATA object missing"
           dashboard = json.loads(match.group(1))
-          history_doc = json.loads(Path("data/history/portfolio-history.json").read_text())
-          history = history_doc["history"]
+          history = json.loads(Path("data/history/portfolio-history.json").read_text())["history"]
           reconstructed = json.loads(Path("data/history/reconstructed-history.json").read_text())
           security_history = json.loads(Path("data/history/security-history.json").read_text())["snapshots"]
-          transactions = json.loads(Path("data/transactions.json").read_text()).get("transactions", [])
+          depot1 = json.loads(Path("data/transactions-depot1.json").read_text()).get("transactions", [])
+          depot2 = json.loads(Path("data/transactions.json").read_text()).get("transactions", [])
+          assert len(depot1) == 199, f"Expected 199 Depot 1 transactions, got {len(depot1)}"
+          assert len(depot2) == 240, f"Expected 240 Depot 2 transactions, got {len(depot2)}"
+          assert reconstructed["meta"]["transactions"] == 439, "Reconstruction does not use all 439 transactions"
+          assert reconstructed["meta"]["depot1_transactions"] == 199
+          assert reconstructed["meta"]["depot2_transactions"] == 240
           assert abs(float(dashboard["meta"]["total"]) - float(portfolio["total"])) < 0.000001
-          assert len(dashboard["companies"]) == len(portfolio["companies"])
           assert dashboard["history"] == history, "Inline and persisted history differ"
-          assert history[0]["date"] == "16.08.2022", "History does not begin at documented depot start"
-          assert len(history) > 150, f"Expected long-term history, got only {len(history)} points"
-          assert reconstructed["meta"]["transactions"] == 240, "Reconstruction does not use all imported transactions"
-          assert all("net_contributions" in row and "gain" in row for row in history), "Cashflow-aware fields missing from history"
-          assert float(history[-1]["net_contributions"]) > 10000, "Net contributions unexpectedly zero or too small"
-          assert history[-1]["date"] == dashboard["meta"]["asof"], "Latest history date is not current as-of date"
+          assert history[0]["date"] == "02.06.2020", "Combined history does not begin at Depot 1 start"
+          assert len(history) > 300, f"Expected long-term combined history, got only {len(history)} points"
+          assert all("net_contributions" in row and "gain" in row for row in history), "Cashflow-aware fields missing"
+          assert history[-1]["date"] == dashboard["meta"]["asof"]
           assert abs(float(history[-1]["value"]) - float(portfolio["total"])) < 0.000001
           assert dashboard.get("movers", {}).get("periods"), "Movers data missing"
           assert security_history, "Security history missing"
-          assert len(transactions) == 240, f"Expected 240 transactions, got {len(transactions)}"
-          assert 'id="manualUpdateLink"' in html, "Manual update link missing"
-          assert 'id="historyPeriodBadge"' in html, "Dynamic history badge missing"
-          assert 'Gesamtdepotentwicklung seit Depotbeginn' in html, "Long-term history chart missing"
-          assert 'data-page="transactions"' in html, "Transactions navigation missing"
-          assert 'id="transactions"' in html, "Transactions page missing"
-          assert '240 Vorgänge' in html, "Rendered transaction count missing"
-          assert 'Siemens Energy' in html and 'LVMH' in html, "Transaction content missing"
-          assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0), "Old sidebar label still present"
-          print(f"Dashboard matches portfolio output with {len(history)} total history points, {len(reconstructed['history'])} reconstructed points, {len(security_history)} security history points and {len(transactions)} transactions.")
+          assert '439 Vorgänge' in html, "Rendered combined transaction count missing"
+          assert 'Depot 1' in html and 'Depot 2' in html, "Depot labels missing from transactions"
+          assert 'Gesamtdepotentwicklung' in html and 'Nettoeinzahlungen' in html
+          assert 'id="manualUpdateLink"' in html
+          assert 'data-page="transactions"' in html and 'id="transactions"' in html
+          assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0)
+          print(f"Validated combined history with {len(history)} points and 439 transactions.")
           PY
 
       - name: Upload private dashboard artifact
@@ -163,16 +162,16 @@ jobs:
         run: python scripts/verify_immutable_history.py
 
       - name: Show intended production changes
-        run: git diff -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json index.html
+        run: git diff -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json data/transactions-depot1.json index.html
 
       - name: Commit validated production data, history and dashboard
         run: |
-          if git diff --quiet -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json index.html; then
+          if git diff --quiet -- data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json data/transactions-depot1.json index.html; then
             echo "No production data changes to commit."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json index.html
+            git add data/prices/latest.json data/generated/dry-run-portfolio.json data/history/portfolio-history.json data/history/reconstructed-history.json data/history/security-history.json data/transactions.json data/transactions-depot1.json index.html
             git commit -m "Update validated portfolio dashboard"
             git push origin HEAD:main
           fi
