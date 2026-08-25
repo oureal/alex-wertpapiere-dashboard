@@ -65,9 +65,9 @@ def main() -> int:
             quarters = page.locator("#historyChart .history-quarter-label")
             assert years.count() >= 6, f"Expected year labels, got {years.count()}"
             assert quarters.count() >= 20, f"Expected quarterly labels, got {quarters.count()}"
-            assert all(re.fullmatch(r"20\d{2}", years.nth(i).inner_text()) for i in range(years.count()))
-            assert all(re.fullmatch(r"Q[1-4]", quarters.nth(i).inner_text()) for i in range(quarters.count()))
-            chart_text = page.locator("#historyChart").inner_text()
+            assert all(re.fullmatch(r"20\d{2}", (years.nth(i).text_content() or "").strip()) for i in range(years.count()))
+            assert all(re.fullmatch(r"Q[1-4]", (quarters.nth(i).text_content() or "").strip()) for i in range(quarters.count()))
+            chart_text = page.locator("#historyChart").text_content() or ""
             assert "Kumulierter Geldfluss" in chart_text
             assert "Nettoeinzahlungen" not in chart_text
 
