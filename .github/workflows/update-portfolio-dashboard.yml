@@ -116,6 +116,7 @@ jobs:
         run: |
           python - <<'PY'
           import json, re
+          from datetime import datetime
           from pathlib import Path
           html = Path("index.html").read_text()
           portfolio = json.loads(Path("data/generated/dry-run-portfolio.json").read_text())
@@ -134,7 +135,13 @@ jobs:
           assert reconstructed["meta"]["depot2_transactions"] == 240
           assert abs(float(dashboard["meta"]["total"]) - float(portfolio["total"])) < 0.000001
           assert dashboard["history"] == history, "Inline and persisted history differ"
-          assert history[0]["date"] == "02.06.2020", "Combined history does not begin at Depot 1 start"
+          first_positive_contribution = min(
+              datetime.strptime(t["date"], "%Y-%m-%d").date()
+              for t in depot1 + depot2
+              if t.get("type") == "Einzahlung" and float(t.get("amount_eur") or 0) > 0
+          )
+          assert datetime.strptime(history[0]["date"], "%d.%m.%Y").date() == first_positive_contribution, "Combined history does not begin at first positive external contribution"
+          assert float(history[0]["net_contributions"]) > 0, "History starts before capital was contributed"
           assert len(history) > 300, f"Expected long-term combined history, got only {len(history)} points"
           assert all("net_contributions" in row and "gain" in row for row in history), "Cashflow-aware fields missing"
           assert history[-1]["date"] == dashboard["meta"]["asof"]
