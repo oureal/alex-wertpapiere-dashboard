@@ -1,0 +1,1254 @@
+{
+  "schema_version": 1,
+  "meta": {
+    "schema_version": 1,
+    "method": "weekly transaction-ledger reconstruction with Yahoo historical close where available and last transaction EUR price fallback",
+    "start": "2022-08-16",
+    "end_exclusive": "2026-07-17",
+    "points": 206,
+    "transactions": 240,
+    "market_mapped_isins": 25,
+    "all_isins": 29,
+    "yahoo_valuation_uses": 1632,
+    "fallback_valuation_uses": 724,
+    "warning": "Reconstructed values are estimates and are not broker-verified historical account statements."
+  },
+  "history": [
+    {
+      "date": "16.08.2022",
+      "value": 4000.0,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.08.2022",
+      "value": 4941.57,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.08.2022",
+      "value": 4866.29,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "02.09.2022",
+      "value": 5779.15,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "09.09.2022",
+      "value": 6871.94,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.09.2022",
+      "value": 6737.91,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "23.09.2022",
+      "value": 7579.94,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "30.09.2022",
+      "value": 8990.47,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "07.10.2022",
+      "value": 9990.9,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "14.10.2022",
+      "value": 9936.78,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "21.10.2022",
+      "value": 9919.66,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "28.10.2022",
+      "value": 10059.61,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "04.11.2022",
+      "value": 11565.09,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "11.11.2022",
+      "value": 11760.91,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "18.11.2022",
+      "value": 13212.98,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "25.11.2022",
+      "value": 13324.26,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "02.12.2022",
+      "value": 19612.69,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "09.12.2022",
+      "value": 19409.82,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.12.2022",
+      "value": 19112.21,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "23.12.2022",
+      "value": 20370.3,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "30.12.2022",
+      "value": 21313.2,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "06.01.2023",
+      "value": 21341.79,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "13.01.2023",
+      "value": 21587.13,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "20.01.2023",
+      "value": 21433.03,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "27.01.2023",
+      "value": 21585.36,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.02.2023",
+      "value": 23043.52,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.02.2023",
+      "value": 22913.66,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "17.02.2023",
+      "value": 22978.17,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "24.02.2023",
+      "value": 22777.13,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.03.2023",
+      "value": 24011.63,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.03.2023",
+      "value": 23778.57,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "17.03.2023",
+      "value": 23459.59,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "24.03.2023",
+      "value": 23447.64,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "31.03.2023",
+      "value": 24300.16,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "07.04.2023",
+      "value": 24857.54,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "14.04.2023",
+      "value": 24990.97,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "21.04.2023",
+      "value": 25027.59,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "28.04.2023",
+      "value": 24837.99,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "05.05.2023",
+      "value": 25192.17,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "12.05.2023",
+      "value": 25947.36,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.05.2023",
+      "value": 26052.64,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.05.2023",
+      "value": 26084.3,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "02.06.2023",
+      "value": 27146.2,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "09.06.2023",
+      "value": 27161.42,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.06.2023",
+      "value": 27227.03,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "23.06.2023",
+      "value": 26849.67,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "30.06.2023",
+      "value": 27048.2,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "07.07.2023",
+      "value": 27355.06,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "14.07.2023",
+      "value": 27490.42,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "21.07.2023",
+      "value": 27553.65,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "28.07.2023",
+      "value": 27621.5,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "04.08.2023",
+      "value": 27859.14,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "11.08.2023",
+      "value": 27759.91,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "18.08.2023",
+      "value": 27469.0,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "25.08.2023",
+      "value": 27541.28,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "01.09.2023",
+      "value": 28328.79,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "08.09.2023",
+      "value": 28280.03,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "15.09.2023",
+      "value": 28338.48,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "22.09.2023",
+      "value": 28082.86,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "29.09.2023",
+      "value": 29030.22,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "06.10.2023",
+      "value": 28909.62,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "13.10.2023",
+      "value": 28796.5,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "20.10.2023",
+      "value": 28653.71,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "27.10.2023",
+      "value": 28478.05,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.11.2023",
+      "value": 30093.64,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.11.2023",
+      "value": 30126.62,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "17.11.2023",
+      "value": 30275.46,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "24.11.2023",
+      "value": 30284.91,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "01.12.2023",
+      "value": 32319.1,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "08.12.2023",
+      "value": 32503.77,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "15.12.2023",
+      "value": 32480.15,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "22.12.2023",
+      "value": 33469.09,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "29.12.2023",
+      "value": 33547.4,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "05.01.2024",
+      "value": 33438.35,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "12.01.2024",
+      "value": 33699.71,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.01.2024",
+      "value": 33875.0,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.01.2024",
+      "value": 34364.81,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "02.02.2024",
+      "value": 35461.79,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "09.02.2024",
+      "value": 35622.28,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.02.2024",
+      "value": 35688.73,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "23.02.2024",
+      "value": 35914.82,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "01.03.2024",
+      "value": 37687.19,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "08.03.2024",
+      "value": 37633.4,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "15.03.2024",
+      "value": 37625.47,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "22.03.2024",
+      "value": 37577.29,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "29.03.2024",
+      "value": 37681.9,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "05.04.2024",
+      "value": 37364.47,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "12.04.2024",
+      "value": 37281.35,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.04.2024",
+      "value": 36991.09,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.04.2024",
+      "value": 37126.02,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.05.2024",
+      "value": 37834.02,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.05.2024",
+      "value": 38027.23,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "17.05.2024",
+      "value": 38113.56,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "24.05.2024",
+      "value": 37139.84,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "31.05.2024",
+      "value": 38043.42,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "07.06.2024",
+      "value": 38758.4,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "14.06.2024",
+      "value": 39695.32,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "21.06.2024",
+      "value": 39784.43,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "28.06.2024",
+      "value": 40797.37,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "05.07.2024",
+      "value": 40908.12,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "12.07.2024",
+      "value": 41127.36,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.07.2024",
+      "value": 40208.58,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.07.2024",
+      "value": 39989.44,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "02.08.2024",
+      "value": 39519.14,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "09.08.2024",
+      "value": 40202.57,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.08.2024",
+      "value": 40930.41,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "23.08.2024",
+      "value": 41088.41,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "30.08.2024",
+      "value": 42200.79,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "06.09.2024",
+      "value": 41914.14,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "13.09.2024",
+      "value": 42340.81,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "20.09.2024",
+      "value": 42375.83,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "27.09.2024",
+      "value": 42587.47,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "04.10.2024",
+      "value": 43887.46,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "11.10.2024",
+      "value": 44144.8,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "18.10.2024",
+      "value": 44334.91,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "25.10.2024",
+      "value": 44249.84,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "01.11.2024",
+      "value": 43878.56,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "08.11.2024",
+      "value": 44477.68,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "15.11.2024",
+      "value": 44611.0,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "22.11.2024",
+      "value": 44962.99,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "29.11.2024",
+      "value": 46907.46,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "06.12.2024",
+      "value": 46944.54,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "13.12.2024",
+      "value": 46770.28,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "20.12.2024",
+      "value": 46710.96,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "27.12.2024",
+      "value": 46806.86,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.01.2025",
+      "value": 48011.21,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.01.2025",
+      "value": 47512.49,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "17.01.2025",
+      "value": 48174.77,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "24.01.2025",
+      "value": 48078.94,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "31.01.2025",
+      "value": 49082.59,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "07.02.2025",
+      "value": 49644.24,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "14.02.2025",
+      "value": 49790.88,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "21.02.2025",
+      "value": 49675.66,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "28.02.2025",
+      "value": 50676.93,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "07.03.2025",
+      "value": 49115.52,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "14.03.2025",
+      "value": 48590.75,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "21.03.2025",
+      "value": 48771.67,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "28.03.2025",
+      "value": 48563.04,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "04.04.2025",
+      "value": 47176.56,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "11.04.2025",
+      "value": 46451.19,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "18.04.2025",
+      "value": 46053.69,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "25.04.2025",
+      "value": 47147.19,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "02.05.2025",
+      "value": 48862.8,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "09.05.2025",
+      "value": 48458.76,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.05.2025",
+      "value": 49565.45,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "23.05.2025",
+      "value": 48873.87,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "30.05.2025",
+      "value": 50036.37,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "06.06.2025",
+      "value": 50087.87,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "13.06.2025",
+      "value": 49763.3,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "20.06.2025",
+      "value": 49750.39,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "27.06.2025",
+      "value": 51110.1,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "04.07.2025",
+      "value": 51052.4,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "11.07.2025",
+      "value": 52255.7,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "18.07.2025",
+      "value": 52620.88,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "25.07.2025",
+      "value": 52881.75,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "01.08.2025",
+      "value": 53853.16,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "08.08.2025",
+      "value": 53865.71,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "15.08.2025",
+      "value": 54279.21,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "22.08.2025",
+      "value": 54442.9,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "29.08.2025",
+      "value": 54590.45,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "05.09.2025",
+      "value": 55742.93,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "12.09.2025",
+      "value": 56023.96,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.09.2025",
+      "value": 55717.01,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.09.2025",
+      "value": 55898.04,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.10.2025",
+      "value": 57181.55,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.10.2025",
+      "value": 57370.37,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "17.10.2025",
+      "value": 57084.55,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "24.10.2025",
+      "value": 57759.35,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "31.10.2025",
+      "value": 59129.05,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "07.11.2025",
+      "value": 58722.38,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "14.11.2025",
+      "value": 59089.71,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "21.11.2025",
+      "value": 58734.38,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "28.11.2025",
+      "value": 59565.86,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "05.12.2025",
+      "value": 60903.6,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "12.12.2025",
+      "value": 60186.36,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.12.2025",
+      "value": 60239.82,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.12.2025",
+      "value": 60500.9,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "02.01.2026",
+      "value": 61553.5,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "09.01.2026",
+      "value": 62148.0,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.01.2026",
+      "value": 62300.43,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "23.01.2026",
+      "value": 61720.14,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "30.01.2026",
+      "value": 62442.96,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "06.02.2026",
+      "value": 62757.98,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "13.02.2026",
+      "value": 62115.45,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "20.02.2026",
+      "value": 62674.78,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "27.02.2026",
+      "value": 63532.97,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "06.03.2026",
+      "value": 63267.1,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "13.03.2026",
+      "value": 63366.36,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "20.03.2026",
+      "value": 60763.03,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "27.03.2026",
+      "value": 59899.21,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.04.2026",
+      "value": 61511.64,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.04.2026",
+      "value": 62490.23,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "17.04.2026",
+      "value": 63596.48,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "24.04.2026",
+      "value": 64367.33,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "01.05.2026",
+      "value": 64860.11,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "08.05.2026",
+      "value": 67729.87,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "15.05.2026",
+      "value": 68126.4,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "22.05.2026",
+      "value": 68647.35,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "29.05.2026",
+      "value": 69179.93,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "05.06.2026",
+      "value": 70090.45,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "12.06.2026",
+      "value": 70390.5,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "19.06.2026",
+      "value": 71568.74,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "26.06.2026",
+      "value": 70961.07,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "03.07.2026",
+      "value": 73618.21,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "10.07.2026",
+      "value": 74150.24,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    },
+    {
+      "date": "16.07.2026",
+      "value": 73299.58,
+      "reconstructed": true,
+      "unresolved_positions": 0
+    }
+  ]
+}
