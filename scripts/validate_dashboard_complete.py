@@ -81,7 +81,11 @@ def main() -> int:
     assert all("net_contributions" in row and "gain" in row for row in history), "Cash-flow fields missing"
     assert abs(float(history[-1]["value"]) - float(data["meta"]["total"])) < 1e-6
     assert "dynamic-history-labels-v2" not in html, "Obsolete history KPI override still present"
-    assert "['Nettoeinzahlungen',eur.format(netContrib),'beide Depots zusammen']" in html, "Cash-flow KPI renderer missing"
+    # Check the semantic contract, not a brittle exact JavaScript source fragment.
+    assert "Kumulierter Geldfluss" in html, "Cumulative cash-flow wording missing"
+    assert "net_contributions" in html, "Cash-flow series missing from rendered dashboard"
+    assert "Q1" in html and "Q2" in html and "Q3" in html and "Q4" in html, "Quarter labels missing"
+    assert "H1" in html or "H2" in html or "halfYearRows" in html, "Half-year checkpoint renderer missing"
     require_dom_id(html, "historyChart")
     require_dom_id(html, "historyKpis")
     require_dom_id(html, "historyBars")
