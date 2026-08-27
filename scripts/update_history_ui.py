@@ -115,8 +115,6 @@ def replace_script_block(text: str) -> str:
     if marked.search(text):
         return marked.sub(BLOCK, text, count=1)
 
-    # Current pre-marker interactive renderer. Match through the *complete*
-    # initializer, not the renderHistoryChart() call inside click handlers.
     interactive = re.compile(
         r"const chartHistory=DATA\.history;.*?"
         r"renderHistoryBars\(\);renderHistoryChart\(\);bindHistoryControls\(\);",
@@ -125,7 +123,6 @@ def replace_script_block(text: str) -> str:
     if interactive.search(text):
         return interactive.sub(BLOCK, text, count=1)
 
-    # Legacy renderer variants used before period controls existed.
     legacy = re.compile(
         r"(?:const fullHistory=DATA\.history;.*?|"
         r"const firstHistory=DATA\.history\[0\], lastHistory=DATA\.history\[DATA\.history\.length-1\];.*?)"
@@ -148,14 +145,20 @@ def main():
     text = re.sub(r'<div class="history-card-head"><h3>Depotwert im Zeitverlauf</h3>.*?</div></div>|<h3>Depotwert im Zeitverlauf</h3>', LEFT_CONTROLS, text, count=1, flags=re.S)
     text = re.sub(r'<div class="history-card-head"><h3>Stichtagsvergleich</h3>.*?</div></div>|<h3>Stichtagsvergleich</h3>', RIGHT_CONTROLS, text, count=1, flags=re.S)
 
-    # Cheap structural guard before the real-browser deployment gate.
+    old_note = "<p><b>Gesamtwert:</b> von ${eur.format(oldTotal)} auf ${eur.format(newTotal)} – eine Veränderung von <b>${eur.format(historyGain)} (${historyGain>=0?'+':''}${pct.format(historyPct)})</b>.</p>"
+    new_note = "<p><b>Änderung zum letzten Tag:</b> von ${eur.format(oldTotal)} auf ${eur.format(newTotal)} – <b>${eur.format(newTotal-oldTotal)} (${oldTotal?((newTotal-oldTotal)>=0?'+':'')+pct.format((newTotal-oldTotal)/oldTotal):'–'})</b>. &nbsp; <b>Gesamte Änderung seit Beginn:</b> <b>${eur.format(historyGain)} (${historyPct==null?'–':(historyGain>=0?'+':'')+pct.format(historyPct)})</b>.</p>"
+    if old_note in text:
+        text = text.replace(old_note, new_note, 1)
+    elif new_note not in text:
+        raise ValueError('Could not locate portfolio change summary')
+
     if text.count(SCRIPT_START) != 1 or text.count(SCRIPT_END) != 1:
         raise ValueError('History UI script markers are not unique')
     if text.count("const chartHistory=DATA.history;") != 1:
         raise ValueError('History UI JavaScript block duplicated')
 
     INDEX.write_text(text, encoding='utf-8')
-    print('Updated history UI idempotently with interactive chart ranges and yearly/half-year checkpoints.')
+    print('Updated history UI and clarified daily versus total portfolio change.')
 
 
 if __name__ == '__main__':
