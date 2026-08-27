@@ -9,7 +9,7 @@ import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -31,6 +31,10 @@ def free_port() -> int:
         return int(sock.getsockname()[1])
 
 
+def require_no_browser_errors(browser_errors: list[str], where: str) -> None:
+    assert not browser_errors, f"Browser JavaScript/console errors {where}:\n" + "\n".join(browser_errors)
+
+
 def main() -> int:
     port = free_port()
     handler = lambda *a, **kw: SimpleHTTPRequestHandler(*a, directory=str(ROOT), **kw)
@@ -47,7 +51,16 @@ def main() -> int:
             page.on("console", lambda msg: browser_errors.append(f"console error: {msg.text}") if msg.type == "error" else None)
             response = page.goto(f"http://127.0.0.1:{port}/index.html", wait_until="load")
             assert response and response.ok, f"Dashboard HTTP load failed: {response.status if response else 'no response'}"
-            page.wait_for_timeout(250)
+
+            # The generated dashboard performs substantial synchronous rendering. Wait for the
+            # start page to be populated instead of relying on a fixed 250 ms sleep.
+            try:
+                page.locator("#historyKpis .card").first.wait_for(state="attached", timeout=10000)
+                page.locator("#historyChart svg").wait_for(state="attached", timeout=10000)
+            except PlaywrightTimeoutError as exc:
+                require_no_browser_errors(browser_errors, "while waiting for initial history render")
+                raise AssertionError("History page did not finish rendering within 10 seconds") from exc
+            require_no_browser_errors(browser_errors, "after initial render")
 
             for page_id, checks in PAGES.items():
                 nav = page.locator(f'#nav button[data-page="{page_id}"]')
@@ -57,10 +70,18 @@ def main() -> int:
                 section.wait_for(state="visible")
                 assert "active" in (section.get_attribute("class") or "").split(), f"Page {page_id} did not activate"
                 for selector, minimum in checks:
-                    count = page.locator(selector).count()
+                    locator = page.locator(selector)
+                    if minimum > 0:
+                        try:
+                            locator.first.wait_for(state="attached", timeout=5000)
+                        except PlaywrightTimeoutError:
+                            require_no_browser_errors(browser_errors, f"on page {page_id}")
+                    count = locator.count()
                     assert count >= minimum, f"Page {page_id}: expected >= {minimum} elements for {selector}, got {count}"
+                require_no_browser_errors(browser_errors, f"on page {page_id}")
 
             # History axis must use years with quarter labels, not arbitrary dates.
+            page.locator('#nav button[data-page="history"]').click()
             years = page.locator("#historyChart .history-year-label")
             quarters = page.locator("#historyChart .history-quarter-label")
             assert years.count() >= 6, f"Expected year labels, got {years.count()}"
@@ -88,7 +109,7 @@ def main() -> int:
                     title = segments.nth(i).locator("title").text_content() or ""
                     assert "·" in title and "%" in title, f"Missing name/percentage tooltip for {selector} segment {i}"
 
-            assert not browser_errors, "Browser JavaScript/console errors:\n" + "\n".join(browser_errors)
+            require_no_browser_errors(browser_errors, "at end of smoke test")
             browser.close()
     finally:
         server.shutdown()
