@@ -95,8 +95,6 @@ function bindHistoryControls(){{
 renderHistoryBars();renderHistoryChart();bindHistoryControls();
 {SCRIPT_END}'''
 
-NOTICE = '''Die Historie umfasst <b>Depot 1 und Depot 2</b>. Die Zeitachse ist nach Jahren gegliedert; innerhalb jedes Jahres markieren Q1 bis Q4 die Quartale. Mit 1M, 6M, 1J, 3J, 5J und Max lässt sich der Chartzeitraum direkt umschalten. Der Stichtagsvergleich kann jährlich oder halbjährlich angezeigt werden. Die gelbe Linie zeigt den <b>kumulierten Geldfluss</b>, also Einzahlungen abzüglich Auszahlungen. Werte vor 17.07.2026 werden aus den 439 dokumentierten Onvista-Transaktionen und historischen Kursen rekonstruiert; ab 17.07.2026 werden validierte Dashboard-Stichtage verwendet.'''
-
 CONTROLS_CSS = '''
 /* history-period-controls-v1 */
 .history-switch{display:flex;gap:0;flex-wrap:wrap;margin:0 0 14px}.history-switch button{border:1px solid var(--line);border-right:0;background:#0e1729;color:#eef2ff;padding:9px 16px;cursor:pointer;min-width:58px}.history-switch button:first-child{border-radius:9px 0 0 9px}.history-switch button:last-child{border-right:1px solid var(--line);border-radius:0 9px 9px 0}.history-switch button.active{background:#24599a;color:white}.history-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}.history-card-head h3{margin:0}.history-card-head .history-switch{margin:0 0 8px}
@@ -139,7 +137,7 @@ def main():
     text = INDEX.read_text(encoding='utf-8')
     text = re.sub(r'/\* dynamic-history-labels-v2 \*/\s*\(function\(\)\{.*?\}\)\(\);\s*', '', text, flags=re.S)
     text = replace_script_block(text)
-    text = re.sub(r'<div class="notice small" style="margin-top:18px">.*?</div>', f'<div class="notice small" style="margin-top:18px">{NOTICE}</div>', text, count=1, flags=re.S)
+    text = re.sub(r'\s*<div class="notice small" style="margin-top:18px">.*?</div>', '', text, count=1, flags=re.S)
     text = re.sub(r'/\* history-period-controls-v1 \*/.*?(?=</style>)', '', text, flags=re.S)
     text = text.replace('</style>', CONTROLS_CSS + '</style>', 1)
     text = re.sub(r'<div class="history-card-head"><h3>Depotwert im Zeitverlauf</h3>.*?</div></div>|<h3>Depotwert im Zeitverlauf</h3>', LEFT_CONTROLS, text, count=1, flags=re.S)
@@ -156,9 +154,11 @@ def main():
         raise ValueError('History UI script markers are not unique')
     if text.count("const chartHistory=DATA.history;") != 1:
         raise ValueError('History UI JavaScript block duplicated')
+    if 'Die Historie umfasst <b>Depot 1 und Depot 2</b>' in text:
+        raise ValueError('Legacy history notice was not removed')
 
     INDEX.write_text(text, encoding='utf-8')
-    print('Updated history UI and clarified daily versus total portfolio change.')
+    print('Updated history UI idempotently and removed the history notice.')
 
 
 if __name__ == '__main__':
