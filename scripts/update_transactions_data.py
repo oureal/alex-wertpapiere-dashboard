@@ -2,6 +2,7 @@
 from pathlib import Path
 import json, html, re
 ROOT=Path(__file__).resolve().parents[1]; INDEX=ROOT/'index.html'; FILES=[ROOT/'data/transactions-depot1.json',ROOT/'data/transactions.json']
+MANUAL_TX={"date":"2026-08-28","type":"Einzahlung","name":"Einzahlung","amount_eur":1000.0,"source":"User bestätigt","depot":"depot2"}
 def eur(v):
     if v is None:return '–'
     s=f"{abs(float(v)):,.2f}".replace(',','X').replace('.',',').replace('X','.');sign='+' if float(v)>0 else '-' if float(v)<0 else '';return f'{sign}{s} €'
@@ -15,6 +16,8 @@ def load():
         doc=json.loads(p.read_text(encoding='utf-8'));dep=doc.get('depot') or ('depot1' if 'depot1' in p.name else 'depot2')
         for x in doc.get('transactions',[]):
             r=dict(x);r.setdefault('depot',dep);out.append(r)
+    if not any(x.get('date')==MANUAL_TX['date'] and x.get('type')=='Einzahlung' and x.get('depot')=='depot2' and abs(float(x.get('amount_eur') or 0)-1000.0)<1e-9 for x in out):
+        out.append(dict(MANUAL_TX))
     return sorted(out,key=lambda x:x['date'],reverse=True)
 def build(tx):
     count=len(tx);deposits=sum(float(x.get('amount_eur',0)) for x in tx if x.get('type')=='Einzahlung');withdrawals=sum(abs(float(x.get('amount_eur',0))) for x in tx if x.get('type')=='Auszahlung');fees=sum(float(x.get('fees_eur',0) or 0) for x in tx);orders=sum(1 for x in tx if x.get('type') in {'Kauf','Verkauf'});start=min(x['date'] for x in tx);end=max(x['date'] for x in tx)
@@ -43,7 +46,7 @@ def build(tx):
 <!-- TRANSACTIONS_END -->'''
 def main():
     tx=load()
-    if len(tx)!=440:raise SystemExit(f'Expected 440 historical transactions, got {len(tx)}')
+    if len(tx)!=440:raise SystemExit(f'Expected 440 effective transactions, got {len(tx)}')
     text=INDEX.read_text();section=build(tx);pat=r'<!-- TRANSACTIONS_START -->.*?<!-- TRANSACTIONS_END -->'
     if not re.search(pat,text,flags=re.S):raise SystemExit('Transactions section not found')
     INDEX.write_text(re.sub(pat,section,text,count=1,flags=re.S));print(f'Rendered {len(tx)} transactions from both depots.')
