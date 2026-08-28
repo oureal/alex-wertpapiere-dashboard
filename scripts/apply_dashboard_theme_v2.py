@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from scripts.apply_dashboard_theme import STYLE, SCRIPT
+from apply_dashboard_theme import STYLE, SCRIPT
 
 HTML_PATH = Path("index.html")
 STYLE_START = "/* dashboard-theme-v1:start */"
