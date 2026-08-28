@@ -14,6 +14,7 @@ from verify_immutable_history import verify as verify_history
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPORT = ROOT / "data/legacy/validation-report.json"
 TOLERANCE = 0.01
+LEGACY_CUTOFF = "2026-08-21"
 
 
 def close(left: float, right: float) -> bool:
@@ -94,15 +95,23 @@ def build_report(root: Path = ROOT) -> dict:
         {"company_exposures": company_total, "resolved": meta["resolved"]},
     )
     company_direct = sum(company["direct"] for company in legacy["companies"])
+    # Compare only holdings belonging to the immutable legacy snapshot. Positions
+    # bought after 2026-08-21 are valid live holdings, not part of the legacy baseline.
     migrated_direct = sum(
         float(row["legacy_market_value_eur"])
         for row in holdings
-        if instrument_by_id[row["instrument_id"]]["asset_type"] == "equity"
+        if row["as_of"] <= LEGACY_CUTOFF
+        and instrument_by_id[row["instrument_id"]]["asset_type"] == "equity"
     )
     check(
         "direct_holdings_consistent_with_company_exposures",
         close(migrated_direct, company_direct) and close(company_direct, meta["directTotal"]),
-        {"migrated_direct": migrated_direct, "company_direct": company_direct, "meta_direct": meta["directTotal"]},
+        {
+            "legacy_cutoff": LEGACY_CUTOFF,
+            "migrated_direct": migrated_direct,
+            "company_direct": company_direct,
+            "meta_direct": meta["directTotal"],
+        },
     )
     migrated_cash = sum(float(row["balance_eur"]) for row in cash)
     # cash.csv is a live portfolio input while meta.cash belongs to the immutable
