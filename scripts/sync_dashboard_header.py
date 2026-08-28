@@ -125,6 +125,7 @@ def main() -> int:
     original = text
     text = text.replace("Portfolio Lens", "Portfolio")
     text = text.replace('<div class="muted">Fortlaufende Entwicklung des Depotwerts über alle dokumentierten Stichtage</div>', '')
+    text = text.replace('<div class="notice small" style="margin-top:16px">Die Rangfolge basiert auf der Veränderung des Positionswerts in EUR und Prozent zwischen zwei gespeicherten Stichtagen. Käufe, Verkäufe oder Stückzahländerungen können den Wertbeitrag beeinflussen; die Anzeige ist daher keine bereinigte Kursperformance.</div>', '')
     stamp = latest_stamp()
     if stamp:
         text = re.sub(r'<div class="sub">.*?</div>', f'<div class="sub">Stand {stamp}</div>', text, count=1, flags=re.S)
@@ -141,6 +142,8 @@ def main() -> int:
         raise SystemExit("Sidebar label removal failed")
     if "Fortlaufende Entwicklung des Depotwerts über alle dokumentierten Stichtage" in text:
         raise SystemExit("History subtitle removal failed")
+    if "Die Rangfolge basiert auf der Veränderung des Positionswerts" in text:
+        raise SystemExit("Movers explanatory notice removal failed")
     if 'data-page="transactions"' not in text or 'id="transactions"' not in text:
         raise SystemExit("Transactions page synchronization failed")
 
