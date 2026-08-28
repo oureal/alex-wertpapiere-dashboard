@@ -1,0 +1,111 @@
+name: Apply and publish dashboard themes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/theme-dashboard.yml"
+      - "scripts/apply_dashboard_theme.py"
+      - "scripts/apply_dashboard_theme_v2.py"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: production-dashboard-theme
+  cancel-in-progress: true
+
+jobs:
+  theme-and-publish:
+    name: Validate themes and publish dashboard
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install test dependencies
+        run: python -m pip install --requirement requirements-dev.txt
+
+      - name: Apply light and dark themes
+        run: python scripts/apply_dashboard_theme_v2.py
+
+      - name: Verify theme injection is idempotent
+        run: |
+          before=$(sha256sum index.html | cut -d' ' -f1)
+          python scripts/apply_dashboard_theme_v2.py
+          after=$(sha256sum index.html | cut -d' ' -f1)
+          test "$before" = "$after"
+
+      - name: Validate theme contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html = Path('index.html').read_text(encoding='utf-8')
+          checks = {
+              'light theme variables': 'html[data-theme="light"]' in html,
+              'persistent storage': "alex-wertpapiere-theme" in html,
+              'theme toggle': "themeToggle" in html,
+              'theme style marker': html.count('/* dashboard-theme-v1:start */') == 1,
+              'theme script marker': html.count('<!-- dashboard-theme-v2:start -->') == 1,
+              'all dashboard pages retained': all(f'id="{page}"' in html for page in ['overview','positions','lookthrough','regions','sectors','risk','movers','transactions']),
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit('Theme validation failed: ' + ', '.join(failed))
+          print('Theme contract validated.')
+          PY
+
+      - name: Validate complete dashboard
+        run: python scripts/validate_dashboard_complete.py
+
+      - name: Install Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: Browser smoke test
+        run: python tests/browser_smoke_test.py
+
+      - name: Commit validated theme to main
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "Theme already present in index.html."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html
+            git commit -m "Add persistent light and dark dashboard themes"
+            git push origin HEAD:main
+          fi
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Prepare published site
+        run: |
+          rm -rf _site
+          mkdir _site
+          cp index.html _site/index.html
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Deploy dashboard to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
