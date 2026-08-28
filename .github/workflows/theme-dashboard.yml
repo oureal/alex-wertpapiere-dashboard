@@ -63,7 +63,7 @@ jobs:
               'theme toggle': "themeToggle" in html,
               'theme style marker': html.count('/* dashboard-theme-v1:start */') == 1,
               'theme script marker': html.count('<!-- dashboard-theme-v2:start -->') == 1,
-              'all dashboard pages retained': all(f'id="{page}"' in html for page in ['overview','positions','lookthrough','regions','sectors','risk','movers','transactions']),
+              'all dashboard pages retained': all(f'id="{page}"' in html for page in ['history','movers','dashboard','treemap','sectors','regions','risk','transactions']),
           }
           failed = [name for name, ok in checks.items() if not ok]
           if failed:
