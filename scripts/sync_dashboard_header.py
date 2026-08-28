@@ -120,6 +120,39 @@ def synchronize_transactions(text: str) -> str:
     return text
 
 
+def synchronize_latest_direct_positions(text: str) -> str:
+    summary = (
+        '<p><b>Neue Direktpositionen (28.08.2026):</b> Amazon.com Inc. und Schneider Electric SE '
+        'wurden mit jeweils 2 Stück in Depot 2 aufgenommen. Marvell Technology und Broadcom bleiben '
+        'als direkte Aktienpositionen berücksichtigt. Depotstruktur, Länderzuordnung und '
+        'Look-through-Auswertung basieren auf den aktuellen Beständen.</p>'
+    )
+    pattern = r'<p><b>Neue Direktpositionen(?: gegenüber dem Juli-Datensatz| \(28\.08\.2026\))?:</b>.*?</p>'
+    if not re.search(pattern, text, flags=re.S):
+        raise SystemExit("Direct-position summary paragraph not found")
+    text = re.sub(pattern, summary, text, count=1, flags=re.S)
+
+    map_match = re.search(r"const directMap=\{([^}]*)\};", text)
+    if not map_match:
+        raise SystemExit("Direct-country mapping not found")
+    entries = map_match.group(1)
+    additions = []
+    for key, country in (
+        ("Amazon.com Inc.", "US"),
+        ("Amazon", "US"),
+        ("Schneider Electric SE", "FR"),
+        ("Schneider Electric", "FR"),
+    ):
+        token = f"'{key}':'{country}'"
+        if token not in entries:
+            additions.append(token)
+    if additions:
+        updated_entries = entries + ("," if entries.strip() else "") + ",".join(additions)
+        text = text[:map_match.start(1)] + updated_entries + text[map_match.end(1):]
+
+    return text
+
+
 def main() -> int:
     text = INDEX.read_text()
     original = text
@@ -134,6 +167,7 @@ def main() -> int:
         text = re.sub(r'<div class="sub">\s*Look-through Dashboard\s*·?\s*(.*?)</div>', r'<div class="sub">\1</div>', text, count=1, flags=re.S)
 
     text = synchronize_transactions(text)
+    text = synchronize_latest_direct_positions(text)
 
     sidebar = re.search(r'<div class="sub">.*?</div>', text, flags=re.S)
     if not sidebar:
@@ -146,6 +180,10 @@ def main() -> int:
         raise SystemExit("Movers explanatory notice removal failed")
     if 'data-page="transactions"' not in text or 'id="transactions"' not in text:
         raise SystemExit("Transactions page synchronization failed")
+    if "Neue Direktpositionen (28.08.2026)" not in text or "Amazon.com Inc." not in text or "Schneider Electric SE" not in text:
+        raise SystemExit("Latest direct-position summary synchronization failed")
+    if "'Amazon.com Inc.':'US'" not in text or "'Schneider Electric SE':'FR'" not in text:
+        raise SystemExit("Latest direct-country mapping synchronization failed")
 
     if text != original:
         INDEX.write_text(text)
