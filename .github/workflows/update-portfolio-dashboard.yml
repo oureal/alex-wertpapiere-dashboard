@@ -21,6 +21,8 @@ name: Update portfolio dashboard
       - "data/transactions.json"
       - "data/transactions-depot1.json"
       - "data/portfolio/cash.csv"
+      - "data/portfolio/holdings.csv"
+      - "data/portfolio/instruments.yml"
 
 permissions:
   contents: write
@@ -29,7 +31,7 @@ permissions:
 
 concurrency:
   group: production-portfolio-update
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   update-portfolio:
