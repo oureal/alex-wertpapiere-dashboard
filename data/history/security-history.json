@@ -102,6 +102,36 @@
         "siemens-energy": 604.0
       },
       "source": "current"
+    },
+    {
+      "date": "28.08.2026",
+      "time": "02:50",
+      "values": {
+        "berkshire-hathaway-b": 23764.063066000002,
+        "xetra-gold": 7867.800095,
+        "allianz": 4517.000122,
+        "microsoft": 3032.683286,
+        "eli-lilly": 2017.717134,
+        "siemens": 2016.700043,
+        "hsbc": 1727.764027,
+        "apple": 1349.233573,
+        "linde": 832.666477,
+        "boerse-de-aktienfonds": 22635.28,
+        "ishares-global-titans-50": 13554.419594,
+        "boerse-de-technologiefonds": 4972.48,
+        "nvidia": 4889.031048,
+        "amd": 3679.987867,
+        "ishares-core-msci-world": 3420.360008,
+        "alphabet-c": 3186.563963,
+        "micron-technology": 1604.755122,
+        "ishares-msci-world-value-factor": 1191.699974,
+        "wisdomtree-physical-bitcoin": 982.68,
+        "marvell-technology": 828.463236,
+        "tsmc-adr": 733.075865,
+        "broadcom": 637.414044,
+        "siemens-energy": 604.400024
+      },
+      "source": "current"
     }
   ]
 }
