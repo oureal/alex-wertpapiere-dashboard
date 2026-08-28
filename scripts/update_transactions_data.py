@@ -3,6 +3,7 @@ from pathlib import Path
 import json, html, re
 ROOT=Path(__file__).resolve().parents[1]; INDEX=ROOT/'index.html'; FILES=[ROOT/'data/transactions-depot1.json',ROOT/'data/transactions.json']
 MANUAL_TX={"date":"2026-08-28","type":"Einzahlung","name":"Einzahlung","amount_eur":1000.0,"source":"User bestätigt","depot":"depot2"}
+REGIONS_NOTICE='<div class="notice">Die Excel-Datei enthält Sektoren, Unternehmen und Quellen, aber keine belastbaren Länder- oder Währungsfelder für sämtliche 1.288 Unternehmen. Daher werden hier keine Länderquoten geschätzt oder erfunden.</div>'
 def eur(v):
     if v is None:return '–'
     s=f"{abs(float(v)):,.2f}".replace(',','X').replace('.',',').replace('X','.');sign='+' if float(v)>0 else '-' if float(v)<0 else '';return f'{sign}{s} €'
@@ -49,5 +50,8 @@ def main():
     if len(tx)!=440:raise SystemExit(f'Expected 440 effective transactions, got {len(tx)}')
     text=INDEX.read_text();section=build(tx);pat=r'<!-- TRANSACTIONS_START -->.*?<!-- TRANSACTIONS_END -->'
     if not re.search(pat,text,flags=re.S):raise SystemExit('Transactions section not found')
-    INDEX.write_text(re.sub(pat,section,text,count=1,flags=re.S));print(f'Rendered {len(tx)} transactions from both depots.')
+    text=re.sub(pat,section,text,count=1,flags=re.S)
+    text=text.replace(REGIONS_NOTICE,'')
+    if 'Die Excel-Datei enthält Sektoren, Unternehmen und Quellen' in text:raise SystemExit('Regions explanatory notice removal failed')
+    INDEX.write_text(text);print(f'Rendered {len(tx)} transactions from both depots and removed regions notice.')
 if __name__=='__main__':main()
