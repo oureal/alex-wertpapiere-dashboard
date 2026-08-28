@@ -79,7 +79,8 @@ def calculate(root: Path = ROOT, prices_path: Path | None = None) -> dict[str, A
     for company in legacy["companies"]:
         company_values[company["name"]] = {"name": company["name"], "sector": company["sector"], "direct": ZERO, "indirect": ZERO, "sources": defaultdict(lambda: ZERO)}
 
-    # Direct equity positions resolve entirely to their aliased company.
+    # Direct equities reuse an existing legacy company when possible. A genuinely new
+    # direct holding is added to the current calculation without mutating legacy history.
     direct_total = ZERO
     for instrument_id, value in values_by_instrument.items():
         instrument = instruments[instrument_id]
@@ -88,7 +89,17 @@ def calculate(root: Path = ROOT, prices_path: Path | None = None) -> dict[str, A
         names = alias_by_instrument.get(instrument_id, []) + [instrument["name"]]
         target = next((company_values[name] for name in names if name in company_values), None)
         if target is None:
-            raise ValueError(f"No company alias for direct equity {instrument_id}")
+            sector = instrument.get("sector")
+            if not sector:
+                raise ValueError(f"No sector metadata for new direct equity {instrument_id}")
+            target = {
+                "name": instrument["name"],
+                "sector": sector,
+                "direct": ZERO,
+                "indirect": ZERO,
+                "sources": defaultdict(lambda: ZERO),
+            }
+            company_values[instrument["name"]] = target
         target["direct"] += value
         target["sources"]["direct"] += value
         direct_total += value
