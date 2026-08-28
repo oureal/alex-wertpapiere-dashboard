@@ -21,7 +21,7 @@ PAGES = {
     "sectors": [("#sectorBars .bar-row", 1), ("#sectorLegend .legend-row", 1), ("#sectorDonut .donut-segment", 1), ("#sectorDonut .donut-callout", 8)],
     "regions": [("#directCountries .bar-row", 1), ("#nonEquity .bar-row", 1)],
     "risk": [("#riskKpis .card", 4), ("#riskMeters .risk", 1), ("#riskNotes p", 1)],
-    "transactions": [("#transactions tbody tr", 439)],
+    "transactions": [("#transactions tbody tr", 440)],
 }
 
 
@@ -52,8 +52,6 @@ def main() -> int:
             response = page.goto(f"http://127.0.0.1:{port}/index.html", wait_until="load")
             assert response and response.ok, f"Dashboard HTTP load failed: {response.status if response else 'no response'}"
 
-            # The generated dashboard performs substantial synchronous rendering. Wait for the
-            # start page to be populated instead of relying on a fixed 250 ms sleep.
             try:
                 page.locator("#historyKpis .card").first.wait_for(state="attached", timeout=10000)
                 page.locator("#historyChart svg").wait_for(state="attached", timeout=10000)
@@ -80,7 +78,6 @@ def main() -> int:
                     assert count >= minimum, f"Page {page_id}: expected >= {minimum} elements for {selector}, got {count}"
                 require_no_browser_errors(browser_errors, f"on page {page_id}")
 
-            # History axis must use years with quarter labels, not arbitrary dates.
             page.locator('#nav button[data-page="history"]').click()
             years = page.locator("#historyChart .history-year-label")
             quarters = page.locator("#historyChart .history-quarter-label")
@@ -92,7 +89,6 @@ def main() -> int:
             assert "Kumulierter Geldfluss" in chart_text
             assert "Nettoeinzahlungen" not in chart_text
 
-            # Checkpoint comparison uses only year + half-year intervals and EUR values.
             history_rows = page.locator("#historyBars .bar-row")
             assert history_rows.count() >= 10
             for i in range(history_rows.count()):
