@@ -16,9 +16,11 @@ name: Update portfolio dashboard
       - "scripts/reconstruct_portfolio_history.py"
       - "scripts/update_history_ui.py"
       - "scripts/validate_dashboard_complete.py"
+      - "scripts/validate_data.py"
       - "tests/**"
       - "data/transactions.json"
       - "data/transactions-depot1.json"
+      - "data/portfolio/cash.csv"
 
 permissions:
   contents: write
@@ -135,10 +137,10 @@ jobs:
           depot1 = json.loads(Path("data/transactions-depot1.json").read_text()).get("transactions", [])
           depot2 = json.loads(Path("data/transactions.json").read_text()).get("transactions", [])
           assert len(depot1) == 199, f"Expected 199 Depot 1 transactions, got {len(depot1)}"
-          assert len(depot2) == 240, f"Expected 240 Depot 2 transactions, got {len(depot2)}"
-          assert reconstructed["meta"]["transactions"] == 439, "Reconstruction does not use all 439 transactions"
+          assert len(depot2) == 241, f"Expected 241 Depot 2 transactions, got {len(depot2)}"
+          assert reconstructed["meta"]["transactions"] == 440, "Reconstruction does not use all 440 transactions"
           assert reconstructed["meta"]["depot1_transactions"] == 199
-          assert reconstructed["meta"]["depot2_transactions"] == 240
+          assert reconstructed["meta"]["depot2_transactions"] == 241
           assert abs(float(dashboard["meta"]["total"]) - float(portfolio["total"])) < 0.000001
           assert dashboard["history"] == history, "Inline and persisted history differ"
           first_positive_contribution = min(
@@ -154,13 +156,13 @@ jobs:
           assert abs(float(history[-1]["value"]) - float(portfolio["total"])) < 0.000001
           assert dashboard.get("movers", {}).get("periods"), "Movers data missing"
           assert security_history, "Security history missing"
-          assert '439 Vorgänge' in html, "Rendered combined transaction count missing"
+          assert '440 Vorgänge' in html, "Rendered combined transaction count missing"
           assert 'Depot 1' in html and 'Depot 2' in html, "Depot labels missing from transactions"
           assert 'Gesamtdepotentwicklung' in html and 'Kumulierter Geldfluss' in html
           assert 'id="manualUpdateLink"' in html
           assert 'data-page="transactions"' in html and 'id="transactions"' in html
           assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0)
-          print(f"Validated combined history with {len(history)} points and 439 transactions.")
+          print(f"Validated combined history with {len(history)} points and 440 transactions.")
           PY
 
       - name: Install Chromium for browser deployment gate
