@@ -52,6 +52,10 @@
     {
       "alias": "Marvell Technology Inc",
       "instrument_id": "marvell-technology"
+    },
+    {
+      "alias": "Amazon",
+      "instrument_id": "amazon"
     }
   ]
 }
