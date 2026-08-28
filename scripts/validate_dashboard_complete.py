@@ -80,7 +80,6 @@ def main() -> int:
     assert "dynamic-history-labels-v2" not in html, "Obsolete history KPI override still present"
     assert "Kumulierter Geldfluss" in html, "Cumulative cash-flow wording missing"
     assert "net_contributions" in html, "Cash-flow series missing from rendered dashboard"
-    # Source-level checks use stable semantic markers; browser gate verifies actual rendered controls and labels.
     assert "history-quarter-label" in html and "Q${q}" in html, "Quarter-axis renderer missing"
     assert "checkpointRows" in html and "H${half}" in html, "Checkpoint renderer missing"
     for element_id in ("historyChart", "historyKpis", "historyBars", "historyRangeControls", "checkpointControls"):
@@ -101,14 +100,14 @@ def main() -> int:
     require_dom_id(html, "moversGrid")
     require_dom_id(html, "moversAsOf")
 
-    assert len(depot1) == 199 and len(depot2) == 240
-    assert "439 Vorgänge" in html
+    assert len(depot1) == 199 and len(depot2) == 241
+    assert "440 Vorgänge" in html
     section = re.search(r'<section id="transactions" class="page">(.*?)</section>', html, flags=re.S)
     assert section, "Transactions section missing"
     tbody = re.search(r'<tbody>(.*?)</tbody>', section.group(1), flags=re.S)
     assert tbody, "Transaction table body missing"
     rendered_rows = tbody.group(1).count("<tr>")
-    assert rendered_rows == 439, f"Expected 439 rendered transaction rows, got {rendered_rows}"
+    assert rendered_rows == 440, f"Expected 440 rendered transaction rows, got {rendered_rows}"
     assert "Depot 1" in section.group(1) and "Depot 2" in section.group(1)
 
     print(
