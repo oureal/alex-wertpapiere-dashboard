@@ -132,6 +132,14 @@ def synchronize_latest_direct_positions(text: str) -> str:
         raise SystemExit("Direct-position summary paragraph not found")
     text = re.sub(pattern, summary, text, count=1, flags=re.S)
 
+    countries_match = re.search(r"const directCountries=\[([^\]]*)\];", text)
+    if not countries_match:
+        raise SystemExit("Direct-country list not found")
+    countries = countries_match.group(1)
+    if "name:'FR'" not in countries:
+        updated_countries = countries + ("," if countries.strip() else "") + "{name:'FR',value:0}"
+        text = text[:countries_match.start(1)] + updated_countries + text[countries_match.end(1):]
+
     map_match = re.search(r"const directMap=\{([^}]*)\};", text)
     if not map_match:
         raise SystemExit("Direct-country mapping not found")
@@ -182,8 +190,8 @@ def main() -> int:
         raise SystemExit("Transactions page synchronization failed")
     if "Neue Direktpositionen (28.08.2026)" not in text or "Amazon.com Inc." not in text or "Schneider Electric SE" not in text:
         raise SystemExit("Latest direct-position summary synchronization failed")
-    if "'Amazon.com Inc.':'US'" not in text or "'Schneider Electric SE':'FR'" not in text:
-        raise SystemExit("Latest direct-country mapping synchronization failed")
+    if "name:'FR'" not in text or "'Amazon.com Inc.':'US'" not in text or "'Schneider Electric SE':'FR'" not in text:
+        raise SystemExit("Latest direct-country synchronization failed")
 
     if text != original:
         INDEX.write_text(text)
