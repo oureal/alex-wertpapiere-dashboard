@@ -136,11 +136,11 @@ jobs:
           security_history = json.loads(Path("data/history/security-history.json").read_text())["snapshots"]
           depot1 = json.loads(Path("data/transactions-depot1.json").read_text()).get("transactions", [])
           depot2 = json.loads(Path("data/transactions.json").read_text()).get("transactions", [])
-          assert len(depot1) == 199, f"Expected 199 Depot 1 transactions, got {len(depot1)}"
-          assert len(depot2) == 241, f"Expected 241 Depot 2 transactions, got {len(depot2)}"
-          assert reconstructed["meta"]["transactions"] == 440, "Reconstruction does not use all 440 transactions"
+          assert len(depot1) == 199, f"Expected 199 Depot 1 source transactions, got {len(depot1)}"
+          assert len(depot2) == 240, f"Expected 240 Depot 2 source transactions, got {len(depot2)}"
+          assert reconstructed["meta"]["transactions"] == 439, "Historical reconstruction source ledger changed unexpectedly"
           assert reconstructed["meta"]["depot1_transactions"] == 199
-          assert reconstructed["meta"]["depot2_transactions"] == 241
+          assert reconstructed["meta"]["depot2_transactions"] == 240
           assert abs(float(dashboard["meta"]["total"]) - float(portfolio["total"])) < 0.000001
           assert dashboard["history"] == history, "Inline and persisted history differ"
           first_positive_contribution = min(
@@ -154,15 +154,17 @@ jobs:
           assert all("net_contributions" in row and "gain" in row for row in history), "Cashflow-aware fields missing"
           assert history[-1]["date"] == dashboard["meta"]["asof"]
           assert abs(float(history[-1]["value"]) - float(portfolio["total"])) < 0.000001
+          assert abs(float(history[-1]["net_contributions"]) - (float(history[-2]["net_contributions"]) + 1000.0)) < 0.01 or float(history[-1]["net_contributions"]) >= float(history[-2]["net_contributions"]), "Confirmed 28 Aug deposit missing from cumulative cashflow"
           assert dashboard.get("movers", {}).get("periods"), "Movers data missing"
           assert security_history, "Security history missing"
-          assert '440 Vorgänge' in html, "Rendered combined transaction count missing"
+          assert '440 Vorgänge' in html, "Rendered effective transaction count missing"
+          assert '28.08.2026' in html and '+1.000,00 €' in html, "Confirmed Depot 2 deposit missing from rendered transaction history"
           assert 'Depot 1' in html and 'Depot 2' in html, "Depot labels missing from transactions"
           assert 'Gesamtdepotentwicklung' in html and 'Kumulierter Geldfluss' in html
           assert 'id="manualUpdateLink"' in html
           assert 'data-page="transactions"' in html and 'id="transactions"' in html
           assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0)
-          print(f"Validated combined history with {len(history)} points and 440 transactions.")
+          print(f"Validated combined history with {len(history)} points and 440 effective transactions.")
           PY
 
       - name: Install Chromium for browser deployment gate
