@@ -14,6 +14,7 @@ DEFAULT_HISTORY = ROOT / "data/history/portfolio-history.json"
 TRANSACTION_FILES = [ROOT / "data/transactions-depot1.json", ROOT / "data/transactions.json"]
 SOURCE_FIELDS = {"boerse-de-aktienfonds": ("boerse", "boerse.de-Aktienfonds"), "ishares-global-titans-50": ("titans", "Global Titans 50"), "boerse-de-technologiefonds": ("tech", "boerse.de-Technologiefonds"), "ishares-core-msci-world": ("world", "MSCI World"), "ishares-msci-world-value-factor": ("value", "World Value")}
 ASSET_NAMES = {"berkshire-hathaway-b":"Berkshire Hathaway","xetra-gold":"Xetra Gold","allianz":"Allianz","microsoft":"Microsoft","eli-lilly":"Eli Lilly","siemens":"Siemens","hsbc":"HSBC","apple":"Apple","linde":"Linde","boerse-de-aktienfonds":"boerse.de-Aktienfonds","ishares-global-titans-50":"Global Titans 50","boerse-de-technologiefonds":"boerse.de-Technologiefonds","nvidia":"Nvidia","amd":"AMD","ishares-core-msci-world":"MSCI World","alphabet-c":"Alphabet","micron-technology":"Micron Technology","ishares-msci-world-value-factor":"World Value","wisdomtree-physical-bitcoin":"WisdomTree Physical Bitcoin","marvell-technology":"Marvell Technology","tsmc-adr":"TSMC","broadcom":"Broadcom","siemens-energy":"Siemens Energy","cash":"Bargeld"}
+MANUAL_CASHFLOWS = [(datetime(2026,8,28), 1000.0)]
 
 def _asof(prices):
     stamps=[i.get("fetched_at") for i in prices.get("prices",[]) if i.get("fetched_at")]
@@ -35,6 +36,8 @@ def _cashflow_series():
             if tx.get("type") not in {"Einzahlung","Auszahlung"}:continue
             try:flows.append((_iso_key(tx["date"]),float(tx.get("amount_eur") or 0)))
             except (KeyError,ValueError,TypeError):pass
+    for day, amount in MANUAL_CASHFLOWS:
+        if not any(d == day and abs(a-amount) < 0.000001 for d,a in flows): flows.append((day,amount))
     return sorted(flows,key=lambda x:x[0])
 def _net_contributions_at(day,flows): return round(sum(a for d,a in flows if d<=day),2)
 def _normalize_history(points):
@@ -81,9 +84,6 @@ def refresh_document(index_text,portfolio,prices,history=None):
     updated=re.sub(r"<title>[^<]*</title>",f"<title>Portfolio · {asof}</title>",updated,count=1)
     updated=re.sub(r'(<section id="dashboard" class="page">\s*<div class="header"><div><h1>Depotübersicht</h1>)<div class="muted">.*?</div>',r'\1<div class="muted">Konsolidierte Direkt- und Fondspositionen · Kurse: aktuell bzw. letztverfügbar</div>',updated,count=1,flags=re.S)
     updated=re.sub(r"Datenstand \d{2}\.\d{2}\.\d{4}(?:, \d{2}:\d{2} Uhr)?",f"Datenstand {asof}",updated);updated=re.sub(r"Depotwerte \d{2}\.\d{2}\.\d{4}",f"Depotwerte {asof}",updated);updated=re.sub(r'<div class="notice small" style="margin-bottom:16px">.*?</div>',f'<div class="notice small" style="margin-bottom:16px">{_update_notice(prices)}</div>',updated,count=1,flags=re.S)
-    # Keep the client-side script executable. A stale variable name here used to throw
-    # a ReferenceError immediately after the history chart, leaving Countries, Risk
-    # and Movers completely blank even though their data was present.
     updated=updated.replace("historyDelta", "historyGain")
     return updated
 def main():
