@@ -60,6 +60,22 @@ def main() -> int:
                 raise AssertionError("History page did not finish rendering within 10 seconds") from exc
             require_no_browser_errors(browser_errors, "after initial render")
 
+            theme_toggle = page.locator("#themeToggle")
+            assert theme_toggle.count() == 1, "Theme switch missing"
+            assert page.locator("html").get_attribute("data-theme") == "dark", "Dashboard must default to dark theme"
+            assert "Hell" in (theme_toggle.inner_text() or ""), "Dark theme must offer switch to light"
+            theme_toggle.click()
+            assert page.locator("html").get_attribute("data-theme") == "light", "Theme switch did not activate light mode"
+            assert page.evaluate("localStorage.getItem('alex-wertpapiere-theme')") == "light", "Light theme preference was not persisted"
+            assert "Dunkel" in (theme_toggle.inner_text() or ""), "Light theme must offer switch to dark"
+            page.reload(wait_until="load")
+            theme_toggle = page.locator("#themeToggle")
+            theme_toggle.wait_for(state="visible")
+            assert page.locator("html").get_attribute("data-theme") == "light", "Persisted light theme was lost after reload"
+            theme_toggle.click()
+            assert page.locator("html").get_attribute("data-theme") == "dark", "Theme switch did not return to dark mode"
+            assert page.evaluate("localStorage.getItem('alex-wertpapiere-theme')") == "dark", "Dark theme preference was not persisted"
+
             for page_id, checks in PAGES.items():
                 nav = page.locator(f'#nav button[data-page="{page_id}"]')
                 assert nav.count() == 1, f"Navigation button missing for {page_id}"
@@ -111,7 +127,7 @@ def main() -> int:
         server.shutdown()
         server.server_close()
 
-    print("Browser gate passed: all pages render; history uses year/quarter axis, half-year checkpoints and cumulative cash-flow wording.")
+    print("Browser gate passed: all pages render; persistent light/dark theme switching works; history uses year/quarter axis, half-year checkpoints and cumulative cash-flow wording.")
     return 0
 
 
