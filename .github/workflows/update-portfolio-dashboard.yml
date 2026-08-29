@@ -10,6 +10,8 @@ name: Update portfolio dashboard
       - ".github/workflows/update-portfolio-dashboard.yml"
       - "requirements-dev.txt"
       - "scripts/sync_dashboard_header.py"
+      - "scripts/apply_dashboard_theme.py"
+      - "scripts/apply_dashboard_theme_v2.py"
       - "scripts/update_dashboard_data.py"
       - "scripts/update_movers_data.py"
       - "scripts/update_transactions_data.py"
@@ -120,6 +122,9 @@ jobs:
       - name: Render long-term history UI
         run: python scripts/update_history_ui.py
 
+      - name: Apply persistent light and dark dashboard themes
+        run: python scripts/apply_dashboard_theme_v2.py
+
       - name: Validate all eight dashboard pages
         run: python scripts/validate_dashboard_complete.py
 
@@ -169,7 +174,10 @@ jobs:
           assert 'id="manualUpdateLink"' in html
           assert 'data-page="transactions"' in html and 'id="transactions"' in html
           assert "Look-through Dashboard" not in re.search(r'<div class="sub">.*?</div>', html, flags=re.S).group(0)
-          print(f"Validated combined history with {len(history)} points and 442 effective transactions.")
+          assert '/* dashboard-theme-v1:start */' in html and '/* dashboard-theme-v1:end */' in html, "Theme stylesheet missing"
+          assert '<!-- dashboard-theme-v2:start -->' in html and '<!-- dashboard-theme-v2:end -->' in html, "Theme script block missing"
+          assert "alex-wertpapiere-theme" in html and "themeToggle" in html, "Persistent theme toggle missing"
+          print(f"Validated combined history with {len(history)} points, 442 effective transactions and persistent theme switch.")
           PY
 
       - name: Install Chromium for browser deployment gate
