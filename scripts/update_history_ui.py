@@ -22,7 +22,7 @@ const firstHistory=chartHistory[0],lastHistory=chartHistory[chartHistory.length-
 const firstTs=parseHistoryDate(firstHistory.date).getTime(),lastTs=parseHistoryDate(lastHistory.date).getTime();
 const startYear=parseHistoryDate(firstHistory.date).getUTCFullYear(),endYear=parseHistoryDate(lastHistory.date).getUTCFullYear();
 const netContrib=Number(lastHistory.net_contributions||0),historyGain=Number(lastHistory.gain??(lastHistory.value-netContrib)),historyPct=lastHistory.simple_return==null?null:Number(lastHistory.simple_return);
-let activeHistoryRange='max',activeCheckpointMode='half';
+let activeHistoryRange='y3',activeCheckpointMode='year';
 const historyKpis=[
  ['Gesamtdepot · '+endYear,eur.format(lastHistory.value),'Depot 1 + Depot 2'],
  ['Kumulierter Geldfluss',eur.format(netContrib),'Einzahlungen abzüglich Auszahlungen'],
@@ -100,36 +100,18 @@ CONTROLS_CSS = '''
 .history-switch{display:flex;gap:0;flex-wrap:wrap;margin:0 0 14px}.history-switch button{border:1px solid var(--line);border-right:0;background:#0e1729;color:#eef2ff;padding:9px 16px;cursor:pointer;min-width:58px}.history-switch button:first-child{border-radius:9px 0 0 9px}.history-switch button:last-child{border-right:1px solid var(--line);border-radius:0 9px 9px 0}.history-switch button.active{background:#24599a;color:white}.history-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}.history-card-head h3{margin:0}.history-card-head .history-switch{margin:0 0 8px}
 '''
 
-LEFT_CONTROLS = '''<div class="history-card-head"><h3>Depotwert im Zeitverlauf</h3><div id="historyRangeControls" class="history-switch" aria-label="Chartzeitraum"><button data-range="m1">1M</button><button data-range="m6">6M</button><button data-range="y1">1J</button><button data-range="y3">3J</button><button data-range="y5">5J</button><button data-range="max" class="active">Max</button></div></div>'''
-RIGHT_CONTROLS = '''<div class="history-card-head"><h3>Stichtagsvergleich</h3><div id="checkpointControls" class="history-switch" aria-label="Stichtagsintervall"><button data-mode="year">Jährlich</button><button data-mode="half" class="active">Halbjährlich</button></div></div>'''
+LEFT_CONTROLS = '''<div class="history-card-head"><h3>Depotwert im Zeitverlauf</h3><div id="historyRangeControls" class="history-switch" aria-label="Chartzeitraum"><button data-range="m1">1M</button><button data-range="m6">6M</button><button data-range="y1">1J</button><button data-range="y3" class="active">3J</button><button data-range="y5">5J</button><button data-range="max">Max</button></div></div>'''
+RIGHT_CONTROLS = '''<div class="history-card-head"><h3>Stichtagsvergleich</h3><div id="checkpointControls" class="history-switch" aria-label="Stichtagsintervall"><button data-mode="year" class="active">Jährlich</button><button data-mode="half">Halbjährlich</button></div></div>'''
 
 
 def replace_script_block(text: str) -> str:
     """Replace exactly one complete history JS block, safely on repeated runs."""
-    marked = re.compile(
-        re.escape(SCRIPT_START) + r'.*?' + re.escape(SCRIPT_END),
-        flags=re.S,
-    )
-    if marked.search(text):
-        return marked.sub(BLOCK, text, count=1)
-
-    interactive = re.compile(
-        r"const chartHistory=DATA\.history;.*?"
-        r"renderHistoryBars\(\);renderHistoryChart\(\);bindHistoryControls\(\);",
-        flags=re.S,
-    )
-    if interactive.search(text):
-        return interactive.sub(BLOCK, text, count=1)
-
-    legacy = re.compile(
-        r"(?:const fullHistory=DATA\.history;.*?|"
-        r"const firstHistory=DATA\.history\[0\], lastHistory=DATA\.history\[DATA\.history\.length-1\];.*?)"
-        r"renderHistoryChart\(\);",
-        flags=re.S,
-    )
-    if legacy.search(text):
-        return legacy.sub(BLOCK, text, count=1)
-
+    marked = re.compile(re.escape(SCRIPT_START) + r'.*?' + re.escape(SCRIPT_END), flags=re.S)
+    if marked.search(text): return marked.sub(BLOCK, text, count=1)
+    interactive = re.compile(r"const chartHistory=DATA\.history;.*?renderHistoryBars\(\);renderHistoryChart\(\);bindHistoryControls\(\);", flags=re.S)
+    if interactive.search(text): return interactive.sub(BLOCK, text, count=1)
+    legacy = re.compile(r"(?:const fullHistory=DATA\.history;.*?|const firstHistory=DATA\.history\[0\], lastHistory=DATA\.history\[DATA\.history\.length-1\];.*?)renderHistoryChart\(\);", flags=re.S)
+    if legacy.search(text): return legacy.sub(BLOCK, text, count=1)
     raise ValueError('Could not locate a complete history chart block')
 
 
@@ -145,17 +127,12 @@ def main():
 
     old_note = "<p><b>Gesamtwert:</b> von ${eur.format(oldTotal)} auf ${eur.format(newTotal)} – eine Veränderung von <b>${eur.format(historyGain)} (${historyGain>=0?'+':''}${pct.format(historyPct)})</b>.</p>"
     new_note = "<p><b>Änderung zum letzten Tag:</b> von ${eur.format(oldTotal)} auf ${eur.format(newTotal)} – <b>${eur.format(newTotal-oldTotal)} (${oldTotal?((newTotal-oldTotal)>=0?'+':'')+pct.format((newTotal-oldTotal)/oldTotal):'–'})</b>. &nbsp; <b>Gesamte Änderung seit Beginn:</b> <b>${eur.format(historyGain)} (${historyPct==null?'–':(historyGain>=0?'+':'')+pct.format(historyPct)})</b>.</p>"
-    if old_note in text:
-        text = text.replace(old_note, new_note, 1)
-    elif new_note not in text:
-        raise ValueError('Could not locate portfolio change summary')
+    if old_note in text: text = text.replace(old_note, new_note, 1)
+    elif new_note not in text: raise ValueError('Could not locate portfolio change summary')
 
-    if text.count(SCRIPT_START) != 1 or text.count(SCRIPT_END) != 1:
-        raise ValueError('History UI script markers are not unique')
-    if text.count("const chartHistory=DATA.history;") != 1:
-        raise ValueError('History UI JavaScript block duplicated')
-    if 'Die Historie umfasst <b>Depot 1 und Depot 2</b>' in text:
-        raise ValueError('Legacy history notice was not removed')
+    if text.count(SCRIPT_START) != 1 or text.count(SCRIPT_END) != 1: raise ValueError('History UI script markers are not unique')
+    if text.count("const chartHistory=DATA.history;") != 1: raise ValueError('History UI JavaScript block duplicated')
+    if 'Die Historie umfasst <b>Depot 1 und Depot 2</b>' in text: raise ValueError('Legacy history notice was not removed')
 
     INDEX.write_text(text, encoding='utf-8')
     print('Updated history UI idempotently and removed the history notice.')
