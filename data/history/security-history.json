@@ -198,6 +198,38 @@
         "schneider-electric": 595.099976
       },
       "source": "current"
+    },
+    {
+      "date": "31.08.2026",
+      "time": "10:37",
+      "values": {
+        "berkshire-hathaway-b": 23942.049682,
+        "xetra-gold": 7629.719849,
+        "allianz": 4520.0,
+        "microsoft": 3098.640156,
+        "eli-lilly": 2025.027588,
+        "siemens": 2020.549957,
+        "hsbc": 1730.867987,
+        "apple": 1377.907034,
+        "linde": 843.915246,
+        "boerse-de-aktienfonds": 22751.72,
+        "ishares-global-titans-50": 13743.180222,
+        "boerse-de-technologiefonds": 4957.76,
+        "nvidia": 4688.202504,
+        "amd": 3611.969488,
+        "ishares-core-msci-world": 3442.095016,
+        "alphabet-c": 3251.188163,
+        "micron-technology": 1608.250593,
+        "ishares-msci-world-value-factor": 1195.779938,
+        "wisdomtree-physical-bitcoin": 965.04,
+        "marvell-technology": 746.905733,
+        "tsmc-adr": 719.804452,
+        "broadcom": 635.793966,
+        "siemens-energy": 577.119995,
+        "amazon": 459.325301,
+        "schneider-electric": 600.400024
+      },
+      "source": "current"
     }
   ]
 }
