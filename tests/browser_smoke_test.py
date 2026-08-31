@@ -95,10 +95,15 @@ def main() -> int:
                 require_no_browser_errors(browser_errors, f"on page {page_id}")
 
             page.locator('#nav button[data-page="history"]').click()
+            active_range = page.locator('#historyRangeControls button.active')
+            active_checkpoint = page.locator('#checkpointControls button.active')
+            assert active_range.get_attribute("data-range") == "y3", "History must default to the 3-year view"
+            assert active_checkpoint.get_attribute("data-mode") == "year", "Checkpoint comparison must default to yearly"
+
             years = page.locator("#historyChart .history-year-label")
             quarters = page.locator("#historyChart .history-quarter-label")
-            assert years.count() >= 6, f"Expected year labels, got {years.count()}"
-            assert quarters.count() >= 20, f"Expected quarterly labels, got {quarters.count()}"
+            assert years.count() >= 4, f"Expected at least four year labels in 3-year view, got {years.count()}"
+            assert quarters.count() >= 12, f"Expected quarterly labels in 3-year view, got {quarters.count()}"
             assert all(re.fullmatch(r"20\d{2}", (years.nth(i).text_content() or "").strip()) for i in range(years.count()))
             assert all(re.fullmatch(r"Q[1-4]", (quarters.nth(i).text_content() or "").strip()) for i in range(quarters.count()))
             chart_text = page.locator("#historyChart").text_content() or ""
@@ -106,13 +111,27 @@ def main() -> int:
             assert "Nettoeinzahlungen" not in chart_text
 
             history_rows = page.locator("#historyBars .bar-row")
-            assert history_rows.count() >= 10
+            assert history_rows.count() >= 6
             for i in range(history_rows.count()):
                 row_text = history_rows.nth(i).inner_text()
-                assert re.search(r"20\d{2}\s*·\s*H[12]", row_text), f"Missing half-year interval in row {i}: {row_text}"
+                assert re.search(r"20\d{2}", row_text), f"Missing year in row {i}: {row_text}"
+                assert not re.search(r"\bH[12]\b", row_text), f"Half-year label shown in yearly default row {i}: {row_text}"
                 assert "%" not in row_text, f"Unexpected percentage in Stichtagsvergleich row {i}: {row_text}"
                 assert "€" in row_text, f"Missing EUR value in Stichtagsvergleich row {i}: {row_text}"
                 assert not re.search(r"\d{2}\.\d{2}\.20\d{2}", row_text), f"Raw date still shown in row {i}: {row_text}"
+
+            page.locator('#checkpointControls button[data-mode="half"]').click()
+            half_rows = page.locator("#historyBars .bar-row")
+            assert half_rows.count() >= 10, f"Expected half-year checkpoint rows, got {half_rows.count()}"
+            for i in range(half_rows.count()):
+                row_text = half_rows.nth(i).inner_text()
+                assert re.search(r"20\d{2}\s*·\s*H[12]", row_text), f"Missing half-year interval in row {i}: {row_text}"
+
+            page.locator('#historyRangeControls button[data-range="max"]').click()
+            max_years = page.locator("#historyChart .history-year-label")
+            max_quarters = page.locator("#historyChart .history-quarter-label")
+            assert max_years.count() >= 6, f"Expected full-history year labels, got {max_years.count()}"
+            assert max_quarters.count() >= 20, f"Expected full-history quarterly labels, got {max_quarters.count()}"
 
             for selector in ("#assetDonut .donut-segment", "#sectorDonut .donut-segment"):
                 segments = page.locator(selector)
@@ -127,7 +146,7 @@ def main() -> int:
         server.shutdown()
         server.server_close()
 
-    print("Browser gate passed: all pages render; persistent light/dark theme switching works; history uses year/quarter axis, half-year checkpoints and cumulative cash-flow wording.")
+    print("Browser gate passed: all pages render; persistent light/dark theme switching works; history defaults to 3 years with yearly checkpoints and supports half-year/max views.")
     return 0
 
 
