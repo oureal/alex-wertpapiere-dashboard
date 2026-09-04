@@ -893,626 +893,626 @@
     },
     {
       "date": "04.11.2022",
-      "value": 32757.58,
+      "value": 32506.44,
       "net_contributions": 31389.14,
-      "gain": 1368.44,
-      "simple_return": 0.04359597
+      "gain": 1117.3,
+      "simple_return": 0.03559511
     },
     {
       "date": "11.11.2022",
-      "value": 33378.32,
+      "value": 33137.64,
       "net_contributions": 31389.14,
-      "gain": 1989.18,
-      "simple_return": 0.0633716
+      "gain": 1748.5,
+      "simple_return": 0.05570398
     },
     {
       "date": "18.11.2022",
-      "value": 34607.16,
+      "value": 34366.61,
       "net_contributions": 32893.92,
-      "gain": 1713.24,
-      "simple_return": 0.05208379
+      "gain": 1472.69,
+      "simple_return": 0.04477089
     },
     {
       "date": "25.11.2022",
-      "value": 34842.63,
+      "value": 34594.34,
       "net_contributions": 32884.0,
-      "gain": 1958.63,
-      "simple_return": 0.05956179
+      "gain": 1710.34,
+      "simple_return": 0.05201131
     },
     {
       "date": "02.12.2022",
-      "value": 41081.15,
+      "value": 40834.1,
       "net_contributions": 39056.51,
-      "gain": 2024.64,
-      "simple_return": 0.05183873
+      "gain": 1777.59,
+      "simple_return": 0.04551328
     },
     {
       "date": "09.12.2022",
-      "value": 40448.55,
+      "value": 40211.7,
       "net_contributions": 39056.51,
-      "gain": 1392.04,
-      "simple_return": 0.03564169
+      "gain": 1155.19,
+      "simple_return": 0.0295774
     },
     {
       "date": "16.12.2022",
-      "value": 37741.87,
+      "value": 37505.08,
       "net_contributions": 39056.51,
-      "gain": -1314.64,
-      "simple_return": -0.03365995
+      "gain": -1551.43,
+      "simple_return": -0.0397227
     },
     {
       "date": "23.12.2022",
-      "value": 38843.98,
+      "value": 38605.23,
       "net_contributions": 40535.66,
-      "gain": -1691.68,
-      "simple_return": -0.04173313
+      "gain": -1930.43,
+      "simple_return": -0.04762301
     },
     {
       "date": "30.12.2022",
-      "value": 39784.75,
+      "value": 39546.65,
       "net_contributions": 41535.66,
-      "gain": -1750.91,
-      "simple_return": -0.04215438
+      "gain": -1989.01,
+      "simple_return": -0.0478868
     },
     {
       "date": "06.01.2023",
-      "value": 40319.18,
+      "value": 40075.82,
       "net_contributions": 41422.07,
-      "gain": -1102.89,
-      "simple_return": -0.02662566
+      "gain": -1346.25,
+      "simple_return": -0.03250079
     },
     {
       "date": "13.01.2023",
-      "value": 40409.73,
+      "value": 40174.75,
       "net_contributions": 41425.44,
-      "gain": -1015.71,
-      "simple_return": -0.02451899
+      "gain": -1250.69,
+      "simple_return": -0.03019135
     },
     {
       "date": "20.01.2023",
-      "value": 40082.97,
+      "value": 39852.21,
       "net_contributions": 41447.57,
-      "gain": -1364.6,
-      "simple_return": -0.03292352
+      "gain": -1595.36,
+      "simple_return": -0.03849104
     },
     {
       "date": "27.01.2023",
-      "value": 40274.05,
+      "value": 40038.17,
       "net_contributions": 41447.57,
-      "gain": -1173.52,
-      "simple_return": -0.02831336
+      "gain": -1409.4,
+      "simple_return": -0.03400441
     },
     {
       "date": "03.02.2023",
-      "value": 41789.13,
+      "value": 41555.76,
       "net_contributions": 42447.57,
-      "gain": -658.44,
-      "simple_return": -0.01551184
+      "gain": -891.81,
+      "simple_return": -0.02100968
     },
     {
       "date": "10.02.2023",
-      "value": 41850.52,
+      "value": 41611.28,
       "net_contributions": 42447.57,
-      "gain": -597.05,
-      "simple_return": -0.01406559
+      "gain": -836.29,
+      "simple_return": -0.01970172
     },
     {
       "date": "17.02.2023",
-      "value": 41884.35,
+      "value": 41640.16,
       "net_contributions": 42509.07,
-      "gain": -624.72,
-      "simple_return": -0.01469616
+      "gain": -868.91,
+      "simple_return": -0.02044058
     },
     {
       "date": "24.02.2023",
-      "value": 41555.88,
+      "value": 41317.09,
       "net_contributions": 42509.07,
-      "gain": -953.19,
-      "simple_return": -0.02242321
+      "gain": -1191.98,
+      "simple_return": -0.0280406
     },
     {
       "date": "03.03.2023",
-      "value": 43174.84,
+      "value": 42934.25,
       "net_contributions": 43509.07,
-      "gain": -334.23,
-      "simple_return": -0.00768185
+      "gain": -574.82,
+      "simple_return": -0.0132115
     },
     {
       "date": "10.03.2023",
-      "value": 42608.69,
+      "value": 42372.1,
       "net_contributions": 43509.07,
-      "gain": -900.38,
-      "simple_return": -0.02069408
+      "gain": -1136.97,
+      "simple_return": -0.02613179
     },
     {
       "date": "17.03.2023",
-      "value": 42038.78,
+      "value": 41796.2,
       "net_contributions": 43510.26,
-      "gain": -1471.48,
-      "simple_return": -0.03381915
+      "gain": -1714.06,
+      "simple_return": -0.03939439
     },
     {
       "date": "24.03.2023",
-      "value": 42041.95,
+      "value": 41801.8,
       "net_contributions": 43510.26,
-      "gain": -1468.31,
-      "simple_return": -0.03374629
+      "gain": -1708.46,
+      "simple_return": -0.03926568
     },
     {
       "date": "31.03.2023",
-      "value": 43301.34,
+      "value": 42806.04,
       "net_contributions": 43510.26,
-      "gain": -208.92,
-      "simple_return": -0.00480163
+      "gain": -704.22,
+      "simple_return": -0.01618515
     },
     {
       "date": "07.04.2023",
-      "value": 43978.18,
+      "value": 43496.87,
       "net_contributions": 44310.26,
-      "gain": -332.08,
-      "simple_return": -0.00749443
+      "gain": -813.39,
+      "simple_return": -0.0183567
     },
     {
       "date": "14.04.2023",
-      "value": 44177.11,
+      "value": 43701.66,
       "net_contributions": 44271.06,
-      "gain": -93.95,
-      "simple_return": -0.00212215
+      "gain": -569.4,
+      "simple_return": -0.01286168
     },
     {
       "date": "21.04.2023",
-      "value": 44439.68,
+      "value": 43955.95,
       "net_contributions": 44271.06,
-      "gain": 168.62,
-      "simple_return": 0.00380881
+      "gain": -315.11,
+      "simple_return": -0.00711774
     },
     {
       "date": "28.04.2023",
-      "value": 44478.92,
+      "value": 43971.31,
       "net_contributions": 44279.28,
-      "gain": 199.64,
-      "simple_return": 0.00450866
+      "gain": -307.97,
+      "simple_return": -0.00695517
     },
     {
       "date": "05.05.2023",
-      "value": 45464.48,
+      "value": 44922.79,
       "net_contributions": 45300.69,
-      "gain": 163.79,
-      "simple_return": 0.00361562
+      "gain": -377.9,
+      "simple_return": -0.00834204
     },
     {
       "date": "12.05.2023",
-      "value": 46291.38,
+      "value": 45745.75,
       "net_contributions": 45373.73,
-      "gain": 917.65,
-      "simple_return": 0.02022426
+      "gain": 372.02,
+      "simple_return": 0.00819902
     },
     {
       "date": "19.05.2023",
-      "value": 46905.88,
+      "value": 46352.02,
       "net_contributions": 45373.73,
-      "gain": 1532.15,
-      "simple_return": 0.03376734
+      "gain": 978.29,
+      "simple_return": 0.02156071
     },
     {
       "date": "26.05.2023",
-      "value": 46607.58,
+      "value": 46070.39,
       "net_contributions": 45373.73,
-      "gain": 1233.85,
-      "simple_return": 0.02719305
+      "gain": 696.66,
+      "simple_return": 0.01535382
     },
     {
       "date": "02.06.2023",
-      "value": 49023.79,
+      "value": 48471.04,
       "net_contributions": 47401.04,
-      "gain": 1622.75,
-      "simple_return": 0.03423448
+      "gain": 1070.0,
+      "simple_return": 0.02257334
     },
     {
       "date": "09.06.2023",
-      "value": 49130.2,
+      "value": 48599.26,
       "net_contributions": 47401.04,
-      "gain": 1729.16,
-      "simple_return": 0.03647937
+      "gain": 1198.22,
+      "simple_return": 0.02527835
     },
     {
       "date": "16.06.2023",
-      "value": 49312.39,
+      "value": 48778.4,
       "net_contributions": 47415.62,
-      "gain": 1896.77,
-      "simple_return": 0.04000306
+      "gain": 1362.78,
+      "simple_return": 0.02874116
     },
     {
       "date": "23.06.2023",
-      "value": 48647.08,
+      "value": 48107.7,
       "net_contributions": 47415.62,
-      "gain": 1231.46,
-      "simple_return": 0.02597161
+      "gain": 692.08,
+      "simple_return": 0.01459603
     },
     {
       "date": "30.06.2023",
-      "value": 49281.68,
+      "value": 48753.16,
       "net_contributions": 47415.62,
-      "gain": 1866.06,
-      "simple_return": 0.03935539
+      "gain": 1337.54,
+      "simple_return": 0.02820885
     },
     {
       "date": "07.07.2023",
-      "value": 49824.72,
+      "value": 49311.71,
       "net_contributions": 48415.62,
-      "gain": 1409.1,
-      "simple_return": 0.02910424
+      "gain": 896.09,
+      "simple_return": 0.01850828
     },
     {
       "date": "14.07.2023",
-      "value": 49736.08,
+      "value": 49225.45,
       "net_contributions": 48415.62,
-      "gain": 1320.46,
-      "simple_return": 0.02727343
+      "gain": 809.83,
+      "simple_return": 0.01672663
     },
     {
       "date": "21.07.2023",
-      "value": 50163.69,
+      "value": 49642.01,
       "net_contributions": 48415.62,
-      "gain": 1748.07,
-      "simple_return": 0.0361055
+      "gain": 1226.39,
+      "simple_return": 0.02533046
     },
     {
       "date": "28.07.2023",
-      "value": 50622.81,
+      "value": 50093.15,
       "net_contributions": 48445.91,
-      "gain": 2176.9,
-      "simple_return": 0.04493465
+      "gain": 1647.24,
+      "simple_return": 0.03400163
     },
     {
       "date": "04.08.2023",
-      "value": 51027.34,
+      "value": 50524.13,
       "net_contributions": 49451.12,
-      "gain": 1576.22,
-      "simple_return": 0.0318743
+      "gain": 1073.01,
+      "simple_return": 0.0216984
     },
     {
       "date": "11.08.2023",
-      "value": 51154.42,
+      "value": 50624.63,
       "net_contributions": 49452.8,
-      "gain": 1701.62,
-      "simple_return": 0.03440897
+      "gain": 1171.83,
+      "simple_return": 0.02369593
     },
     {
       "date": "18.08.2023",
-      "value": 50698.86,
+      "value": 50171.4,
       "net_contributions": 49452.8,
-      "gain": 1246.06,
-      "simple_return": 0.02519696
+      "gain": 718.6,
+      "simple_return": 0.01453103
     },
     {
       "date": "25.08.2023",
-      "value": 51086.84,
+      "value": 50555.87,
       "net_contributions": 49452.8,
-      "gain": 1634.04,
-      "simple_return": 0.03304242
+      "gain": 1103.07,
+      "simple_return": 0.02230551
     },
     {
       "date": "01.09.2023",
-      "value": 52166.0,
+      "value": 51644.52,
       "net_contributions": 50415.75,
-      "gain": 1750.25,
-      "simple_return": 0.03471633
+      "gain": 1228.77,
+      "simple_return": 0.02437274
     },
     {
       "date": "08.09.2023",
-      "value": 52313.07,
+      "value": 51786.14,
       "net_contributions": 50513.5,
-      "gain": 1799.57,
-      "simple_return": 0.03562553
+      "gain": 1272.64,
+      "simple_return": 0.02519406
     },
     {
       "date": "15.09.2023",
-      "value": 52743.18,
+      "value": 52215.41,
       "net_contributions": 50514.14,
-      "gain": 2229.04,
-      "simple_return": 0.04412705
+      "gain": 1701.27,
+      "simple_return": 0.03367908
     },
     {
       "date": "22.09.2023",
-      "value": 52031.63,
+      "value": 51520.26,
       "net_contributions": 50515.14,
-      "gain": 1516.49,
-      "simple_return": 0.0300205
+      "gain": 1005.12,
+      "simple_return": 0.0198974
     },
     {
       "date": "29.09.2023",
-      "value": 52385.76,
+      "value": 51884.45,
       "net_contributions": 51524.15,
-      "gain": 861.61,
-      "simple_return": 0.01672245
+      "gain": 360.3,
+      "simple_return": 0.00699284
     },
     {
       "date": "06.10.2023",
-      "value": 52219.16,
+      "value": 51745.36,
       "net_contributions": 51508.2,
-      "gain": 710.96,
-      "simple_return": 0.01380285
+      "gain": 237.16,
+      "simple_return": 0.00460432
     },
     {
       "date": "13.10.2023",
-      "value": 52407.99,
+      "value": 51955.1,
       "net_contributions": 51508.17,
-      "gain": 899.82,
-      "simple_return": 0.01746946
+      "gain": 446.93,
+      "simple_return": 0.00867688
     },
     {
       "date": "20.10.2023",
-      "value": 51699.8,
+      "value": 51227.69,
       "net_contributions": 51508.51,
-      "gain": 191.29,
-      "simple_return": 0.00371376
+      "gain": -280.82,
+      "simple_return": -0.00545191
     },
     {
       "date": "27.10.2023",
-      "value": 51294.72,
+      "value": 50822.38,
       "net_contributions": 51508.31,
-      "gain": -213.59,
-      "simple_return": -0.00414671
+      "gain": -685.93,
+      "simple_return": -0.01331688
     },
     {
       "date": "03.11.2023",
-      "value": 53742.44,
+      "value": 53219.24,
       "net_contributions": 52508.31,
-      "gain": 1234.13,
-      "simple_return": 0.02350352
+      "gain": 710.93,
+      "simple_return": 0.01353938
     },
     {
       "date": "10.11.2023",
-      "value": 53806.09,
+      "value": 53287.88,
       "net_contributions": 52508.31,
-      "gain": 1297.78,
-      "simple_return": 0.02471571
+      "gain": 779.57,
+      "simple_return": 0.0148466
     },
     {
       "date": "17.11.2023",
-      "value": 54174.4,
+      "value": 53669.6,
       "net_contributions": 52508.31,
-      "gain": 1666.09,
-      "simple_return": 0.03173003
+      "gain": 1161.29,
+      "simple_return": 0.02211631
     },
     {
       "date": "24.11.2023",
-      "value": 54310.58,
+      "value": 53804.73,
       "net_contributions": 52508.31,
-      "gain": 1802.27,
-      "simple_return": 0.03432352
+      "gain": 1296.42,
+      "simple_return": 0.02468981
     },
     {
       "date": "01.12.2023",
-      "value": 56416.23,
+      "value": 55909.25,
       "net_contributions": 54514.53,
-      "gain": 1901.7,
-      "simple_return": 0.03488428
+      "gain": 1394.72,
+      "simple_return": 0.02558437
     },
     {
       "date": "08.12.2023",
-      "value": 56731.91,
+      "value": 56232.29,
       "net_contributions": 54524.36,
-      "gain": 2207.55,
-      "simple_return": 0.04048741
+      "gain": 1707.93,
+      "simple_return": 0.03132416
     },
     {
       "date": "15.12.2023",
-      "value": 56476.88,
+      "value": 55975.77,
       "net_contributions": 54523.56,
-      "gain": 1953.32,
-      "simple_return": 0.03582525
+      "gain": 1452.21,
+      "simple_return": 0.02663454
     },
     {
       "date": "22.12.2023",
-      "value": 57428.2,
+      "value": 56919.31,
       "net_contributions": 55524.89,
-      "gain": 1903.31,
-      "simple_return": 0.0342785
+      "gain": 1394.42,
+      "simple_return": 0.02511342
     },
     {
       "date": "29.12.2023",
-      "value": 57453.74,
+      "value": 56933.24,
       "net_contributions": 55524.89,
-      "gain": 1928.85,
-      "simple_return": 0.03473847
+      "gain": 1408.35,
+      "simple_return": 0.0253643
     },
     {
       "date": "05.01.2024",
-      "value": 57753.01,
+      "value": 57227.4,
       "net_contributions": 55519.92,
-      "gain": 2233.09,
-      "simple_return": 0.04022142
+      "gain": 1707.48,
+      "simple_return": 0.03075437
     },
     {
       "date": "12.01.2024",
-      "value": 58010.5,
+      "value": 57472.79,
       "net_contributions": 55519.92,
-      "gain": 2490.58,
-      "simple_return": 0.04485921
+      "gain": 1952.87,
+      "simple_return": 0.03517422
     },
     {
       "date": "19.01.2024",
-      "value": 58341.81,
+      "value": 57816.21,
       "net_contributions": 55519.92,
-      "gain": 2821.89,
-      "simple_return": 0.05082662
+      "gain": 2296.29,
+      "simple_return": 0.04135975
     },
     {
       "date": "26.01.2024",
-      "value": 59616.48,
+      "value": 59105.37,
       "net_contributions": 55519.92,
-      "gain": 4096.56,
-      "simple_return": 0.07378541
+      "gain": 3585.45,
+      "simple_return": 0.06457952
     },
     {
       "date": "02.02.2024",
-      "value": 60911.83,
+      "value": 60402.85,
       "net_contributions": 56519.92,
-      "gain": 4391.91,
-      "simple_return": 0.07770552
+      "gain": 3882.93,
+      "simple_return": 0.0687002
     },
     {
       "date": "09.02.2024",
-      "value": 61493.84,
+      "value": 60977.38,
       "net_contributions": 56519.92,
-      "gain": 4973.92,
-      "simple_return": 0.08800296
+      "gain": 4457.46,
+      "simple_return": 0.07886529
     },
     {
       "date": "16.02.2024",
-      "value": 61843.59,
+      "value": 61332.91,
       "net_contributions": 56519.92,
-      "gain": 5323.67,
-      "simple_return": 0.09419104
+      "gain": 4812.99,
+      "simple_return": 0.08515564
     },
     {
       "date": "23.02.2024",
-      "value": 62456.45,
+      "value": 61945.72,
       "net_contributions": 56538.04,
-      "gain": 5918.41,
-      "simple_return": 0.10468014
+      "gain": 5407.68,
+      "simple_return": 0.09564675
     },
     {
       "date": "01.03.2024",
-      "value": 64115.97,
+      "value": 63571.87,
       "net_contributions": 57538.04,
-      "gain": 6577.93,
-      "simple_return": 0.11432315
+      "gain": 6033.83,
+      "simple_return": 0.1048668
     },
     {
       "date": "08.03.2024",
-      "value": 63672.62,
+      "value": 63132.18,
       "net_contributions": 57538.04,
-      "gain": 6134.58,
-      "simple_return": 0.10661781
+      "gain": 5594.14,
+      "simple_return": 0.09722507
     },
     {
       "date": "15.03.2024",
-      "value": 64047.35,
+      "value": 63491.91,
       "net_contributions": 57538.04,
-      "gain": 6509.31,
-      "simple_return": 0.11313055
+      "gain": 5953.87,
+      "simple_return": 0.10347711
     },
     {
       "date": "22.03.2024",
-      "value": 64182.71,
+      "value": 63634.94,
       "net_contributions": 57467.78,
-      "gain": 6714.93,
-      "simple_return": 0.11684687
+      "gain": 6167.16,
+      "simple_return": 0.10731509
     },
     {
       "date": "29.03.2024",
-      "value": 64777.8,
+      "value": 64228.63,
       "net_contributions": 57467.77,
-      "gain": 7310.03,
-      "simple_return": 0.12720226
+      "gain": 6760.86,
+      "simple_return": 0.11764612
     },
     {
       "date": "05.04.2024",
-      "value": 64392.51,
+      "value": 63876.69,
       "net_contributions": 57467.77,
-      "gain": 6924.74,
-      "simple_return": 0.1204978
+      "gain": 6408.92,
+      "simple_return": 0.11152199
     },
     {
       "date": "12.04.2024",
-      "value": 64083.31,
+      "value": 63570.48,
       "net_contributions": 57465.43,
-      "gain": 6617.88,
-      "simple_return": 0.1151628
+      "gain": 6105.05,
+      "simple_return": 0.10623866
     },
     {
       "date": "19.04.2024",
-      "value": 63776.17,
+      "value": 63276.93,
       "net_contributions": 57465.43,
-      "gain": 6310.74,
-      "simple_return": 0.10981802
+      "gain": 5811.5,
+      "simple_return": 0.10113037
     },
     {
       "date": "26.04.2024",
-      "value": 63706.94,
+      "value": 63209.53,
       "net_contributions": 57465.43,
-      "gain": 6241.51,
-      "simple_return": 0.1086133
+      "gain": 5744.1,
+      "simple_return": 0.09995749
     },
     {
       "date": "03.05.2024",
-      "value": 64405.6,
+      "value": 63893.17,
       "net_contributions": 58309.52,
-      "gain": 6096.08,
-      "simple_return": 0.10454691
+      "gain": 5583.65,
+      "simple_return": 0.09575881
     },
     {
       "date": "10.05.2024",
-      "value": 65096.24,
+      "value": 64582.02,
       "net_contributions": 58309.52,
-      "gain": 6786.72,
-      "simple_return": 0.11639129
+      "gain": 6272.5,
+      "simple_return": 0.10757249
     },
     {
       "date": "17.05.2024",
-      "value": 65236.37,
+      "value": 64738.48,
       "net_contributions": 58309.52,
-      "gain": 6926.85,
-      "simple_return": 0.1187945
+      "gain": 6428.96,
+      "simple_return": 0.11025575
     },
     {
       "date": "24.05.2024",
-      "value": 64143.41,
+      "value": 63656.02,
       "net_contributions": 58424.53,
-      "gain": 5718.88,
-      "simple_return": 0.09788491
+      "gain": 5231.49,
+      "simple_return": 0.0895427
     },
     {
       "date": "31.05.2024",
-      "value": 65211.05,
+      "value": 64731.88,
       "net_contributions": 59424.53,
-      "gain": 5786.52,
-      "simple_return": 0.09737595
+      "gain": 5307.35,
+      "simple_return": 0.08931244
     },
     {
       "date": "07.06.2024",
-      "value": 65841.4,
+      "value": 65357.76,
       "net_contributions": 59424.53,
-      "gain": 6416.87,
-      "simple_return": 0.10798352
+      "gain": 5933.23,
+      "simple_return": 0.09984479
     },
     {
       "date": "14.06.2024",
-      "value": 66847.57,
+      "value": 66400.32,
       "net_contributions": 59425.44,
-      "gain": 7422.13,
-      "simple_return": 0.12489819
+      "gain": 6974.88,
+      "simple_return": 0.11737195
     },
     {
       "date": "21.06.2024",
-      "value": 67224.36,
+      "value": 66765.85,
       "net_contributions": 59425.44,
-      "gain": 7798.92,
-      "simple_return": 0.13123874
+      "gain": 7340.41,
+      "simple_return": 0.12352302
     },
     {
       "date": "28.06.2024",
-      "value": 68184.43,
+      "value": 67717.97,
       "net_contributions": 60438.73,
-      "gain": 7745.7,
-      "simple_return": 0.12815789
+      "gain": 7279.24,
+      "simple_return": 0.12043999
     },
     {
       "date": "05.07.2024",
-      "value": 68546.82,
+      "value": 68086.63,
       "net_contributions": 60425.51,
-      "gain": 8121.31,
-      "simple_return": 0.13440201
+      "gain": 7661.12,
+      "simple_return": 0.12678619
     },
     {
       "date": "12.07.2024",
-      "value": 69204.05,
+      "value": 68736.55,
       "net_contributions": 60448.64,
-      "gain": 8755.41,
-      "simple_return": 0.14484048
+      "gain": 8287.91,
+      "simple_return": 0.13710664
     },
     {
       "date": "19.07.2024",
@@ -2352,6 +2352,14 @@
       "net_contributions": 87092.41,
       "gain": 28434.16,
       "simple_return": 0.32648264
+    },
+    {
+      "date": "04.09.2026",
+      "value": 115392.977115,
+      "validated": true,
+      "net_contributions": 87092.41,
+      "gain": 28300.57,
+      "simple_return": 0.32494875
     }
   ]
 }
